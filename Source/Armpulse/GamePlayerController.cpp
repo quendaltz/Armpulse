@@ -39,6 +39,10 @@ void AGamePlayerController::SetupInputComponent()
 		EnhancedInputComponent->BindAction(MoveAction, ETriggerEvent::Canceled, this, &AGamePlayerController::OnMoveReleased);
 		// EnhancedInputComponent->BindAction(SetDestinationClickAction, ETriggerEvent::Completed, this, &AArmpulsePlayerController::OnSetDestinationReleased);
 
+		// Setup keyboard combat input events
+		EnhancedInputComponent->BindAction(AttackAction, ETriggerEvent::Started, this, &AGamePlayerController::OnAttackTriggered);
+		EnhancedInputComponent->BindAction(CastSkillAction, ETriggerEvent::Started, this, &AGamePlayerController::OnSkillTriggered);
+
 		// Setup touch input events
 		// EnhancedInputComponent->BindAction(SetDestinationTouchAction, ETriggerEvent::Started, this, &AArmpulsePlayerController::OnInputStarted);
 		// EnhancedInputComponent->BindAction(SetDestinationTouchAction, ETriggerEvent::Triggered, this, &AArmpulsePlayerController::OnTouchTriggered);
@@ -63,4 +67,14 @@ void AGamePlayerController::OnMoveTriggered(const FInputActionValue& Value)
 void AGamePlayerController::OnMoveReleased(const FInputActionValue& Value)
 {
     
+}
+
+void AGamePlayerController::OnAttackTriggered()
+{
+	GEngine->AddOnScreenDebugMessage(-1, 2.0f, FColor::White, TEXT("Attack"));
+}
+
+void AGamePlayerController::OnSkillTriggered()
+{
+	GEngine->AddOnScreenDebugMessage(-1, 2.0f, FColor::White, TEXT("Skill Cast"));
 }

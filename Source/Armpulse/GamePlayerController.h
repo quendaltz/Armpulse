@@ -28,9 +28,13 @@ public:
 	UPROPERTY(EditAnywhere, BlueprintReadOnly)
 	UInputAction* MoveAction;
 
-	// Combat Input Action
+	// Attack Input Action
 	UPROPERTY(EditAnywhere, BlueprintReadOnly)
-	UInputAction* CombatAction;
+	UInputAction* AttackAction;
+
+	// Cast Skill Input Action
+	UPROPERTY(EditAnywhere, BlueprintReadOnly)
+	UInputAction* CastSkillAction;
 
 protected:
 	virtual void SetupInputComponent() override;
@@ -39,4 +43,7 @@ protected:
 
 	void OnMoveTriggered(const FInputActionValue& Value);
 	void OnMoveReleased(const FInputActionValue& Value);
+
+	void OnAttackTriggered();
+	void OnSkillTriggered();
 };
