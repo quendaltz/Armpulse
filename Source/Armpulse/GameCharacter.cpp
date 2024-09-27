@@ -57,7 +57,7 @@ void AGameCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputCompo
 
 void AGameCharacter::MoveTriggered(const FInputActionValue& Value)
 {
-	GEngine->AddOnScreenDebugMessage(-1, 2.0f, FColor::White, TEXT("ASDASD"));
+	GEngine->AddOnScreenDebugMessage(-1, 2.0f, FColor::White, TEXT("Move"));
 	FVector2D MoveActionValue = Value.Get<FVector2D>();
 	if (CanMove)
 	{
