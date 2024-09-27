@@ -1,7 +1,7 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
 
-#include "Character/Combat/Sweep.h"
+#include "Sweep.h"
 
 // Sets default values
 ASweep::ASweep()
