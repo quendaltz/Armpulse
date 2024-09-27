@@ -14,9 +14,10 @@ class ARMPULSE_API AGameCharacter : public APawn
 public:
 	AGameCharacter();
 
+	// ####################################################################
 	// character box
 	UPROPERTY(VisibleAnywhere, BlueprintReadWrite)
-	class UCapsuleComponent* CapsuleComp;
+	class UCapsuleComponent* CapsuleComponent;
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
 	class USpringArmComponent* SpringArm;
@@ -24,15 +25,16 @@ public:
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
 	class UCameraComponent* Camera;
 
-	UPROPERTY(VisibleAnywhere, BlueprintReadWrite)
-	class UPaperFlipbookComponent* CharacterFlipbook;
+	// UPROPERTY(VisibleAnywhere, BlueprintReadWrite)
+	// class UPaperFlipbookComponent* CharacterFlipbook;
 
-	UPROPERTY(EditAnywhere, BlueprintReadOnly)
-	class UPaperFlipbook* IdleFlipbook;
+	// UPROPERTY(EditAnywhere, BlueprintReadOnly)
+	// class UPaperFlipbook* IdleFlipbook;
 
-	UPROPERTY(EditAnywhere, BlueprintReadOnly)
-	class UPaperFlipbook* RunFlipbook;
+	// UPROPERTY(EditAnywhere, BlueprintReadOnly)
+	// class UPaperFlipbook* RunFlipbook;
 
+	// ####################################################################
 	// input
 	UPROPERTY(EditAnywhere, BlueprintReadOnly)
 	class UInputMappingContext* InputMappingContext;
@@ -40,6 +42,7 @@ public:
 	UPROPERTY(EditAnywhere, BlueprintReadOnly)
 	class UInputAction* MoveAction;
 
+	// ####################################################################
 	// movement
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 	float MoveSpeed = 100.0f;
