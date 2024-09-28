@@ -40,22 +40,6 @@
 		"directory": "D:\\Program Files\\Epic Games\\UE_5.4\\Engine\\Source"
 	},
 	{
-		"file": "D:\\Work\\PrivateProjects\\Armpulse\\Source\\Armpulse\\ArmpulseGameMode.cpp",
-		"arguments": [
-			"D:\\Program Files (x86)\\Microsoft Visual Studio\\2022\\BuildTools\\VC\\Tools\\MSVC\\14.41.34120\\bin\\Hostx64\\x64\\cl.exe",
-			"@D:\\Work\\PrivateProjects\\Armpulse\\.vscode\\compileCommands_Default\\Armpulse.1.rsp"
-		],
-		"directory": "D:\\Program Files\\Epic Games\\UE_5.4\\Engine\\Source"
-	},
-	{
-		"file": "D:\\Work\\PrivateProjects\\Armpulse\\Source\\Armpulse\\ArmpulseGameMode.h",
-		"arguments": [
-			"D:\\Program Files (x86)\\Microsoft Visual Studio\\2022\\BuildTools\\VC\\Tools\\MSVC\\14.41.34120\\bin\\Hostx64\\x64\\cl.exe",
-			"@D:\\Work\\PrivateProjects\\Armpulse\\.vscode\\compileCommands_Default\\Armpulse.1.rsp"
-		],
-		"directory": "D:\\Program Files\\Epic Games\\UE_5.4\\Engine\\Source"
-	},
-	{
 		"file": "D:\\Work\\PrivateProjects\\Armpulse\\Source\\Armpulse\\ArmpulsePlayerController.cpp",
 		"arguments": [
 			"D:\\Program Files (x86)\\Microsoft Visual Studio\\2022\\BuildTools\\VC\\Tools\\MSVC\\14.41.34120\\bin\\Hostx64\\x64\\cl.exe",
@@ -72,7 +56,7 @@
 		"directory": "D:\\Program Files\\Epic Games\\UE_5.4\\Engine\\Source"
 	},
 	{
-		"file": "D:\\Work\\PrivateProjects\\Armpulse\\Source\\Armpulse\\GameCharacter.cpp",
+		"file": "D:\\Work\\PrivateProjects\\Armpulse\\Source\\Armpulse\\Character\\Actions\\Sweep.cpp",
 		"arguments": [
 			"D:\\Program Files (x86)\\Microsoft Visual Studio\\2022\\BuildTools\\VC\\Tools\\MSVC\\14.41.34120\\bin\\Hostx64\\x64\\cl.exe",
 			"@D:\\Work\\PrivateProjects\\Armpulse\\.vscode\\compileCommands_Default\\Armpulse.1.rsp"
@@ -80,7 +64,71 @@
 		"directory": "D:\\Program Files\\Epic Games\\UE_5.4\\Engine\\Source"
 	},
 	{
-		"file": "D:\\Work\\PrivateProjects\\Armpulse\\Source\\Armpulse\\GameCharacter.h",
+		"file": "D:\\Work\\PrivateProjects\\Armpulse\\Source\\Armpulse\\Character\\Actions\\Sweep.h",
+		"arguments": [
+			"D:\\Program Files (x86)\\Microsoft Visual Studio\\2022\\BuildTools\\VC\\Tools\\MSVC\\14.41.34120\\bin\\Hostx64\\x64\\cl.exe",
+			"@D:\\Work\\PrivateProjects\\Armpulse\\.vscode\\compileCommands_Default\\Armpulse.1.rsp"
+		],
+		"directory": "D:\\Program Files\\Epic Games\\UE_5.4\\Engine\\Source"
+	},
+	{
+		"file": "D:\\Work\\PrivateProjects\\Armpulse\\Source\\Armpulse\\Character\\Components\\CharacterCombatComponent.cpp",
+		"arguments": [
+			"D:\\Program Files (x86)\\Microsoft Visual Studio\\2022\\BuildTools\\VC\\Tools\\MSVC\\14.41.34120\\bin\\Hostx64\\x64\\cl.exe",
+			"@D:\\Work\\PrivateProjects\\Armpulse\\.vscode\\compileCommands_Default\\Armpulse.1.rsp"
+		],
+		"directory": "D:\\Program Files\\Epic Games\\UE_5.4\\Engine\\Source"
+	},
+	{
+		"file": "D:\\Work\\PrivateProjects\\Armpulse\\Source\\Armpulse\\Character\\Components\\CharacterCombatComponent.h",
+		"arguments": [
+			"D:\\Program Files (x86)\\Microsoft Visual Studio\\2022\\BuildTools\\VC\\Tools\\MSVC\\14.41.34120\\bin\\Hostx64\\x64\\cl.exe",
+			"@D:\\Work\\PrivateProjects\\Armpulse\\.vscode\\compileCommands_Default\\Armpulse.1.rsp"
+		],
+		"directory": "D:\\Program Files\\Epic Games\\UE_5.4\\Engine\\Source"
+	},
+	{
+		"file": "D:\\Work\\PrivateProjects\\Armpulse\\Source\\Armpulse\\Character\\Controllers\\GamePlayerController.cpp",
+		"arguments": [
+			"D:\\Program Files (x86)\\Microsoft Visual Studio\\2022\\BuildTools\\VC\\Tools\\MSVC\\14.41.34120\\bin\\Hostx64\\x64\\cl.exe",
+			"@D:\\Work\\PrivateProjects\\Armpulse\\.vscode\\compileCommands_Default\\Armpulse.1.rsp"
+		],
+		"directory": "D:\\Program Files\\Epic Games\\UE_5.4\\Engine\\Source"
+	},
+	{
+		"file": "D:\\Work\\PrivateProjects\\Armpulse\\Source\\Armpulse\\Character\\Controllers\\GamePlayerController.h",
+		"arguments": [
+			"D:\\Program Files (x86)\\Microsoft Visual Studio\\2022\\BuildTools\\VC\\Tools\\MSVC\\14.41.34120\\bin\\Hostx64\\x64\\cl.exe",
+			"@D:\\Work\\PrivateProjects\\Armpulse\\.vscode\\compileCommands_Default\\Armpulse.1.rsp"
+		],
+		"directory": "D:\\Program Files\\Epic Games\\UE_5.4\\Engine\\Source"
+	},
+	{
+		"file": "D:\\Work\\PrivateProjects\\Armpulse\\Source\\Armpulse\\Character\\GameCharacter.cpp",
+		"arguments": [
+			"D:\\Program Files (x86)\\Microsoft Visual Studio\\2022\\BuildTools\\VC\\Tools\\MSVC\\14.41.34120\\bin\\Hostx64\\x64\\cl.exe",
+			"@D:\\Work\\PrivateProjects\\Armpulse\\.vscode\\compileCommands_Default\\Armpulse.1.rsp"
+		],
+		"directory": "D:\\Program Files\\Epic Games\\UE_5.4\\Engine\\Source"
+	},
+	{
+		"file": "D:\\Work\\PrivateProjects\\Armpulse\\Source\\Armpulse\\Character\\GameCharacter.h",
+		"arguments": [
+			"D:\\Program Files (x86)\\Microsoft Visual Studio\\2022\\BuildTools\\VC\\Tools\\MSVC\\14.41.34120\\bin\\Hostx64\\x64\\cl.exe",
+			"@D:\\Work\\PrivateProjects\\Armpulse\\.vscode\\compileCommands_Default\\Armpulse.1.rsp"
+		],
+		"directory": "D:\\Program Files\\Epic Games\\UE_5.4\\Engine\\Source"
+	},
+	{
+		"file": "D:\\Work\\PrivateProjects\\Armpulse\\Source\\Armpulse\\GameMode\\ArmpulseGameMode.cpp",
+		"arguments": [
+			"D:\\Program Files (x86)\\Microsoft Visual Studio\\2022\\BuildTools\\VC\\Tools\\MSVC\\14.41.34120\\bin\\Hostx64\\x64\\cl.exe",
+			"@D:\\Work\\PrivateProjects\\Armpulse\\.vscode\\compileCommands_Default\\Armpulse.1.rsp"
+		],
+		"directory": "D:\\Program Files\\Epic Games\\UE_5.4\\Engine\\Source"
+	},
+	{
+		"file": "D:\\Work\\PrivateProjects\\Armpulse\\Source\\Armpulse\\GameMode\\ArmpulseGameMode.h",
 		"arguments": [
 			"D:\\Program Files (x86)\\Microsoft Visual Studio\\2022\\BuildTools\\VC\\Tools\\MSVC\\14.41.34120\\bin\\Hostx64\\x64\\cl.exe",
 			"@D:\\Work\\PrivateProjects\\Armpulse\\.vscode\\compileCommands_Default\\Armpulse.1.rsp"
