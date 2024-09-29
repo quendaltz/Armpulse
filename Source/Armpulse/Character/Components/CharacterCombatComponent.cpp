@@ -2,6 +2,7 @@
 
 
 #include "CharacterCombatComponent.h"
+#include "AttackComponent.h"
 
 #include "TimerManager.h"
 #include "Kismet/GameplayStatics.h"
@@ -42,6 +43,10 @@ void UCharacterCombatComponent::Attack()
 
 		IsInAction = true;
 		CanAction = false;
+		if (AttackComponent)
+		{
+			AttackComponent->ExecuteAttack();
+		}
 		GetWorld()->GetTimerManager().SetTimer(ActionTimer, this, &UCharacterCombatComponent::ResetAnimation, AttackSpeed, false);
 	}
 }

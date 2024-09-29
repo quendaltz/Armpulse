@@ -17,6 +17,9 @@ public:
 	// Sets default values for this component's properties
 	UCharacterCombatComponent();
 
+	UPROPERTY(EditAnywhere, BlueprintReadOnly)
+	class UAttackComponent* AttackComponent;
+
 protected:
 	// Called when the game starts
 	virtual void BeginPlay() override;
