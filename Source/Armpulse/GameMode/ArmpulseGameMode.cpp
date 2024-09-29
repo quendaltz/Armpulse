@@ -1,9 +1,7 @@
 // Copyright Epic Games, Inc. All Rights Reserved.
 
 #include "ArmpulseGameMode.h"
-#include "GamePlayerController.h"
-#include "ArmpulseCharacter.h"
-
+#include "../Character/Controllers/GamePlayerController.h"
 #include "UObject/ConstructorHelpers.h"
 
 AArmpulseGameMode::AArmpulseGameMode()
