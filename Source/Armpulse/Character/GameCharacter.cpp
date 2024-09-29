@@ -3,6 +3,7 @@
 
 #include "GameCharacter.h"
 
+#include "GameFramework/Character.h"
 #include "GameFramework/SpringArmComponent.h"
 #include "GameFramework/Controller.h"
 
@@ -15,6 +16,8 @@
 #include "PaperSpriteComponent.h"
 #include "EnhancedInputComponent.h"
 #include "EnhancedInputSubsystems.h"
+
+#include "DrawDebugHelpers.h"
 
 // Sets default values
 AGameCharacter::AGameCharacter()
@@ -47,6 +50,19 @@ void AGameCharacter::BeginPlay()
 void AGameCharacter::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
+
+	if (CapsuleComponent)
+    {
+        FVector CapsuleLocation = CapsuleComponent->GetComponentLocation();
+        float CapsuleRadius = CapsuleComponent->GetScaledCapsuleRadius();
+        float CapsuleHalfHeight = CapsuleComponent->GetScaledCapsuleHalfHeight();
+        
+        FColor DebugColor = FColor::Red;
+        float Duration = 0.0f; // The sphere will stay for 5 seconds
+        float Thickness = 2.0f; // Optional, for the line thickness
+
+        DrawDebugCapsule(GetWorld(), CapsuleLocation, CapsuleHalfHeight, CapsuleRadius, FQuat::Identity, DebugColor, false, Duration, 0, Thickness);
+    }
 }
 
 // Called to bind functionality to input
