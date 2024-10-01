@@ -29,19 +29,6 @@ UAttackComponent::UAttackComponent()
     CapsuleHitbox = CreateDefaultSubobject<UCapsuleComponent>(TEXT("CapsuleHitbox"));
 
     bIsHitboxActive = false;
-
-	HitboxComponent = CreateDefaultSubobject<USphereComponent>(TEXT("HitboxComponent"));
-    AActor* OwnerActor = GetOwner();
-    if (OwnerActor)
-    {
-        USceneComponent* RootComponent = OwnerActor->GetRootComponent();
-
-        if (RootComponent)
-        {
-            HitboxComponent->SetupAttachment(RootComponent);  // Attach to the root component
-        }
-    }
-    HitboxComponent->SetSphereRadius(AttackRange);
 }
 
 void UAttackComponent::BeginPlay()
@@ -91,14 +78,20 @@ void UAttackComponent::TickComponent(float DeltaTime, ELevelTick TickType, FActo
 
 void UAttackComponent::ExecuteAttack()
 {
-    if (IsAoE)
+    AActor* OwnerActor = GetOwner();
+    if (OwnerActor)
     {
-        PerformHitDetection();  // AoE attack
+        CreateHitbox(OwnerActor->GetActorLocation(), 10);
     }
-    else
-    {
-        PerformHitDetection();  // Single target attack (use hitbox)
-    }
+
+    // if (IsAoE)
+    // {
+    //     PerformHitDetection();  // AoE attack
+    // }
+    // else
+    // {
+    //     PerformHitDetection();  // Single target attack (use hitbox)
+    // }
 }
 
 void UAttackComponent::PerformHitDetection()
@@ -222,6 +215,7 @@ void UAttackComponent::SetSphereHitbox(float Radius)
 {
     SphereHitbox->SetSphereRadius(Radius);
     SphereHitbox->SetCollisionEnabled(ECollisionEnabled::QueryOnly);
+    SphereHitbox->SetActive(true);
 }
 
 // Set the box hitbox size
