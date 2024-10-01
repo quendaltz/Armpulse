@@ -3,7 +3,7 @@
 #pragma once
 
 #include "CoreMinimal.h"
-#include "Components/ActorComponent.h"
+#include "AttackComponent.h"
 #include "CharacterCombatComponent.generated.h"
 
 DECLARE_DYNAMIC_MULTICAST_DELEGATE(FOnAttackDelegate);
@@ -38,7 +38,7 @@ public:
 
 private:
 	UPROPERTY(EditAnywhere, Category="Combat")
-	float AttackSpeed;
+	float AttackSpeed = 20.0f;
 	FTimerHandle ActionTimer;
 
 	bool CanAction;

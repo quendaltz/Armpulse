@@ -14,7 +14,7 @@ UCharacterCombatComponent::UCharacterCombatComponent()
 	// off to improve performance if you don't need them.
 	PrimaryComponentTick.bCanEverTick = true;
 
-	// ...
+	AttackComponent = CreateDefaultSubobject<UAttackComponent>(TEXT("AttackComponent"));
 }
 
 
@@ -24,6 +24,7 @@ void UCharacterCombatComponent::BeginPlay()
 	Super::BeginPlay();
 
 	IsInAction = false;
+	CanAction = true;
 }
 
 
@@ -39,15 +40,17 @@ void UCharacterCombatComponent::Attack()
 {
 	if (CanAction && !IsInAction)
 	{
+		GEngine->AddOnScreenDebugMessage(-1, 2.0f, FColor::White, TEXT("Can Perform Attack"));
 		OnAttack.Broadcast();
 
 		IsInAction = true;
 		CanAction = false;
 		if (AttackComponent)
 		{
+			GEngine->AddOnScreenDebugMessage(-1, 2.0f, FColor::White, TEXT("AttackComponent Detected"));
 			AttackComponent->ExecuteAttack();
 		}
-		GetWorld()->GetTimerManager().SetTimer(ActionTimer, this, &UCharacterCombatComponent::ResetAnimation, AttackSpeed, false);
+		GetWorld()->GetTimerManager().SetTimer(ActionTimer, this, &UCharacterCombatComponent::ResetAnimation, 100.0f/AttackSpeed, false);
 	}
 }
 
