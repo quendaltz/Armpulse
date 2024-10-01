@@ -35,14 +35,6 @@ public:
 	// class UPaperFlipbook* RunFlipbook;
 
 	// ####################################################################
-	// input
-	UPROPERTY(EditAnywhere, BlueprintReadOnly)
-	class UInputMappingContext* InputMappingContext;
-
-	UPROPERTY(EditAnywhere, BlueprintReadOnly)
-	class UInputAction* MoveAction;
-
-	// ####################################################################
 	// movement
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 	float MoveSpeed = 100.0f;
@@ -52,6 +44,11 @@ public:
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadWrite)
 	bool CanMove = true;
+
+	// ####################################################################
+	// components
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Combat")
+    class UCharacterCombatComponent* CombatComponent;
 
 protected:
 	virtual void BeginPlay() override;
@@ -63,4 +60,5 @@ public:
 
 	void MoveTriggered(const struct FInputActionValue& Value);
 	void MoveCompleted(const struct FInputActionValue& Value);
+	void AttackTriggered();
 };

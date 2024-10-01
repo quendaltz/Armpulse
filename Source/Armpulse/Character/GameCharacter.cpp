@@ -11,6 +11,7 @@
 #include "Components/SceneComponent.h"
 #include "Components/CapsuleComponent.h"
 #include "Components/InputComponent.h"
+#include "Components/CharacterCombatComponent.h"
 
 #include "PaperFlipbookComponent.h"
 #include "PaperSpriteComponent.h"
@@ -38,6 +39,9 @@ AGameCharacter::AGameCharacter()
 
     Camera = CreateDefaultSubobject<UCameraComponent>(TEXT("Camera"));
     Camera->SetupAttachment(SpringArm, USpringArmComponent::SocketName);
+
+	// Setup gameplay components
+	CombatComponent = CreateDefaultSubobject<UCharacterCombatComponent>(TEXT("CombatComponent"));
 }
 
 // Called when the game starts or when spawned
@@ -143,3 +147,12 @@ void AGameCharacter::MoveCompleted(const FInputActionValue& Value)
 // 	MoveDirection = FVector2D(0.0f, 0.0f);
 // 	CharacterFlipbook->SetFlipbook(IdleFlipbook);
 // }
+
+void AGameCharacter::AttackTriggered()
+{
+	if (CombatComponent)
+	{
+		GEngine->AddOnScreenDebugMessage(-1, 2.0f, FColor::White, TEXT("CombatComponent Detected"));
+		CombatComponent->Attack();
+	}
+}

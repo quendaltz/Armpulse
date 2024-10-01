@@ -72,6 +72,11 @@ void AGamePlayerController::OnMoveReleased(const FInputActionValue& Value)
 void AGamePlayerController::OnAttackTriggered()
 {
 	GEngine->AddOnScreenDebugMessage(-1, 2.0f, FColor::White, TEXT("Attack"));
+	AGameCharacter* PlayerCharacter = Cast<AGameCharacter>(GetPawn());
+	if (PlayerCharacter)
+	{
+		PlayerCharacter->AttackTriggered();
+	}
 }
 
 void AGamePlayerController::OnSkillTriggered()
