@@ -25,6 +25,9 @@ public:
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
 	class UCameraComponent* Camera;
 
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
+	class USkeletalMeshComponent* CharacterMesh;
+
 	// UPROPERTY(VisibleAnywhere, BlueprintReadWrite)
 	// class UPaperFlipbookComponent* CharacterFlipbook;
 

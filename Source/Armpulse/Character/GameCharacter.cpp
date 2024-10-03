@@ -8,15 +8,18 @@
 #include "GameFramework/Controller.h"
 
 #include "Camera/CameraComponent.h"
-#include "Components/SceneComponent.h"
 #include "Components/CapsuleComponent.h"
+#include "Components/SceneComponent.h"
+#include "Components/SkeletalMeshComponent.h"
 #include "Components/InputComponent.h"
-#include "Components/CharacterCombatComponent.h"
 
 #include "PaperFlipbookComponent.h"
 #include "PaperSpriteComponent.h"
 #include "EnhancedInputComponent.h"
 #include "EnhancedInputSubsystems.h"
+
+#include "Components/CharacterCombatComponent.h"
+#include "../Utility/RotationValues.h"
 
 #include "DrawDebugHelpers.h"
 
@@ -29,6 +32,8 @@ AGameCharacter::AGameCharacter()
 	CapsuleComponent = CreateDefaultSubobject<UCapsuleComponent>(TEXT("CapsuleComponent"));
 	SetRootComponent(CapsuleComponent);
 
+	CharacterMesh = CreateDefaultSubobject<USkeletalMeshComponent>(TEXT("CharacterMesh"));
+	CharacterMesh->SetupAttachment(RootComponent);
 	// CharacterFlipbook = CreateDefaultSubobject<UPaperFlipbookComponent>(TEXT("CharacterFlipbook"));
 	// CharacterFlipbook->SetupAttachment(RootComponent);
 
@@ -77,37 +82,61 @@ void AGameCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputCompo
 
 void AGameCharacter::MoveTriggered(const FInputActionValue& Value)
 {
-	GEngine->AddOnScreenDebugMessage(-1, 2.0f, FColor::White, TEXT("Move"));
+	//GEngine->AddOnScreenDebugMessage(-1, 2.0f, FColor::White, TEXT("Move"));
 	FVector2D MoveActionValue = Value.Get<FVector2D>();
 	if (CanMove)
 	{
 		MoveDirection = MoveActionValue;
-
 		if (MoveDirection.Length() > 0.0f)
 		{
 			if (MoveDirection.Length() > 1.0f)
 			{
 				MoveDirection.Normalize();
 			}
+
 			float DeltaTime = GetWorld()->DeltaTimeSeconds;
 			FVector2D DistanceToMove = MoveDirection * MoveSpeed * DeltaTime;
 
 			FVector CurrentLocation = GetActorLocation();
-
 			FVector NewLocation = CurrentLocation + FVector(DistanceToMove.X, 0.0f, 0.0f);
+			FRotator NewRotation = FRotator(0.0f, 0.0f, 0.0f);
+
 			if (false)
 			{
 				NewLocation -= FVector(DistanceToMove.X, 0.0f, 0.0f);
 			}
 			
 			NewLocation += FVector(0.0f, -DistanceToMove.Y, 0.0f);
-			//GEngine->AddOnScreenDebugMessage(-1, 2.0f, FColor::Green, NewLocation.ToString(), IsInMapBoundsVertical(NewLocation.Y));
+			UE_LOG(LogTemp, Warning, TEXT("Input found: %f, %f"), MoveDirection.X, MoveDirection.Y);
 			if (false)
 			{
 				NewLocation -= FVector(0.0f, -DistanceToMove.Y, 0.0f);
 			}
-			//GEngine->AddOnScreenDebugMessage(-1, 2.0f, FColor::White, NewLocation.ToString());
+
+			if (MoveDirection.X < 0.0f)
+			{
+				NewRotation += RotationValues::GetTurnLeftRotateValue();
+			}
+			else if (MoveDirection.X > 0.0f)
+			{
+				NewRotation += RotationValues::GetTurnRightRotateValue();
+			}
+
+			if (MoveDirection.Y < 0.0f)
+			{
+				NewRotation += RotationValues::GetTurnDownRotateValue();
+			}
+			else if (MoveDirection.Y > 0.0f)
+			{
+				NewRotation += RotationValues::GetTurnUpRotateValue();
+			}
+			
+			if (abs(MoveDirection.X) == abs(MoveDirection.Y))
+			{
+				NewRotation.Yaw = NewRotation.Yaw/2;
+			}
 			SetActorLocation(NewLocation);
+			SetActorRotation(NewRotation);
 		}
 	}
 }
