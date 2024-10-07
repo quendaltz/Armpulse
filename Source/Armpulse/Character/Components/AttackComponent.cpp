@@ -9,6 +9,8 @@
 #include "Components/CapsuleComponent.h"
 #include "Components/SphereComponent.h"
 
+#include "../GameCharacter.h"
+
 #include "DrawDebugHelpers.h"
 
 
@@ -81,7 +83,21 @@ void UAttackComponent::ExecuteAttack()
     AActor* OwnerActor = GetOwner();
     if (OwnerActor)
     {
-        CreateHitbox(OwnerActor->GetActorLocation(), 10);
+        float ActorCapsuleRadius = 0.0f;
+        AGameCharacter* Character = Cast<AGameCharacter>(OwnerActor);
+        if (Character)
+        {
+            ActorCapsuleRadius = Character->GetCapsuleComponent()->GetScaledCapsuleRadius();
+        }
+        FVector ActorLocation = OwnerActor->GetActorLocation();
+        FVector ForwardVector = OwnerActor->GetActorForwardVector();
+        FVector RightVector = OwnerActor->GetActorRightVector();
+        FVector HitboxSpawnLocation = ActorLocation + (ForwardVector * ActorCapsuleRadius);
+
+		UE_LOG(LogTemp, Log, TEXT("Capsule Radius %s"), *OwnerActor->GetActorRotation().ToString());
+		UE_LOG(LogTemp, Log, TEXT("ForwardVector %s"), *ForwardVector.ToString());
+		UE_LOG(LogTemp, Log, TEXT("RightVector %s"), *RightVector.ToString());
+        CreateHitbox(HitboxSpawnLocation, 100);
     }
 
     // if (IsAoE)
