@@ -82,7 +82,7 @@ void AGameCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputCompo
 
 void AGameCharacter::MoveTriggered(const FInputActionValue& Value)
 {
-	//GEngine->AddOnScreenDebugMessage(-1, 2.0f, FColor::White, TEXT("Move"));
+	// 0.707107
 	FVector2D MoveActionValue = Value.Get<FVector2D>();
 	if (CanMove)
 	{
@@ -100,6 +100,14 @@ void AGameCharacter::MoveTriggered(const FInputActionValue& Value)
 			FVector CurrentLocation = GetActorLocation();
 			FVector NewLocation = CurrentLocation + FVector(DistanceToMove.X, 0.0f, 0.0f);
 			FRotator NewRotation = FRotator(0.0f, 0.0f, 0.0f);
+			// x 0 = 0 >>> inp(0 -) out(0 +)
+			// 90 0 = 45 >>> inp(- -) out(- +)    90 - 45
+			// 90 y = 90 >>> inp(- 0) out(- 0)
+			// 90 180 = 135 >>> inp(- +) out(- -)    90 + 45
+			// x 180 = 180 >>> inp(0 +) out(0 -)
+			// 270 0 = 315 >>> inp(+ -) out(+ +)    270 + 45
+			// 270 y = 270 >>> inp(+ 0) out(+ 0)
+			// 270 180 = 225 >>> inp(+ +) out(+ -)    270 - 45
 
 			if (false)
 			{
@@ -107,7 +115,7 @@ void AGameCharacter::MoveTriggered(const FInputActionValue& Value)
 			}
 			
 			NewLocation += FVector(0.0f, -DistanceToMove.Y, 0.0f);
-			UE_LOG(LogTemp, Warning, TEXT("Input found: %f, %f"), MoveDirection.X, MoveDirection.Y);
+			//UE_LOG(LogTemp, Warning, TEXT("Input found: %f, %f, %f"), MoveDirection.X, MoveDirection.Y, MultipleDirection);
 			if (false)
 			{
 				NewLocation -= FVector(0.0f, -DistanceToMove.Y, 0.0f);
@@ -115,26 +123,24 @@ void AGameCharacter::MoveTriggered(const FInputActionValue& Value)
 
 			if (MoveDirection.X < 0.0f)
 			{
-				NewRotation += RotationValues::GetTurnLeftRotateValue();
+				NewRotation = RotationValues::GetTurnLeftRotateValue();
 			}
 			else if (MoveDirection.X > 0.0f)
 			{
-				NewRotation += RotationValues::GetTurnRightRotateValue();
+				NewRotation = RotationValues::GetTurnRightRotateValue();
 			}
-
-			if (MoveDirection.Y < 0.0f)
+			else if (MoveDirection.Y < 0.0f)
 			{
-				NewRotation += RotationValues::GetTurnDownRotateValue();
+				NewRotation = RotationValues::GetTurnDownRotateValue();
 			}
 			else if (MoveDirection.Y > 0.0f)
 			{
-				NewRotation += RotationValues::GetTurnUpRotateValue();
+				NewRotation = RotationValues::GetTurnUpRotateValue();
 			}
-			
-			if (abs(MoveDirection.X) == abs(MoveDirection.Y))
-			{
-				NewRotation.Yaw = NewRotation.Yaw/2;
-			}
+
+			float MultipleDirection = MoveActionValue.X * -MoveActionValue.Y;
+			// dont know why 0.707107 * 0.707107 is 1.000000
+			NewRotation = NewRotation + MultipleDirection * FRotator(0.0f, 45.0f, 0.0f);
 			SetActorLocation(NewLocation);
 			SetActorRotation(NewRotation);
 		}
