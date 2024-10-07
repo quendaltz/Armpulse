@@ -19,7 +19,7 @@
 #include "EnhancedInputSubsystems.h"
 
 #include "Components/CharacterCombatComponent.h"
-#include "../Utility/RotationValues.h"
+#include "../Utility/BaseGameConfig.h"
 
 #include "DrawDebugHelpers.h"
 
@@ -82,74 +82,41 @@ void AGameCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputCompo
 
 void AGameCharacter::MoveTriggered(const FInputActionValue& Value)
 {
-	// 0.707107
 	FVector2D MoveActionValue = Value.Get<FVector2D>();
-	if (CanMove)
+	if (CanMove && !MoveActionValue.IsNearlyZero())
 	{
-		MoveDirection = MoveActionValue;
-		if (MoveDirection.Length() > 0.0f)
+		MoveActionValue.Normalize();
+		float DeltaTime = GetWorld()->DeltaTimeSeconds;
+
+		FVector2D MoveDistance = MoveActionValue * MoveSpeed * DeltaTime;
+		FVector CurrentLocation = GetActorLocation();
+
+		// set initial desired location
+		FVector NewLocation = CurrentLocation + FVector(MoveDistance.X, -MoveDistance.Y, 0.0f);
+		if (false) // blocked by left/right obstacle
 		{
-			if (MoveDirection.Length() > 1.0f)
-			{
-				MoveDirection.Normalize();
-			}
-
-			float DeltaTime = GetWorld()->DeltaTimeSeconds;
-			FVector2D DistanceToMove = MoveDirection * MoveSpeed * DeltaTime;
-
-			FVector CurrentLocation = GetActorLocation();
-			FVector NewLocation = CurrentLocation + FVector(DistanceToMove.X, 0.0f, 0.0f);
-			FRotator NewRotation = FRotator(0.0f, 0.0f, 0.0f);
-			// x 0 = 0 >>> inp(0 -) out(0 +)
-			// 90 0 = 45 >>> inp(- -) out(- +)    90 - 45
-			// 90 y = 90 >>> inp(- 0) out(- 0)
-			// 90 180 = 135 >>> inp(- +) out(- -)    90 + 45
-			// x 180 = 180 >>> inp(0 +) out(0 -)
-			// 270 0 = 315 >>> inp(+ -) out(+ +)    270 + 45
-			// 270 y = 270 >>> inp(+ 0) out(+ 0)
-			// 270 180 = 225 >>> inp(+ +) out(+ -)    270 - 45
-
-			if (false)
-			{
-				NewLocation -= FVector(DistanceToMove.X, 0.0f, 0.0f);
-			}
-			
-			NewLocation += FVector(0.0f, -DistanceToMove.Y, 0.0f);
-			//UE_LOG(LogTemp, Warning, TEXT("Input found: %f, %f, %f"), MoveDirection.X, MoveDirection.Y, MultipleDirection);
-			if (false)
-			{
-				NewLocation -= FVector(0.0f, -DistanceToMove.Y, 0.0f);
-			}
-
-			if (MoveDirection.X < 0.0f)
-			{
-				NewRotation = RotationValues::GetTurnLeftRotateValue();
-			}
-			else if (MoveDirection.X > 0.0f)
-			{
-				NewRotation = RotationValues::GetTurnRightRotateValue();
-			}
-			else if (MoveDirection.Y < 0.0f)
-			{
-				NewRotation = RotationValues::GetTurnDownRotateValue();
-			}
-			else if (MoveDirection.Y > 0.0f)
-			{
-				NewRotation = RotationValues::GetTurnUpRotateValue();
-			}
-
-			float MultipleDirection = MoveActionValue.X * -MoveActionValue.Y;
-			// dont know why 0.707107 * 0.707107 is 1.000000
-			NewRotation = NewRotation + MultipleDirection * FRotator(0.0f, 45.0f, 0.0f);
-			SetActorLocation(NewLocation);
-			SetActorRotation(NewRotation);
+			// remove corresponding movement direction
+			NewLocation -= FVector(MoveDistance.X, 0.0f, 0.0f);
 		}
+		if (false) // blocked by up/down obstacle
+		{
+			// remove corresponding movement direction
+			NewLocation -= FVector(0.0f, -MoveDistance.Y, 0.0f);
+		}
+
+		SetActorLocation(NewLocation);
+
+		// rotate character
+		FVector MoveDirection = (BaseGameConfig::BaseCharacterForwardDirection() * MoveActionValue.Y) + (BaseGameConfig::BaseCharacterRightDirection() * MoveActionValue.X);
+		MoveDirection.Normalize();
+		FRotator NewRotation = MoveDirection.Rotation();
+		SetActorRotation(NewRotation);
 	}
 }
 
 void AGameCharacter::MoveCompleted(const FInputActionValue& Value)
 {
-	MoveDirection = FVector2D(0.0f, 0.0f);
+
 }
 
 // void AGameCharacter::MoveTriggered(const FInputActionValue& Value)
