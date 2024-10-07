@@ -21,13 +21,13 @@ public:
 	UCapsuleComponent* CapsuleComponent;
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
+	class USkeletalMeshComponent* CharacterMesh;
+
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
 	class USpringArmComponent* SpringArm;
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
 	class UCameraComponent* Camera;
-
-	UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
-	class USkeletalMeshComponent* CharacterMesh;
 
 	// UPROPERTY(VisibleAnywhere, BlueprintReadWrite)
 	// class UPaperFlipbookComponent* CharacterFlipbook;
@@ -42,9 +42,6 @@ public:
 	// movement
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 	float MoveSpeed = 100.0f;
-
-	UPROPERTY(BlueprintReadWrite)
-	FVector2D MoveDirection;
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadWrite)
 	bool CanMove = true;
