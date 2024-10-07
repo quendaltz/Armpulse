@@ -6,6 +6,7 @@
 #include "GameFramework/Pawn.h"
 #include "GameCharacter.generated.h"
 
+class UCapsuleComponent;
 UCLASS()
 class ARMPULSE_API AGameCharacter : public APawn
 {
@@ -17,7 +18,7 @@ public:
 	// ####################################################################
 	// character box
 	UPROPERTY(VisibleAnywhere, BlueprintReadWrite)
-	class UCapsuleComponent* CapsuleComponent;
+	UCapsuleComponent* CapsuleComponent;
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
 	class USpringArmComponent* SpringArm;
@@ -60,6 +61,8 @@ public:
 	virtual void Tick(float DeltaTime) override;
 
 	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
+
+	FORCEINLINE UCapsuleComponent* GetCapsuleComponent() const { return CapsuleComponent; }
 
 	void MoveTriggered(const struct FInputActionValue& Value);
 	void MoveCompleted(const struct FInputActionValue& Value);
