@@ -59,6 +59,18 @@ void UCharacterCombatComponent::ApplyDamage(AActor* Target)
 
 }
 
+void UCharacterCombatComponent::DamageTaken(AActor* DamagedActor, float Damage, const UDamageType* DamageType, class AController* Instigator, AActor* DamageCauser)
+{
+	if (Damage <= 0.f) return;
+	
+	Health -= Damage;
+	if (Health <= 0.f && ToonTanksGameMode)
+	{
+		ToonTanksGameMode->ActorDied(DamagedActor);
+	}
+	UE_LOG(LogTemp, Warning, TEXT("Health: %f"), Health);
+}
+
 void UCharacterCombatComponent::ResetAnimation()
 {
 	IsInAction = false;
