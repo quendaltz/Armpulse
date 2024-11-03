@@ -10,6 +10,7 @@
 #include "Components/SphereComponent.h"
 
 #include "../GameCharacter.h"
+#include "../Components/CharacterStatusComponent.h"
 
 #include "DrawDebugHelpers.h"
 
@@ -52,7 +53,7 @@ void UAttackComponent::TickComponent(float DeltaTime, ELevelTick TickType, FActo
 
     if (SphereHitbox->IsActive())
     {
-        SphereHitbox->SetCollisionEnabled(ECollisionEnabled::QueryAndPhysics);
+        //SphereHitbox->SetCollisionEnabled(ECollisionEnabled::QueryAndPhysics);
 
         FVector SphereLocation = SphereHitbox->GetComponentLocation();
         float SphereRadius = SphereHitbox->GetScaledSphereRadius();
@@ -81,33 +82,37 @@ void UAttackComponent::TickComponent(float DeltaTime, ELevelTick TickType, FActo
 void UAttackComponent::ExecuteAttack()
 {
     AActor* OwnerActor = GetOwner();
+    AGameCharacter* OwnerCharacter = nullptr;
     if (OwnerActor)
     {
-        float ActorCapsuleRadius = 0.0f;
-        AGameCharacter* Character = Cast<AGameCharacter>(OwnerActor);
-        if (Character)
-        {
-            ActorCapsuleRadius = Character->GetCapsuleComponent()->GetScaledCapsuleRadius();
-        }
-        FVector ActorLocation = OwnerActor->GetActorLocation();
-        FVector ForwardVector = OwnerActor->GetActorForwardVector();
-        FVector RightVector = OwnerActor->GetActorRightVector();
-        FVector HitboxSpawnLocation = ActorLocation + (ForwardVector * ActorCapsuleRadius);
-
-		UE_LOG(LogTemp, Log, TEXT("Capsule Radius %s"), *OwnerActor->GetActorRotation().ToString());
-		UE_LOG(LogTemp, Log, TEXT("ForwardVector %s"), *ForwardVector.ToString());
-		UE_LOG(LogTemp, Log, TEXT("RightVector %s"), *RightVector.ToString());
-        CreateHitbox(HitboxSpawnLocation, 100);
+        OwnerCharacter = Cast<AGameCharacter>(OwnerActor);
     }
 
-    // if (IsAoE)
-    // {
-    //     PerformHitDetection();  // AoE attack
-    // }
-    // else
-    // {
-    //     PerformHitDetection();  // Single target attack (use hitbox)
-    // }
+    if (OwnerCharacter)
+    {
+        float ActorCapsuleRadius = 0.0f;
+        ActorCapsuleRadius = OwnerCharacter->GetCapsuleComponent()->GetScaledCapsuleRadius();
+        float TargetHitboxRadius = 0.0f;
+        TargetHitboxRadius = OwnerCharacter->GetStatusComponent()->GetAttackRadius();
+
+        FVector ActorLocation = OwnerActor->GetActorLocation();
+        FVector RightVector = OwnerActor->GetActorRightVector();
+        FVector HitboxSpawnLocation = ActorLocation + RightVector * (ActorCapsuleRadius + TargetHitboxRadius);
+
+		// UE_LOG(LogTemp, Log, TEXT("Capsule Radius %s"), *OwnerActor->GetActorRotation().ToString());
+		// UE_LOG(LogTemp, Log, TEXT("ForwardVector %s"), *ForwardVector.ToString());
+		// UE_LOG(LogTemp, Log, TEXT("RightVector %s"), *RightVector.ToString());
+        CreateHitbox(HitboxSpawnLocation, TargetHitboxRadius);
+
+        if (TargetHitboxRadius > 0.0f)
+        {
+            //PerformHitDetection();  // AoE attack
+        }
+        else
+        {
+            //PerformHitDetection();  // Single target attack (use hitbox)
+        }
+    }
 }
 
 void UAttackComponent::PerformHitDetection()
@@ -154,8 +159,8 @@ void UAttackComponent::ApplyDamage(AActor* Target)
 
 void UAttackComponent::GetActorsInRadius(TArray<AActor*>& OutActors)
 {
-    AActor* Owner = GetOwner();
-    if (!Owner) return;
+    AActor* OwnerActor = GetOwner();
+    if (!OwnerActor) return;
 
     // Use Unreal's built-in functionality to get actors within the AoE radius
     UGameplayStatics::GetAllActorsOfClass(GetWorld(), AActor::StaticClass(), OutActors);
@@ -164,7 +169,7 @@ void UAttackComponent::GetActorsInRadius(TArray<AActor*>& OutActors)
     for (int32 i = OutActors.Num() - 1; i >= 0; i--)
     {
         AActor* Actor = OutActors[i];
-        if (Actor && FVector::Dist(Owner->GetActorLocation(), Actor->GetActorLocation()) > AoERadius)
+        if (Actor && FVector::Dist(OwnerActor->GetActorLocation(), Actor->GetActorLocation()) > AoERadius)
         {
             OutActors.RemoveAt(i);
         }
@@ -229,9 +234,13 @@ void UAttackComponent::DisableHitbox()
 // Set the sphere hitbox size
 void UAttackComponent::SetSphereHitbox(float Radius)
 {
+    SphereHitbox->SetCollisionProfileName(TEXT("OverlapAllDynamic"));
     SphereHitbox->SetSphereRadius(Radius);
     SphereHitbox->SetCollisionEnabled(ECollisionEnabled::QueryOnly);
     SphereHitbox->SetActive(true);
+    SphereHitbox->SetGenerateOverlapEvents(true);
+    SphereHitbox->SetCollisionObjectType(ECollisionChannel::ECC_WorldDynamic);
+    SphereHitbox->SetCollisionResponseToAllChannels(ECollisionResponse::ECR_Overlap);
 }
 
 // Set the box hitbox size
@@ -250,11 +259,28 @@ void UAttackComponent::SetCapsuleHitbox(float Radius, float HalfHeight)
 }
 
 // Handle overlap events
-void UAttackComponent::OnHitboxOverlap(UPrimitiveComponent* OverlappedComp, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult & SweepResult)
+void UAttackComponent::OnHitboxOverlap(
+    UPrimitiveComponent* OverlappedComponent,
+    AActor* OtherActor,
+    UPrimitiveComponent* OtherComponent,
+    int32 OtherBodyIndex,
+    bool bFromSweep,
+    const FHitResult & SweepResult)
 {
+    auto MyOwnerInstigator = MyOwner->GetInstigatorController();
+	auto DamageTypeClass = UDamageType::StaticClass();
     if (OtherActor && OtherActor != GetOwner())
     {
         UE_LOG(LogTemp, Warning, TEXT("Hit: %s"), *OtherActor->GetName());
         // Implement damage, effects, etc.
+        UGameplayStatics::ApplyDamage(OtherActor, Damage, MyOwnerInstigator, this, DamageTypeClass);
+		if(HitParticles)
+		{
+			UGameplayStatics::SpawnEmitterAtLocation(this, HitParticles, GetActorLocation(), GetActorRotation());
+		}
+		if (HitSound)
+		{
+			UGameplayStatics::PlaySoundAtLocation(this, HitSound, GetActorLocation());
+		}
     }
 }
