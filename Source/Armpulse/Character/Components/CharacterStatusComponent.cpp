@@ -32,7 +32,39 @@ void UCharacterStatusComponent::TickComponent(float DeltaTime, ELevelTick TickTy
 	// ...
 }
 
-float UCharacterStatusComponent::GetAttackRadius() {
+// ATK POW
+float UCharacterStatusComponent::GetAttackPower()
+{
+	return AttackPower;
+}
+
+void UCharacterStatusComponent::SetAttackPower(float NewAttackPower)
+{
+	if (NewAttackPower < 0.0f)
+	{
+		NewAttackPower = 0.0f;
+	}
+	AttackPower = NewAttackPower;
+}
+
+// ATK SPD
+float UCharacterStatusComponent::GetAttackSpeed()
+{
+	return AttackSpeed;
+}
+
+void UCharacterStatusComponent::SetAttackSpeed(float NewAttackSpeed)
+{
+	if (NewAttackSpeed < 0.0f)
+	{
+		NewAttackSpeed = 0.0f;
+	}
+	AttackSpeed = NewAttackSpeed;
+}
+
+// ATK RAD
+float UCharacterStatusComponent::GetAttackRadius()
+{
 	return AttackRadius;
 }
 
@@ -45,7 +77,39 @@ void UCharacterStatusComponent::SetAttackRadius(float NewAttackRadius)
 	AttackRadius = NewAttackRadius;
 }
 
-float UCharacterStatusComponent::GetMoveSpeed() {
+// DEF
+float UCharacterStatusComponent::GetDefense()
+{
+	return Defense;
+}
+
+void UCharacterStatusComponent::SetDefense(float NewDefense)
+{
+	if (NewDefense < 0.0f)
+	{
+		NewDefense = 0.0f;
+	}
+	Defense = NewDefense;
+}
+
+// HP	
+float UCharacterStatusComponent::GetHealth()
+{
+	return Health;
+}
+
+void UCharacterStatusComponent::SetHealth(float NewHealth)
+{
+	if (NewHealth < 0.0f)
+	{
+		NewHealth = 0.0f;
+	}
+	Health = NewHealth;
+}
+
+// MOV SPD
+float UCharacterStatusComponent::GetMoveSpeed()
+{
 	return MoveSpeed;
 }
 
@@ -58,6 +122,7 @@ void UCharacterStatusComponent::SetMoveSpeed(float NewMoveSpeed)
 	MoveSpeed = NewMoveSpeed;
 }
 
+// MOV COND
 bool UCharacterStatusComponent::GetCanMove()
 {
 	return CanMove;

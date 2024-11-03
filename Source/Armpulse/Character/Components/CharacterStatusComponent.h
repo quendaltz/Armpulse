@@ -24,8 +24,20 @@ public:
 	// Called every frame
 	virtual void TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction) override;
 
+	float GetAttackPower();
+	void SetAttackPower(float NewAttackPower);
+
+	float GetAttackSpeed();
+	void SetAttackSpeed(float NewAttackSpeed);
+
 	float GetAttackRadius();
 	void SetAttackRadius(float NewAttackRadius);
+
+	float GetDefense();
+	void SetDefense(float NewDefense);
+
+	float GetHealth();
+	void SetHealth(float NewHealth);
 
 	float GetMoveSpeed();
 	void SetMoveSpeed(float NewMoveSpeed);
@@ -35,11 +47,11 @@ public:
 
 private:
 	// combat section ------------------------------------------------------------------------------------------
-	float Attack;
+	float AttackPower;
 	float AttackRadius;
+	float AttackSpeed;
 	float Defense;
 	float Health;
-	float AttackSpeed;
 
 	bool IsActing;
 	bool CanAct;
