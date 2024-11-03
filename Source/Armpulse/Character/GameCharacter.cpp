@@ -4,13 +4,10 @@
 #include "GameCharacter.h"
 
 #include "GameFramework/Character.h"
-#include "GameFramework/SpringArmComponent.h"
 #include "GameFramework/Controller.h"
 
-#include "Camera/CameraComponent.h"
 #include "Components/CapsuleComponent.h"
 #include "Components/SceneComponent.h"
-#include "Components/SkeletalMeshComponent.h"
 #include "Components/InputComponent.h"
 
 #include "PaperFlipbookComponent.h"
@@ -19,6 +16,7 @@
 #include "EnhancedInputSubsystems.h"
 
 #include "Components/CharacterCombatComponent.h"
+#include "Components/CharacterStatusComponent.h"
 #include "../Utility/BaseGameConfig.h"
 
 #include "DrawDebugHelpers.h"
@@ -32,21 +30,12 @@ AGameCharacter::AGameCharacter()
 	CapsuleComponent = CreateDefaultSubobject<UCapsuleComponent>(TEXT("CapsuleComponent"));
 	SetRootComponent(CapsuleComponent);
 
-	CharacterMesh = CreateDefaultSubobject<USkeletalMeshComponent>(TEXT("CharacterMesh"));
-	CharacterMesh->SetupAttachment(RootComponent);
 	// CharacterFlipbook = CreateDefaultSubobject<UPaperFlipbookComponent>(TEXT("CharacterFlipbook"));
 	// CharacterFlipbook->SetupAttachment(RootComponent);
 
-	SpringArm = CreateDefaultSubobject<USpringArmComponent>(TEXT("SpringArm"));
-    SpringArm->SetupAttachment(RootComponent);
-	SpringArm->SetUsingAbsoluteRotation(true);
-	SpringArm->bDoCollisionTest = false;
-
-    Camera = CreateDefaultSubobject<UCameraComponent>(TEXT("Camera"));
-    Camera->SetupAttachment(SpringArm, USpringArmComponent::SocketName);
-
 	// Setup gameplay components
 	CombatComponent = CreateDefaultSubobject<UCharacterCombatComponent>(TEXT("CombatComponent"));
+	StatusComponent = CreateDefaultSubobject<UCharacterStatusComponent>(TEXT("StatusComponent"));
 }
 
 // Called when the game starts or when spawned
@@ -83,12 +72,12 @@ void AGameCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputCompo
 void AGameCharacter::MoveTriggered(const FInputActionValue& Value)
 {
 	FVector2D MoveActionValue = Value.Get<FVector2D>();
-	if (CanMove && !MoveActionValue.IsNearlyZero())
+	if (StatusComponent->GetCanMove() && !MoveActionValue.IsNearlyZero())
 	{
 		MoveActionValue.Normalize();
 		float DeltaTime = GetWorld()->DeltaTimeSeconds;
 
-		FVector2D MoveDistance = MoveActionValue * MoveSpeed * DeltaTime;
+		FVector2D MoveDistance = MoveActionValue * StatusComponent->GetMoveSpeed() * DeltaTime;
 		FVector CurrentLocation = GetActorLocation();
 
 		// set initial desired location

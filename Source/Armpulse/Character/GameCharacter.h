@@ -15,20 +15,6 @@ class ARMPULSE_API AGameCharacter : public APawn
 public:
 	AGameCharacter();
 
-	// ####################################################################
-	// character box
-	UPROPERTY(VisibleAnywhere, BlueprintReadWrite)
-	UCapsuleComponent* CapsuleComponent;
-
-	UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
-	class USkeletalMeshComponent* CharacterMesh;
-
-	UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
-	class USpringArmComponent* SpringArm;
-
-	UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
-	class UCameraComponent* Camera;
-
 	// UPROPERTY(VisibleAnywhere, BlueprintReadWrite)
 	// class UPaperFlipbookComponent* CharacterFlipbook;
 
@@ -38,21 +24,16 @@ public:
 	// UPROPERTY(EditAnywhere, BlueprintReadOnly)
 	// class UPaperFlipbook* RunFlipbook;
 
-	// ####################################################################
-	// movement
-	UPROPERTY(EditAnywhere, BlueprintReadWrite)
-	float MoveSpeed = 100.0f;
-
-	UPROPERTY(VisibleAnywhere, BlueprintReadWrite)
-	bool CanMove = true;
-
-	// ####################################################################
-	// components
-	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Combat")
-    class UCharacterCombatComponent* CombatComponent;
-
 protected:
 	virtual void BeginPlay() override;
+
+private:
+	// character box
+	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, meta = (AllowPrivateAccess = "true"))
+	UCapsuleComponent* CapsuleComponent;
+	// components
+    class UCharacterStatusComponent* StatusComponent;
+    class UCharacterCombatComponent* CombatComponent;
 
 public:	
 	virtual void Tick(float DeltaTime) override;
@@ -60,6 +41,8 @@ public:
 	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
 
 	FORCEINLINE UCapsuleComponent* GetCapsuleComponent() const { return CapsuleComponent; }
+	FORCEINLINE UCharacterStatusComponent* GetStatusComponent() const { return StatusComponent; }
+	FORCEINLINE UCharacterCombatComponent* GetCombatComponent() const { return CombatComponent; }
 
 	void MoveTriggered(const struct FInputActionValue& Value);
 	void MoveCompleted(const struct FInputActionValue& Value);
