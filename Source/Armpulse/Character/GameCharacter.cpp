@@ -147,3 +147,23 @@ void AGameCharacter::AttackTriggered()
 		CombatComponent->Attack();
 	}
 }
+
+float AGameCharacter::TakeDamage(float DamageAmount, FDamageEvent const& DamageEvent, AController* EventInstigator, AActor* DamageCauser)
+{
+    // Call the base class's TakeDamage if needed
+    // float ActualDamage = Super::TakeDamage(DamageAmount, DamageEvent, EventInstigator, DamageCauser);
+	float ActualDamage = 0.0f;
+	float CurrentHealth = StatusComponent->GetHealth();
+    if (CurrentHealth > 0.f)
+    {
+		float CurrentDefense = StatusComponent->GetDefense();
+		ActualDamage = DamageAmount - CurrentDefense;
+        CurrentHealth = CurrentHealth - ActualDamage;
+        if (CurrentHealth <= 0.f)
+        {
+            //Die();  // Custom function to handle death
+        }
+    }
+    
+    return ActualDamage;
+}
