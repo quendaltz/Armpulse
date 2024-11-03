@@ -57,10 +57,10 @@ void AGamePlayerController::SetupInputComponent()
 
 void AGamePlayerController::OnMoveTriggered(const FInputActionValue& Value)
 {
-	AGameCharacter* PlayerCharacter = Cast<AGameCharacter>(GetPawn());
-	if (PlayerCharacter)
+	AGameCharacter* PlayerGameCharacter = Cast<AGameCharacter>(GetPawn());
+	if (PlayerGameCharacter)
 	{
-		PlayerCharacter->MoveTriggered(Value);
+		PlayerGameCharacter->MoveTriggered(Value);
 	}
 }
 
@@ -72,10 +72,10 @@ void AGamePlayerController::OnMoveReleased(const FInputActionValue& Value)
 void AGamePlayerController::OnAttackTriggered()
 {
 	GEngine->AddOnScreenDebugMessage(-1, 2.0f, FColor::White, TEXT("Attack"));
-	AGameCharacter* PlayerCharacter = Cast<AGameCharacter>(GetPawn());
-	if (PlayerCharacter)
+	AGameCharacter* PlayerGameCharacter = Cast<AGameCharacter>(GetPawn());
+	if (PlayerGameCharacter)
 	{
-		PlayerCharacter->AttackTriggered();
+		PlayerGameCharacter->AttackTriggered();
 	}
 }
 
