@@ -2,10 +2,12 @@
 
 
 #include "CharacterCombatComponent.h"
-#include "AttackComponent.h"
 
 #include "TimerManager.h"
 #include "Kismet/GameplayStatics.h"
+
+#include "AttackComponent.h"
+#include "../Components/CharacterStatusComponent.h"
 
 // Sets default values for this component's properties
 UCharacterCombatComponent::UCharacterCombatComponent()
@@ -59,16 +61,29 @@ void UCharacterCombatComponent::ApplyDamage(AActor* Target)
 
 }
 
-void UCharacterCombatComponent::DamageTaken(AActor* DamagedActor, float Damage, const UDamageType* DamageType, class AController* Instigator, AActor* DamageCauser)
+void UCharacterCombatComponent::HandleTakeDamage(UCharacterStatusComponent* CharacterStatusComponent, float DamageAmount, FDamageEvent const& DamageEvent, AController* EventInstigator, AActor* DamageCauser)
 {
-	if (Damage <= 0.f) return;
-	
-	Health -= Damage;
-	if (Health <= 0.f && ToonTanksGameMode)
+	if (DamageAmount <= 0.f)
 	{
-		ToonTanksGameMode->ActorDied(DamagedActor);
+		return;
 	}
-	UE_LOG(LogTemp, Warning, TEXT("Health: %f"), Health);
+
+	if (CharacterStatusComponent)
+	{
+		float CurrentHealth = CharacterStatusComponent->GetHealth();
+		if (CurrentHealth > 0.f)
+		{
+			float ActualDamage = 0.0f;
+			float CurrentDefense = CharacterStatusComponent->GetDefense();
+			ActualDamage = DamageAmount - CurrentDefense;
+			CurrentHealth = CurrentHealth - ActualDamage;
+			CharacterStatusComponent->SetHealth(CurrentHealth);
+			if (CurrentHealth <= 0.f)
+			{
+				//Die();  // Custom function to handle death
+			}
+		}
+	}
 }
 
 void UCharacterCombatComponent::ResetAnimation()

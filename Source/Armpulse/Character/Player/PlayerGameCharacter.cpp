@@ -35,6 +35,7 @@ void APlayerGameCharacter::BeginPlay()
     UCharacterStatusComponent* ParentStatusComponent = GetStatusComponent();
     if (ParentStatusComponent)
     {
+        ParentStatusComponent->SetAttackPower(35.0f);
         ParentStatusComponent->SetAttackRadius(50.0f);
         ParentStatusComponent->SetMoveSpeed(200.0f);
         ParentStatusComponent->SetCanMove(true);

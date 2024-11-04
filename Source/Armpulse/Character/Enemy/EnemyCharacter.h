@@ -19,5 +19,9 @@ public:
 	
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
 	class USkeletalMeshComponent* CharacterMesh;
-	
+
+protected:
+	virtual void BeginPlay() override;
+
+private:
 };

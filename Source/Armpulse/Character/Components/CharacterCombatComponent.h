@@ -8,6 +8,7 @@
 
 DECLARE_DYNAMIC_MULTICAST_DELEGATE(FOnAttackDelegate);
 
+class UCharacterStatusComponent;
 UCLASS( ClassGroup=(Custom), meta=(BlueprintSpawnableComponent) )
 class ARMPULSE_API UCharacterCombatComponent : public UActorComponent
 {
@@ -35,13 +36,13 @@ public:
     void ApplyDamage(AActor* Target);
 
 	UFUNCTION()
-	void DamageTaken(AActor* DamagedActor, float Damage, const UDamageType* DamageType, class AController* Instigator, AActor* DamageCauser);
+	void HandleTakeDamage(UCharacterStatusComponent* CharacterStatusComponent, float DamageAmount, FDamageEvent const& DamageEvent, AController* EventInstigator, AActor* DamageCauser);
 
 	void ResetAnimation();
 
 private:
 	UPROPERTY(EditAnywhere, Category="Combat")
-	float AttackSpeed = 20.0f;
+	float AttackSpeed = 50.0f;
 	FTimerHandle ActionTimer;
 
 	bool CanAction;

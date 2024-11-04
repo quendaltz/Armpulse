@@ -61,6 +61,12 @@ void AGameCharacter::Tick(float DeltaTime)
 
         DrawDebugCapsule(GetWorld(), CapsuleLocation, CapsuleHalfHeight, CapsuleRadius, FQuat::Identity, DebugColor, false, Duration, 0, Thickness);
     }
+
+	if (StatusComponent)
+	{
+		auto Test = StatusComponent->GetHealth();
+		UE_LOG(LogTemp, Warning, TEXT("Hit: %s, %f"), *this->GetName(), Test);
+	}
 }
 
 // Called to bind functionality to input
@@ -150,20 +156,10 @@ void AGameCharacter::AttackTriggered()
 
 float AGameCharacter::TakeDamage(float DamageAmount, FDamageEvent const& DamageEvent, AController* EventInstigator, AActor* DamageCauser)
 {
-    // Call the base class's TakeDamage if needed
-    // float ActualDamage = Super::TakeDamage(DamageAmount, DamageEvent, EventInstigator, DamageCauser);
-	float ActualDamage = 0.0f;
-	float CurrentHealth = StatusComponent->GetHealth();
-    if (CurrentHealth > 0.f)
+	if (CombatComponent)
     {
-		float CurrentDefense = StatusComponent->GetDefense();
-		ActualDamage = DamageAmount - CurrentDefense;
-        CurrentHealth = CurrentHealth - ActualDamage;
-        if (CurrentHealth <= 0.f)
-        {
-            //Die();  // Custom function to handle death
-        }
+        CombatComponent->HandleTakeDamage(StatusComponent, DamageAmount, DamageEvent, EventInstigator, DamageCauser);
     }
     
-    return ActualDamage;
+    return DamageAmount;
 }

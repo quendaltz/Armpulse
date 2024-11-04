@@ -20,7 +20,7 @@ UAttackComponent::UAttackComponent()
 {
 	PrimaryComponentTick.bCanEverTick = true;
 
-    Damage = 10.0f;
+    // Damage = 10.0f;
     AttackRange = 100.0f;
     IsAoE = false;  // Default is single target attack
     AoERadius = 300.0f;
@@ -58,6 +58,7 @@ void UAttackComponent::TickComponent(float DeltaTime, ELevelTick TickType, FActo
         FVector SphereLocation = SphereHitbox->GetComponentLocation();
         float SphereRadius = SphereHitbox->GetScaledSphereRadius();
         DrawDebugSphere(GetWorld(), SphereLocation, SphereRadius, 12, FColor::Green, 0.0f, 2.0f);
+        SphereHitbox->SetActive(false);
     }
     else if (BoxHitbox->IsActive())
     {
@@ -152,8 +153,8 @@ void UAttackComponent::ApplyDamage(AActor* Target)
     if (Target)
     {
         // Apply damage to the target
-        UGameplayStatics::ApplyDamage(Target, Damage, nullptr, GetOwner(), nullptr);
-        UE_LOG(LogTemp, Log, TEXT("Applied %f damage to %s"), Damage, *Target->GetName());
+        UGameplayStatics::ApplyDamage(Target, 10.0f, nullptr, GetOwner(), nullptr);
+        UE_LOG(LogTemp, Log, TEXT("Applied %f damage to %s"), 10.0f, *Target->GetName());
     }
 }
 
@@ -267,20 +268,35 @@ void UAttackComponent::OnHitboxOverlap(
     bool bFromSweep,
     const FHitResult & SweepResult)
 {
-    auto MyOwnerInstigator = MyOwner->GetInstigatorController();
-	auto DamageTypeClass = UDamageType::StaticClass();
+    AActor* OwnerActor = GetOwner();
+    AGameCharacter* OwnerCharacter = nullptr;
+    AController* OwnerInstigator = nullptr;
+    float Damage = 0.0f;
+    auto DamageTypeClass = UDamageType::StaticClass();
+
+    if (OwnerActor)
+    {
+        OwnerCharacter = Cast<AGameCharacter>(OwnerActor);
+        OwnerInstigator = OwnerActor->GetInstigatorController();
+    }
+
+    if (OwnerCharacter)
+    {
+        Damage = OwnerCharacter->GetStatusComponent()->GetAttackPower();
+    }
+
     if (OtherActor && OtherActor != GetOwner())
     {
         UE_LOG(LogTemp, Warning, TEXT("Hit: %s"), *OtherActor->GetName());
         // Implement damage, effects, etc.
-        UGameplayStatics::ApplyDamage(OtherActor, Damage, MyOwnerInstigator, this, DamageTypeClass);
-		if(HitParticles)
-		{
-			UGameplayStatics::SpawnEmitterAtLocation(this, HitParticles, GetActorLocation(), GetActorRotation());
-		}
-		if (HitSound)
-		{
-			UGameplayStatics::PlaySoundAtLocation(this, HitSound, GetActorLocation());
-		}
+        UGameplayStatics::ApplyDamage(OtherActor, Damage, OwnerInstigator, OwnerActor, DamageTypeClass);
+        // if(HitParticles)
+        // {
+        //     UGameplayStatics::SpawnEmitterAtLocation(this, HitParticles, GetActorLocation(), GetActorRotation());
+        // }
+        // if (HitSound)
+        // {
+        //     UGameplayStatics::PlaySoundAtLocation(this, HitSound, GetActorLocation());
+        // }
     }
 }
