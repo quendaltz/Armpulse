@@ -6,7 +6,7 @@
 #include "EnhancedInputComponent.h"
 #include "EnhancedInputSubsystems.h"
 
-#include "../GameCharacter.h"
+#include "../Character/GameCharacter.h"
 
 AGamePlayerController::AGamePlayerController()
 {

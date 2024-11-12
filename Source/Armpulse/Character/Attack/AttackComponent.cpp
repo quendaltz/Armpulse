@@ -10,7 +10,7 @@
 #include "Components/CapsuleComponent.h"
 #include "Components/SphereComponent.h"
 
-#include "../GameCharacter.h"
+#include "../Character/GameCharacter.h"
 #include "../Components/CharacterStatusComponent.h"
 
 #include "DrawDebugHelpers.h"
@@ -74,7 +74,6 @@ void UAttackComponent::ExecuteAttack()
         FVector HitboxSize = FVector(TargetHitboxRadius, TargetHitboxRadius, 10.0f);
         FCollisionShape Hitbox = FCollisionShape::MakeBox(HitboxSize);
         FQuat HitboxRotation = AttackRotation.Quaternion();
-
         
         // Define collision parameters and check for overlaps
         FCollisionQueryParams CollisionParams;
@@ -90,9 +89,6 @@ void UAttackComponent::ExecuteAttack()
             Hitbox,
             CollisionParams
         );
-
-        DrawDebugBox(GetWorld(), HitboxSpawnLocation3, HitboxSize, HitboxRotation, FColor::Green, false, 1.0f); // Duration is 1 second
-        DrawDebugBox(GetWorld(), HitboxSpawnLocation2, HitboxSize, HitboxRotation, FColor::Red, false, 1.0f); // Duration is 1 second
 
         if (bOverlap)
         {

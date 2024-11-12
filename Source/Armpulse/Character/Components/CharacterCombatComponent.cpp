@@ -6,7 +6,7 @@
 #include "TimerManager.h"
 #include "Kismet/GameplayStatics.h"
 
-#include "AttackComponent.h"
+#include "../Attack/AttackComponent.h"
 #include "../Components/CharacterStatusComponent.h"
 
 // Sets default values for this component's properties
@@ -80,6 +80,7 @@ void UCharacterCombatComponent::HandleTakeDamage(UCharacterStatusComponent* Char
 			CharacterStatusComponent->SetHealth(CurrentHealth);
 			if (CurrentHealth <= 0.f)
 			{
+				UE_LOG(LogTemp, Warning, TEXT("Die: %s, HP: %f"), *this->GetName(), CurrentHealth);
 				//Die();  // Custom function to handle death
 			}
 		}
