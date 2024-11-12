@@ -3,7 +3,7 @@
 #pragma once
 
 #include "CoreMinimal.h"
-#include "AttackComponent.h"
+#include "../Attack/AttackComponent.h"
 #include "CharacterCombatComponent.generated.h"
 
 DECLARE_DYNAMIC_MULTICAST_DELEGATE(FOnAttackDelegate);

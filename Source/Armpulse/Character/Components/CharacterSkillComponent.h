@@ -19,8 +19,8 @@ public:
 
 protected:
     UPROPERTY(EditDefaultsOnly, Category = "Skills")
-    USkillSet* SkillSet;
+    class USkillSet* SkillSet;
 
     UPROPERTY()
-    TMap<FName, USkillBase*> ActiveSkills;
+    TMap<FName, UCharacterSkillBase*> ActiveSkills;
 };

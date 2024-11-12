@@ -1,6 +1,7 @@
 #include "CharacterSkillComponent.h"
 
 #include "../Skill/CharacterSkillBase.h"
+#include "../Skill/SkillSet/SkillSet.h"
 
 UCharacterSkillComponent::UCharacterSkillComponent()
 {
@@ -18,7 +19,7 @@ void UCharacterSkillComponent::InitializeSkills(FName CharacterClass, FName Weap
         {
             if (Elem.Key == CharacterClass)
             {
-                USkillBase* NewSkill = NewObject<USkillBase>(this, Elem.Value);
+                UCharacterSkillBase* NewSkill = NewObject<UCharacterSkillBase>(this, Elem.Value);
                 ActiveSkills.Add(Elem.Key, NewSkill);
             }
         }
@@ -27,7 +28,7 @@ void UCharacterSkillComponent::InitializeSkills(FName CharacterClass, FName Weap
         {
             if (Elem.Key == WeaponType)
             {
-                USkillBase* NewSkill = NewObject<USkillBase>(this, Elem.Value);
+                UCharacterSkillBase* NewSkill = NewObject<UCharacterSkillBase>(this, Elem.Value);
                 ActiveSkills.Add(Elem.Key, NewSkill);
             }
         }

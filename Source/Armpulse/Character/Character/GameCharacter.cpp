@@ -15,9 +15,9 @@
 #include "EnhancedInputComponent.h"
 #include "EnhancedInputSubsystems.h"
 
-#include "Components/CharacterCombatComponent.h"
-#include "Components/CharacterStatusComponent.h"
-#include "../Utility/BaseGameConfig.h"
+#include "../Components/CharacterCombatComponent.h"
+#include "../Components/CharacterStatusComponent.h"
+#include "../../Utility/BaseGameConfig.h"
 
 #include "DrawDebugHelpers.h"
 

@@ -8,7 +8,7 @@
 #include "Camera/CameraComponent.h"
 #include "Components/SkeletalMeshComponent.h"
 
-#include "../Components/CharacterStatusComponent.h"
+#include "../../Components/CharacterStatusComponent.h"
 
 APlayerGameCharacter::APlayerGameCharacter()
 {

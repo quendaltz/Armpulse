@@ -5,7 +5,7 @@
 
 #include "Components/SkeletalMeshComponent.h"
 
-#include "../Components/CharacterStatusComponent.h"
+#include "../../Components/CharacterStatusComponent.h"
 
 AEnemyCharacter::AEnemyCharacter()
 {

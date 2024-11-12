@@ -3,7 +3,7 @@
 #include "CoreMinimal.h"
 #include "UObject/NoExportTypes.h"
 
-#include "../CharacterCharacterSkillBase.h"
+#include "../CharacterSkillBase.h"
 
 #include "SkillSet.generated.h"
 
