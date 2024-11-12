@@ -44,7 +44,9 @@ public:
 	FORCEINLINE UCharacterStatusComponent* GetStatusComponent() const { return StatusComponent; }
 	FORCEINLINE UCharacterCombatComponent* GetCombatComponent() const { return CombatComponent; }
 
+	FVector GetForwardCharacterLocation(float ForwardDistance = 0.0f);
 	void MoveTriggered(const struct FInputActionValue& Value);
 	void MoveCompleted(const struct FInputActionValue& Value);
 	void AttackTriggered();
+
 };

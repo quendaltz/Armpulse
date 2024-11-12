@@ -65,7 +65,7 @@ void AGameCharacter::Tick(float DeltaTime)
 	if (StatusComponent)
 	{
 		auto Test = StatusComponent->GetHealth();
-		UE_LOG(LogTemp, Warning, TEXT("Hit: %s, %f"), *this->GetName(), Test);
+		//UE_LOG(LogTemp, Warning, TEXT("Hit: %s, %f"), *this->GetName(), Test);
 	}
 }
 
@@ -73,6 +73,13 @@ void AGameCharacter::Tick(float DeltaTime)
 void AGameCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
 {
 	Super::SetupPlayerInputComponent(PlayerInputComponent);
+}
+
+FVector AGameCharacter::GetForwardCharacterLocation(float ForwardDistance)
+{
+	FVector CurrentLocation = GetActorLocation();
+	FVector RightVector = GetActorRightVector();
+	return CurrentLocation + (RightVector * ForwardDistance);
 }
 
 void AGameCharacter::MoveTriggered(const FInputActionValue& Value)
