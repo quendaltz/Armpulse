@@ -5,6 +5,7 @@
 #include "GameCharacter.generated.h"
 
 class UCapsuleComponent;
+class UAnimMontage;
 UCLASS()
 class ARMPULSE_API AGameCharacter : public APawn
 {
@@ -21,6 +22,9 @@ public:
 
 	// UPROPERTY(EditAnywhere, BlueprintReadOnly)
 	// class UPaperFlipbook* RunFlipbook;
+
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
+	class USkeletalMeshComponent* CharacterMesh;
 
 protected:
 	virtual void BeginPlay() override;
@@ -43,6 +47,8 @@ public:
 	FORCEINLINE UCharacterCombatComponent* GetCombatComponent() const { return CombatComponent; }
 
 	FVector GetForwardCharacterLocation(float ForwardDistance = 0.0f);
+    void ExecuteMontage(UAnimMontage* MontageToPlay);
+    void ExecuteAnimation(UAnimSequence* AnimationToPlay);
 	void MoveTriggered(const struct FInputActionValue& Value);
 	void MoveCompleted(const struct FInputActionValue& Value);
 	void AttackTriggered();

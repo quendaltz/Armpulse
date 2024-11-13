@@ -2,6 +2,7 @@
 
 
 #include "AttackComponent.h"
+
 #include "Engine/OverlapResult.h"
 #include "GameFramework/Actor.h"
 #include "Kismet/GameplayStatics.h"
@@ -20,10 +21,6 @@
 UAttackComponent::UAttackComponent()
 {
 	PrimaryComponentTick.bCanEverTick = true;
-
-    AttackRange = 100.0f;
-    IsAoE = false;
-    AoERadius = 300.0f;
 }
 
 void UAttackComponent::BeginPlay()
@@ -78,6 +75,15 @@ void UAttackComponent::ExecuteAttack()
         // Define collision parameters and check for overlaps
         FCollisionQueryParams CollisionParams;
         CollisionParams.AddIgnoredActor(OwnerCharacter); // Ignore self in overlap check
+
+        if (AttackMontage)
+        {
+            UE_LOG(LogTemp, Log, TEXT("ExecuteMontage"));
+            OwnerCharacter->ExecuteMontage(AttackMontage);
+            //OwnerCharacter->ExecuteAnimation(AttackAnimation);
+        }
+
+        DrawDebugBox(GetWorld(), HitboxSpawnLocation, HitboxSize, HitboxRotation, FColor::Green, false, 1.0f); // Duration is 1 second
 
         // Check for enemies within the hitbox
         TArray<FOverlapResult> OverlapResults;

@@ -16,9 +16,6 @@ class ARMPULSE_API AEnemyCharacter : public AGameCharacter
 
 public:
 	AEnemyCharacter();
-	
-	UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
-	class USkeletalMeshComponent* CharacterMesh;
 
 protected:
 	virtual void BeginPlay() override;

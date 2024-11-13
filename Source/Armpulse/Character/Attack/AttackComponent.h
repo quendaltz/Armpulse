@@ -14,15 +14,6 @@ class ARMPULSE_API UAttackComponent : public UActorComponent
 public:	
 	UAttackComponent();
 
-	// ####################################################################
-    // Attack properties
-    UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="Attack")
-    float AttackRange;
-    UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="Attack")
-    bool IsAoE;
-    UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="Attack")
-    float AoERadius;
-
     // Function to trigger the attack
     UFUNCTION(BlueprintCallable, Category="Attack")
     void ExecuteAttack();
@@ -30,17 +21,10 @@ public:
 protected:
 	virtual void BeginPlay() override;
 
-    UPROPERTY()
-    class USphereComponent* SphereHitbox;
-
-    UPROPERTY()
-    class UBoxComponent* BoxHitbox;
-
-    UPROPERTY()
-    class UCapsuleComponent* CapsuleHitbox;
-
-    // General flag to track the hitbox's active state
-    bool bIsHitboxActive;
+    UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Animation")
+    UAnimMontage* AttackMontage;
+    UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Animation")
+    UAnimSequence* AttackAnimation;
 
     // Collision function for when the hitbox overlaps with another actor
     UFUNCTION()
@@ -51,5 +35,5 @@ public:
 	virtual void TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction) override;
 
 private:
-	void GetActorsInRadius(TArray<AActor*>& OutActors);
+
 };

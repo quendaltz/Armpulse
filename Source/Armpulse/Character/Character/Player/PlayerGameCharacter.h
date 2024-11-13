@@ -23,9 +23,6 @@ public:
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
 	class UCameraComponent* Camera;
 
-	UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
-	class USkeletalMeshComponent* CharacterMesh;
-
 protected:
 	virtual void BeginPlay() override;
 

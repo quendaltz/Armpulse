@@ -3,12 +3,14 @@
 
 #include "GameCharacter.h"
 
+#include "Animation/AnimInstance.h"
 #include "GameFramework/Character.h"
 #include "GameFramework/Controller.h"
 
 #include "Components/CapsuleComponent.h"
-#include "Components/SceneComponent.h"
 #include "Components/InputComponent.h"
+#include "Components/SceneComponent.h"
+#include "Components/SkeletalMeshComponent.h"
 
 #include "PaperFlipbookComponent.h"
 #include "PaperSpriteComponent.h"
@@ -36,6 +38,9 @@ AGameCharacter::AGameCharacter()
 	// Setup gameplay components
 	CombatComponent = CreateDefaultSubobject<UCharacterCombatComponent>(TEXT("CombatComponent"));
 	StatusComponent = CreateDefaultSubobject<UCharacterStatusComponent>(TEXT("StatusComponent"));
+
+	CharacterMesh = CreateDefaultSubobject<USkeletalMeshComponent>(TEXT("CharacterMesh"));
+	CharacterMesh->SetupAttachment(RootComponent);
 }
 
 // Called when the game starts or when spawned
@@ -80,6 +85,31 @@ FVector AGameCharacter::GetForwardCharacterLocation(float ForwardDistance)
 	FVector CurrentLocation = GetActorLocation();
 	FVector RightVector = GetActorRightVector();
 	return CurrentLocation + (RightVector * ForwardDistance);
+}
+
+void AGameCharacter::ExecuteMontage(UAnimMontage* MontageToPlay)
+{
+	if (CharacterMesh)
+	{
+		UE_LOG(LogTemp, Log, TEXT("CharacterMesh"));
+		UAnimInstance* Testt = CharacterMesh->GetAnimInstance();
+		if (Testt)
+		{
+			UE_LOG(LogTemp, Log, TEXT("Montage_Play"));
+			CharacterMesh->GetAnimInstance()->Montage_Stop(0.0f);
+			CharacterMesh->GetAnimInstance()->Montage_Play(MontageToPlay, 1.0f);
+		}
+	}
+}
+
+void AGameCharacter::ExecuteAnimation(UAnimSequence* AnimationToPlay)
+{
+	if (CharacterMesh)
+	{
+		UE_LOG(LogTemp, Log, TEXT("CharacterMesh"));
+		UE_LOG(LogTemp, Log, TEXT("PlayAnimation"));
+		CharacterMesh->PlayAnimation(AnimationToPlay, false);
+	}
 }
 
 void AGameCharacter::MoveTriggered(const FInputActionValue& Value)
@@ -156,7 +186,6 @@ void AGameCharacter::AttackTriggered()
 {
 	if (CombatComponent)
 	{
-		GEngine->AddOnScreenDebugMessage(-1, 2.0f, FColor::White, TEXT("CombatComponent Detected"));
 		CombatComponent->Attack();
 	}
 }

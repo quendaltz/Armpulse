@@ -6,7 +6,6 @@
 #include "GameFramework/SpringArmComponent.h"
 
 #include "Camera/CameraComponent.h"
-#include "Components/SkeletalMeshComponent.h"
 
 #include "../../Components/CharacterStatusComponent.h"
 
@@ -22,10 +21,6 @@ APlayerGameCharacter::APlayerGameCharacter()
 
     Camera = CreateDefaultSubobject<UCameraComponent>(TEXT("Camera"));
     Camera->SetupAttachment(SpringArm, USpringArmComponent::SocketName);
-
-    // setup mesh
-    CharacterMesh = CreateDefaultSubobject<USkeletalMeshComponent>(TEXT("CharacterMesh"));
-	CharacterMesh->SetupAttachment(RootComponent);
 }
 
 void APlayerGameCharacter::BeginPlay()

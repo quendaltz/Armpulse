@@ -3,14 +3,11 @@
 
 #include "EnemyCharacter.h"
 
-#include "Components/SkeletalMeshComponent.h"
-
 #include "../../Components/CharacterStatusComponent.h"
 
 AEnemyCharacter::AEnemyCharacter()
 {
-    CharacterMesh = CreateDefaultSubobject<USkeletalMeshComponent>(TEXT("CharacterMesh"));
-	CharacterMesh->SetupAttachment(RootComponent);
+
 }
 
 void AEnemyCharacter::BeginPlay()
