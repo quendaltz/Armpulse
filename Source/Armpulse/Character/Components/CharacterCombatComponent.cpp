@@ -3,8 +3,8 @@
 
 #include "CharacterCombatComponent.h"
 
-#include "TimerManager.h"
 #include "Kismet/GameplayStatics.h"
+#include "TimerManager.h"
 
 #include "../Attack/AttackComponent.h"
 #include "../Components/CharacterStatusComponent.h"
@@ -25,7 +25,8 @@ void UCharacterCombatComponent::BeginPlay()
 {
 	Super::BeginPlay();
 
-	IsInAction = false;
+	IsAction = false;
+	IsAttack = false;
 	CanAction = true;
 }
 
@@ -40,12 +41,13 @@ void UCharacterCombatComponent::TickComponent(float DeltaTime, ELevelTick TickTy
 
 void UCharacterCombatComponent::Attack()
 {
-	if (CanAction && !IsInAction)
+	if (CanAction && !IsAction && !IsAttack)
 	{
 		GEngine->AddOnScreenDebugMessage(-1, 2.0f, FColor::White, TEXT("Can Perform Attack"));
 		OnAttack.Broadcast();
 
-		IsInAction = true;
+		IsAction = true;
+		IsAttack = true;
 		CanAction = false;
 		if (AttackComponent)
 		{
@@ -89,6 +91,7 @@ void UCharacterCombatComponent::HandleTakeDamage(UCharacterStatusComponent* Char
 
 void UCharacterCombatComponent::ResetAnimation()
 {
-	IsInAction = false;
+	IsAction = false;
+	IsAttack = false;
 	CanAction = true;
 }

@@ -46,7 +46,8 @@ private:
 	FTimerHandle ActionTimer;
 
 	bool CanAction;
-	bool IsInAction;
+	bool IsAction;
+	bool IsAttack;
 
 	UPROPERTY(BlueprintAssignable, Category="Combat")
     FOnAttackDelegate OnAttack;
