@@ -18,7 +18,7 @@ public:
 	// Sets default values for this component's properties
 	UCharacterCombatComponent();
 
-	UPROPERTY(EditAnywhere, BlueprintReadOnly)
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
 	class UAttackComponent* AttackComponent;
 
 protected:
