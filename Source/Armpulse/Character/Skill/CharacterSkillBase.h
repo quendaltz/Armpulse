@@ -4,13 +4,14 @@
 #include "UObject/NoExportTypes.h"
 #include "CharacterSkillBase.generated.h"
 
+class AGameCharacter;
 UCLASS(Blueprintable)
 class ARMPULSE_API UCharacterSkillBase : public UObject
 {
     GENERATED_BODY()
 
 public:
-    virtual void ActivateSkill(AActor* Instigator); // Base function to activate the skill
+    virtual void ActivateSkill(AGameCharacter* Instigator); // Base function to activate the skill
     
 protected:
     UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Skill")

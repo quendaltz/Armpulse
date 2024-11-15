@@ -17,12 +17,11 @@ public:
 	UCharacterStatusComponent();
 
 protected:
-	// Called when the game starts
 	virtual void BeginPlay() override;
+	virtual void TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction) override;
 
 public:	
-	// Called every frame
-	virtual void TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction) override;
+	
 
 	float GetAttackPower();
 	void SetAttackPower(float NewAttackPower);

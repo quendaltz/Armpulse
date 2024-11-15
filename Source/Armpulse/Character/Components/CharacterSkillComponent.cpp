@@ -1,5 +1,6 @@
 #include "CharacterSkillComponent.h"
 
+#include "../Character/GameCharacter.h"
 #include "../Skill/CharacterSkillBase.h"
 #include "../Skill/SkillSet/SkillSet.h"
 
@@ -37,8 +38,11 @@ void UCharacterSkillComponent::InitializeSkills(FName CharacterClass, FName Weap
 
 void UCharacterSkillComponent::ActivateSkill(FName SkillKey)
 {
-    if (ActiveSkills.Contains(SkillKey))
+    
+    AGameCharacter* OwnerCharacter = Cast<AGameCharacter>(GetOwner());
+
+    if (OwnerCharacter && ActiveSkills.Contains(SkillKey))
     {
-        ActiveSkills[SkillKey]->ActivateSkill(GetOwner());
+        ActiveSkills[SkillKey]->ActivateSkill(OwnerCharacter);
     }
 }
