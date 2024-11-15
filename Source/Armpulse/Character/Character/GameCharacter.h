@@ -39,6 +39,8 @@ private:
     class UCharacterStatusComponent* StatusComponent;
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, meta = (AllowPrivateAccess = "true"))
     class UCharacterCombatComponent* CombatComponent;
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, meta = (AllowPrivateAccess = "true"))
+    class UCharacterDashComponent* DashComponent;
 
 public:	
 	virtual void Tick(float DeltaTime) override;
@@ -47,6 +49,7 @@ public:
 	FORCEINLINE UCapsuleComponent* GetCapsuleComponent() const { return CapsuleComponent; }
 	FORCEINLINE UCharacterStatusComponent* GetStatusComponent() const { return StatusComponent; }
 	FORCEINLINE UCharacterCombatComponent* GetCombatComponent() const { return CombatComponent; }
+	FORCEINLINE UCharacterDashComponent* GetDashComponent() const { return DashComponent; }
 
 	FVector GetForwardCharacterLocation(float ForwardDistance = 0.0f);
     void ExecuteMontage(UAnimMontage* MontageToPlay);
@@ -54,5 +57,4 @@ public:
 	void MoveTriggered(const struct FInputActionValue& Value);
 	void MoveCompleted(const struct FInputActionValue& Value);
 	void AttackTriggered();
-
 };

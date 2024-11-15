@@ -19,6 +19,7 @@
 
 #include "../Components/CharacterCombatComponent.h"
 #include "../Components/CharacterStatusComponent.h"
+#include "../Components/Movement/CharacterDashComponent.h"
 #include "../../Utility/BaseGameConfig.h"
 
 #include "DrawDebugHelpers.h"
@@ -38,6 +39,7 @@ AGameCharacter::AGameCharacter()
 	// Setup gameplay components
 	CombatComponent = CreateDefaultSubobject<UCharacterCombatComponent>(TEXT("CombatComponent"));
 	StatusComponent = CreateDefaultSubobject<UCharacterStatusComponent>(TEXT("StatusComponent"));
+	DashComponent = CreateDefaultSubobject<UCharacterDashComponent>(TEXT("DashComponent"));
 
 	CharacterMesh = CreateDefaultSubobject<USkeletalMeshComponent>(TEXT("CharacterMesh"));
 	CharacterMesh->SetupAttachment(RootComponent);
