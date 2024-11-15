@@ -65,10 +65,11 @@ void UAttackComponent::ExecuteAttack()
         // UE_LOG(LogTemp, Log, TEXT("AttackRotation %s"), *AttackRotation.ToString());
         // UE_LOG(LogTemp, Log, TEXT("RightVector %s"), *RightVector.ToString());
 
-        FVector HitboxSpawnLocation = OwnerCharacter->GetForwardCharacterLocation(ActorCapsuleRadius + TargetHitboxRadius);
         FRotator AttackRotation = OwnerCharacter->GetActorRotation();
+        FVector HitboxSpawnLocation = OwnerCharacter->GetForwardCharacterLocation(ActorCapsuleRadius + TargetHitboxRadius);
         
-        FVector HitboxSize = FVector(TargetHitboxRadius, TargetHitboxRadius, 10.0f);
+        
+        FVector HitboxSize = FVector(TargetHitboxRadius, TargetHitboxRadius, 0.0f);
         FCollisionShape Hitbox = FCollisionShape::MakeBox(HitboxSize);
         FQuat HitboxRotation = AttackRotation.Quaternion();
         
@@ -82,7 +83,6 @@ void UAttackComponent::ExecuteAttack()
             OwnerCharacter->ExecuteMontage(AttackMontage);
             //OwnerCharacter->ExecuteAnimation(AttackAnimation);
         }
-
         DrawDebugBox(GetWorld(), HitboxSpawnLocation, HitboxSize, HitboxRotation, FColor::Green, false, 1.0f); // Duration is 1 second
 
         // Check for enemies within the hitbox
