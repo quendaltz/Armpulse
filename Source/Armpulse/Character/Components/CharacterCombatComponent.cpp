@@ -6,8 +6,8 @@
 #include "Kismet/GameplayStatics.h"
 #include "TimerManager.h"
 
+#include "CharacterStatusComponent.h"
 #include "../Attack/AttackComponent.h"
-#include "../Components/CharacterStatusComponent.h"
 
 // Sets default values for this component's properties
 UCharacterCombatComponent::UCharacterCombatComponent()
@@ -56,6 +56,7 @@ void UCharacterCombatComponent::Attack(UCharacterStatusComponent* CharacterStatu
 		GEngine->AddOnScreenDebugMessage(-1, 2.0f, FColor::White, TEXT("AttackComponent Detected"));
 		AttackComponent->ExecuteAttack();
 	}
+
 	GetWorld()->GetTimerManager().SetTimer(ActionTimer, TimerFunction, 100.0f/AttackSpeed, false);
 }
 

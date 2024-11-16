@@ -85,7 +85,6 @@ void AGamePlayerController::OnAttackTriggered()
 
 void AGamePlayerController::OnSkillTriggered()
 {
-	GEngine->AddOnScreenDebugMessage(-1, 2.0f, FColor::White, TEXT("Sword Rush"));
 	AGameCharacter* PlayerGameCharacter = Cast<AGameCharacter>(GetPawn());
 	if (PlayerGameCharacter)
 	{

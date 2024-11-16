@@ -6,6 +6,7 @@
 
 #include "CharacterSkillComponent.generated.h"
 
+class UCharacterStatusComponent;
 UCLASS(ClassGroup=(Custom), meta=(BlueprintSpawnableComponent))
 class ARMPULSE_API UCharacterSkillComponent : public UActorComponent
 {
@@ -16,7 +17,7 @@ public:
 
     void InitializeSkills();
     //void InitializeSkills(FName CharacterClass, FName WeaponType);
-    void ActivateSkill(FName SkillName);
+    void CastSkill(FName SkillName, UCharacterStatusComponent* CharacterStatusComponent);
 
 protected:
     UPROPERTY(EditDefaultsOnly, Category = "Skills")
@@ -24,4 +25,7 @@ protected:
 
     UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Skills")
     TMap<FName, TSubclassOf<UCharacterSkillBase>> ActiveSkills;
+
+private:
+	FTimerHandle ActionTimer;
 };

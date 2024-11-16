@@ -13,11 +13,8 @@
 
 USwordRushSkill::USwordRushSkill()
 {
-    // static ConstructorHelpers::FObjectFinder<UAnimMontage> MontageAsset(TEXT("/Game/Characters/Kwang/Montages/SwordRush_Montage"));
-    // if (MontageAsset.Succeeded())
-    // {
-    //     SwordRushMontage = MontageAsset;.Object;
-    // }
+    SkillName = "Sword Rush";
+    CooldownTime = 4.0f;
 }
 
 void USwordRushSkill::ActivateSkill(AGameCharacter* Instigator, AController* InstigatorController)
@@ -25,9 +22,6 @@ void USwordRushSkill::ActivateSkill(AGameCharacter* Instigator, AController* Ins
     if (!Instigator) return;
 
     UCharacterStatusComponent* CharacterStatusComponent = Instigator->GetStatusComponent();
-    bool IsActing = CharacterStatusComponent->GetIsActing();
-	bool CanAction = CharacterStatusComponent->GetCanAct();
-    if (!CanAction && IsActing) return;
 
     // skill properties
     float RushMultiplier = 0.8f; // 240% rush total damage
