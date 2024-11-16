@@ -7,9 +7,7 @@
 #include "GameFramework/Actor.h"
 #include "Kismet/GameplayStatics.h"
 
-#include "Components/BoxComponent.h"
 #include "Components/CapsuleComponent.h"
-#include "Components/SphereComponent.h"
 
 #include "../Character/GameCharacter.h"
 #include "../Components/CharacterStatusComponent.h"
@@ -67,7 +65,6 @@ void UAttackComponent::ExecuteAttack()
 
         FRotator AttackRotation = OwnerCharacter->GetActorRotation();
         FVector HitboxSpawnLocation = OwnerCharacter->GetForwardCharacterLocation(ActorCapsuleRadius + TargetHitboxRadius);
-        
         
         FVector HitboxSize = FVector(TargetHitboxRadius, TargetHitboxRadius, 0.0f);
         FCollisionShape Hitbox = FCollisionShape::MakeBox(HitboxSize);
