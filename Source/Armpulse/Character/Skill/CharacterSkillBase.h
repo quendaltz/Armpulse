@@ -12,6 +12,8 @@ class ARMPULSE_API UCharacterSkillBase : public UObject
 
 public:
     virtual void ActivateSkill(AGameCharacter* Instigator, AController* InstigatorController); // Base function to activate the skill
+
+    FORCEINLINE float GetCooldownTime() const { return CooldownTime; }
     
 protected:
     UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Skill")
