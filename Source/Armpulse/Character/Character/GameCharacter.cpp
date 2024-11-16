@@ -228,7 +228,7 @@ void AGameCharacter::AttackTriggered()
 {
 	if (CombatComponent)
 	{
-		CombatComponent->Attack();
+		CombatComponent->Attack(StatusComponent);
 	}
 }
 

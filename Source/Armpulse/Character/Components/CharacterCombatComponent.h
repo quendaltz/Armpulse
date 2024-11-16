@@ -27,7 +27,8 @@ protected:
 
 public:	
 	UFUNCTION(BlueprintCallable, Category="Combat")
-    void Attack();
+    void Attack(UCharacterStatusComponent* CharacterStatusComponent);
+	void ResetAnimation(UCharacterStatusComponent* CharacterStatusComponent);
 
 	UFUNCTION(BlueprintCallable, Category="Combat")
     void ApplyDamage(AActor* Target);
@@ -35,16 +36,9 @@ public:
 	UFUNCTION()
 	void HandleTakeDamage(UCharacterStatusComponent* CharacterStatusComponent, float DamageAmount, FDamageEvent const& DamageEvent, AController* EventInstigator, AActor* DamageCauser);
 
-	void ResetAnimation();
 
 private:
-	UPROPERTY(EditAnywhere, Category="Combat")
-	float AttackSpeed = 50.0f;
 	FTimerHandle ActionTimer;
-
-	bool CanAction;
-	bool IsAction;
-	bool IsAttack;
 
 	UPROPERTY(BlueprintAssignable, Category="Combat")
     FOnAttackDelegate OnAttack;

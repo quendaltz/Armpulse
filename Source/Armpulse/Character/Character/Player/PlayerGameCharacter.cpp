@@ -32,7 +32,10 @@ void APlayerGameCharacter::BeginPlay()
     {
         ParentStatusComponent->SetAttackPower(35.0f);
         ParentStatusComponent->SetAttackRadius(50.0f);
+        ParentStatusComponent->SetAttackSpeed(50.0f);
         ParentStatusComponent->SetMoveSpeed(200.0f);
+        ParentStatusComponent->SetIsActing(false);
+        ParentStatusComponent->SetCanAct(true);
         ParentStatusComponent->SetCanMove(true);
     }
 }

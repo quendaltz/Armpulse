@@ -24,10 +24,6 @@ UCharacterCombatComponent::UCharacterCombatComponent()
 void UCharacterCombatComponent::BeginPlay()
 {
 	Super::BeginPlay();
-
-	IsAction = false;
-	IsAttack = false;
-	CanAction = true;
 }
 
 
@@ -35,26 +31,32 @@ void UCharacterCombatComponent::BeginPlay()
 void UCharacterCombatComponent::TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction)
 {
 	Super::TickComponent(DeltaTime, TickType, ThisTickFunction);
-
-	// ...
 }
 
-void UCharacterCombatComponent::Attack()
-{
-	if (CanAction && !IsAction && !IsAttack)
-	{
-		GEngine->AddOnScreenDebugMessage(-1, 2.0f, FColor::White, TEXT("Can Perform Attack"));
-		OnAttack.Broadcast();
+void UCharacterCombatComponent::Attack(UCharacterStatusComponent* CharacterStatusComponent)
+{	
+	if (!CharacterStatusComponent) return;
+	bool IsActing = CharacterStatusComponent->GetIsActing();
+	bool CanAction = CharacterStatusComponent->GetCanAct();
 
-		IsAction = true;
-		IsAttack = true;
-		CanAction = false;
+	if (CanAction && !IsActing)
+	{
+		float AttackSpeed = CharacterStatusComponent->GetAttackSpeed();
+		OnAttack.Broadcast();
+		FTimerDelegate TimerFunction;
+		TimerFunction.BindLambda([this, CharacterStatusComponent]()
+		{
+			ResetAnimation(CharacterStatusComponent);
+		});
+
+		CharacterStatusComponent->SetIsActing(true);
+		CharacterStatusComponent->SetCanAct(false);
 		if (AttackComponent)
 		{
 			GEngine->AddOnScreenDebugMessage(-1, 2.0f, FColor::White, TEXT("AttackComponent Detected"));
 			AttackComponent->ExecuteAttack();
 		}
-		GetWorld()->GetTimerManager().SetTimer(ActionTimer, this, &UCharacterCombatComponent::ResetAnimation, 100.0f/AttackSpeed, false);
+		GetWorld()->GetTimerManager().SetTimer(ActionTimer, TimerFunction, 100.0f/AttackSpeed, false);
 	}
 }
 
@@ -89,9 +91,8 @@ void UCharacterCombatComponent::HandleTakeDamage(UCharacterStatusComponent* Char
 	}
 }
 
-void UCharacterCombatComponent::ResetAnimation()
+void UCharacterCombatComponent::ResetAnimation(UCharacterStatusComponent* CharacterStatusComponent)
 {
-	IsAction = false;
-	IsAttack = false;
-	CanAction = true;
+	CharacterStatusComponent->SetIsActing(false);
+	CharacterStatusComponent->SetCanAct(true);
 }
