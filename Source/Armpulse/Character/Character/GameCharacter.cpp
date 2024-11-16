@@ -18,6 +18,7 @@
 #include "EnhancedInputSubsystems.h"
 
 #include "../Components/CharacterCombatComponent.h"
+#include "../Components/CharacterSkillComponent.h"
 #include "../Components/CharacterStatusComponent.h"
 #include "../Components/Movement/CharacterDashComponent.h"
 #include "../../Utility/BaseGameConfig.h"
@@ -38,6 +39,7 @@ AGameCharacter::AGameCharacter()
 
 	// Setup gameplay components
 	CombatComponent = CreateDefaultSubobject<UCharacterCombatComponent>(TEXT("CombatComponent"));
+	SkillComponent = CreateDefaultSubobject<UCharacterSkillComponent>(TEXT("SkillComponent"));
 	StatusComponent = CreateDefaultSubobject<UCharacterStatusComponent>(TEXT("StatusComponent"));
 	DashComponent = CreateDefaultSubobject<UCharacterDashComponent>(TEXT("DashComponent"));
 
@@ -49,6 +51,11 @@ AGameCharacter::AGameCharacter()
 void AGameCharacter::BeginPlay()
 {
 	Super::BeginPlay();
+
+	if (SkillComponent)
+    {
+        SkillComponent->InitializeSkills();
+    }
 }
 
 // Called every frame
@@ -80,6 +87,17 @@ void AGameCharacter::Tick(float DeltaTime)
 void AGameCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
 {
 	Super::SetupPlayerInputComponent(PlayerInputComponent);
+}
+
+// override
+float AGameCharacter::TakeDamage(float DamageAmount, FDamageEvent const& DamageEvent, AController* EventInstigator, AActor* DamageCauser)
+{
+	if (CombatComponent)
+    {
+        CombatComponent->HandleTakeDamage(StatusComponent, DamageAmount, DamageEvent, EventInstigator, DamageCauser);
+    }
+    
+    return DamageAmount;
 }
 
 FVector AGameCharacter::GetForwardCharacterLocation(float ForwardDistance)
@@ -192,12 +210,10 @@ void AGameCharacter::AttackTriggered()
 	}
 }
 
-float AGameCharacter::TakeDamage(float DamageAmount, FDamageEvent const& DamageEvent, AController* EventInstigator, AActor* DamageCauser)
+void AGameCharacter::CastSkill(FName SkillName)
 {
-	if (CombatComponent)
-    {
-        CombatComponent->HandleTakeDamage(StatusComponent, DamageAmount, DamageEvent, EventInstigator, DamageCauser);
-    }
-    
-    return DamageAmount;
+	if (SkillComponent)
+	{
+		SkillComponent->ActivateSkill(SkillName);
+	}
 }

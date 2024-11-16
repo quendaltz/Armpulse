@@ -14,13 +14,14 @@ class ARMPULSE_API UCharacterSkillComponent : public UActorComponent
 public:
     UCharacterSkillComponent();
 
-    void InitializeSkills(FName CharacterClass, FName WeaponType);
-    void ActivateSkill(FName SkillKey);
+    void InitializeSkills();
+    //void InitializeSkills(FName CharacterClass, FName WeaponType);
+    void ActivateSkill(FName SkillName);
 
 protected:
     UPROPERTY(EditDefaultsOnly, Category = "Skills")
     class USkillSet* SkillSet;
 
-    UPROPERTY()
-    TMap<FName, UCharacterSkillBase*> ActiveSkills;
+    UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Skills")
+    TMap<FName, TSubclassOf<UCharacterSkillBase>> ActiveSkills;
 };
