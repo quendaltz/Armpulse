@@ -21,8 +21,6 @@ protected:
 	virtual void TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction) override;
 
 public:	
-	
-
 	float GetAttackPower();
 	void SetAttackPower(float NewAttackPower);
 
@@ -37,6 +35,12 @@ public:
 
 	float GetHealth();
 	void SetHealth(float NewHealth);
+
+	float GetIsActing();
+	void SetIsActing(float NewIsActing);
+
+	float GetCanAct();
+	void SetCanAct(float NewCanAct);
 
 	float GetMoveSpeed();
 	void SetMoveSpeed(float NewMoveSpeed);

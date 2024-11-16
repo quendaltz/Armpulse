@@ -104,6 +104,28 @@ void UCharacterStatusComponent::SetHealth(float NewHealth)
 	Health = NewHealth;
 }
 
+// IS ACT
+bool UCharacterStatusComponent::GetIsActing()
+{
+	return IsActing;
+}
+
+void UCharacterStatusComponent::SetIsActing(bool NewIsActing)
+{
+	IsActing = NewIsActing;
+}
+
+// ACT COND
+bool UCharacterStatusComponent::GetCanAct()
+{
+	return CanAct;
+}
+
+void UCharacterStatusComponent::SetCanAct(bool NewCanAct)
+{
+	CanAct = NewCanAct;
+}
+
 // MOV SPD
 float UCharacterStatusComponent::GetMoveSpeed()
 {
