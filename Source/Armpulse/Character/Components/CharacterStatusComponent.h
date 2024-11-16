@@ -36,11 +36,11 @@ public:
 	float GetHealth();
 	void SetHealth(float NewHealth);
 
-	float GetIsActing();
-	void SetIsActing(float NewIsActing);
+	bool GetIsActing();
+	void SetIsActing(bool NewIsActing);
 
-	float GetCanAct();
-	void SetCanAct(float NewCanAct);
+	bool GetCanAct();
+	void SetCanAct(bool NewCanAct);
 
 	float GetMoveSpeed();
 	void SetMoveSpeed(float NewMoveSpeed);
