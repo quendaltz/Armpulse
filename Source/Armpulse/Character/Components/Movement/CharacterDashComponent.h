@@ -23,7 +23,7 @@ private:
     bool bIsDashing;
 
     UPROPERTY(EditAnywhere, Category = "Dash")
-    float DashDistance = 500.0f;  // Distance to dash
+    float DashDistance = 0.0f;  // Distance to dash
 
     UPROPERTY(EditAnywhere, Category = "Dash")
     float DashSpeed = 1000.0f;  // Speed in units per second
@@ -34,5 +34,5 @@ private:
     void StopDash();
 
 public:
-    void StartDash();
+    void StartDash(float Distance, float Speed);
 };

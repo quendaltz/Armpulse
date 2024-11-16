@@ -28,13 +28,16 @@ void UCharacterDashComponent::TickComponent(float DeltaTime, ELevelTick TickType
     }
 }
 
-void UCharacterDashComponent::StartDash()
+void UCharacterDashComponent::StartDash(float Distance, float Speed = 1000.0f)
 {
     if (bIsDashing) return;  // Prevent overlapping dashes
 
     AGameCharacter* OwnerCharacter = Cast<AGameCharacter>(GetOwner());
     if (!OwnerCharacter) return;
 
+    // set
+    DashDistance = Distance;
+    DashSpeed = Speed;
     float ActorCapsuleRadius = OwnerCharacter->GetCapsuleComponent()->GetScaledCapsuleRadius();
 
     DashStartLocation = OwnerCharacter->GetActorLocation();
