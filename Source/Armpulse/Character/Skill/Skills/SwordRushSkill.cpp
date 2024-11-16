@@ -24,6 +24,11 @@ void USwordRushSkill::ActivateSkill(AGameCharacter* Instigator, AController* Ins
 {
     if (!Instigator) return;
 
+    UCharacterStatusComponent* CharacterStatusComponent = Instigator->GetStatusComponent();
+    bool IsActing = CharacterStatusComponent->GetIsActing();
+	bool CanAction = CharacterStatusComponent->GetCanAct();
+    if (!CanAction && IsActing) return;
+
     // skill properties
     float RushMultiplier = 0.8f; // 240% rush total damage
     float RushHit = 3.0f; // 3 hits
@@ -32,9 +37,9 @@ void USwordRushSkill::ActivateSkill(AGameCharacter* Instigator, AController* Ins
 
     auto DamageTypeClass = UDamageType::StaticClass();
     float CharacterAttackPower = 0.0f;
-    CharacterAttackPower = Instigator->GetStatusComponent()->GetAttackPower();
+    CharacterAttackPower = CharacterStatusComponent->GetAttackPower();
     float TargetHitboxRadius = 0.0f;
-    TargetHitboxRadius = Instigator->GetStatusComponent()->GetAttackRadius();
+    TargetHitboxRadius = CharacterStatusComponent->GetAttackRadius();
 
     if (TargetHitboxRadius < 0.0f)
     {
