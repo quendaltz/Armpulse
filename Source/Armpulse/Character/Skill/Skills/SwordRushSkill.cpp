@@ -28,13 +28,19 @@ void USwordRushSkill::ActivateSkill(AGameCharacter* Instigator, AController* Ins
     float RushMultiplier = 0.8f; // 240% rush total damage
     float RushHit = 3.0f; // 3 hits
     float RushDistance = 200.0f;
-    float RushSpeed = 1000.0f;
+    float RushSpeed = 3000.0f;
 
     auto DamageTypeClass = UDamageType::StaticClass();
     float CharacterAttackPower = 0.0f;
     CharacterAttackPower = Instigator->GetStatusComponent()->GetAttackPower();
     float TargetHitboxRadius = 0.0f;
-    TargetHitboxRadius = Instigator->GetCapsuleComponent()->GetScaledCapsuleRadius();
+    TargetHitboxRadius = Instigator->GetStatusComponent()->GetAttackRadius();
+
+    if (TargetHitboxRadius < 0.0f)
+    {
+        return;
+    }
+
     if (CharacterAttackPower < 0.0f)
     {
         CharacterAttackPower = 0.0f;
@@ -43,9 +49,9 @@ void USwordRushSkill::ActivateSkill(AGameCharacter* Instigator, AController* Ins
     float SkillDamage = CharacterAttackPower * RushMultiplier;
 
     FRotator AttackRotation = Instigator->GetActorRotation();
-    FVector HitboxSpawnLocation = Instigator->GetForwardCharacterLocation(TargetHitboxRadius);
+    FVector HitboxSpawnLocation = Instigator->GetForwardCharacterLocation(RushDistance / 2.0f);
     
-    FVector HitboxSize = FVector(TargetHitboxRadius * 2, RushDistance, 0.0f);
+    FVector HitboxSize = FVector(TargetHitboxRadius, RushDistance / 2.0f, 0.0f);
     FCollisionShape Hitbox = FCollisionShape::MakeBox(HitboxSize);
     FQuat HitboxRotation = AttackRotation.Quaternion();
     

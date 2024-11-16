@@ -58,6 +58,11 @@ void UAttackComponent::ExecuteAttack()
             return;
         }
 
+        if (Damage < 0.0f)
+        {
+            Damage = 0.0f;
+        }
+
         // FVector ActorLocation = OwnerActor->GetActorLocation();
         // FVector RightVector = OwnerActor->GetActorRightVector();
         // UE_LOG(LogTemp, Log, TEXT("AttackRotation %s"), *AttackRotation.ToString());
@@ -76,10 +81,9 @@ void UAttackComponent::ExecuteAttack()
 
         if (AttackMontage)
         {
-            UE_LOG(LogTemp, Log, TEXT("ExecuteMontage"));
             OwnerCharacter->ExecuteMontage(AttackMontage);
-            //OwnerCharacter->ExecuteAnimation(AttackAnimation);
         }
+        
         DrawDebugBox(GetWorld(), HitboxSpawnLocation, HitboxSize, HitboxRotation, FColor::Green, false, 1.0f); // Duration is 1 second
 
         // Check for enemies within the hitbox
