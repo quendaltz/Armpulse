@@ -36,28 +36,27 @@ void UCharacterCombatComponent::TickComponent(float DeltaTime, ELevelTick TickTy
 void UCharacterCombatComponent::Attack(UCharacterStatusComponent* CharacterStatusComponent)
 {	
 	if (!CharacterStatusComponent) return;
+	
 	bool IsActing = CharacterStatusComponent->GetIsActing();
 	bool CanAction = CharacterStatusComponent->GetCanAct();
+	if (!CanAction && IsActing) return;
 
-	if (CanAction && !IsActing)
+	float AttackSpeed = CharacterStatusComponent->GetAttackSpeed();
+	OnAttack.Broadcast();
+	FTimerDelegate TimerFunction;
+	TimerFunction.BindLambda([this, CharacterStatusComponent]()
 	{
-		float AttackSpeed = CharacterStatusComponent->GetAttackSpeed();
-		OnAttack.Broadcast();
-		FTimerDelegate TimerFunction;
-		TimerFunction.BindLambda([this, CharacterStatusComponent]()
-		{
-			ResetAnimation(CharacterStatusComponent);
-		});
+		ResetAnimation(CharacterStatusComponent);
+	});
 
-		CharacterStatusComponent->SetIsActing(true);
-		CharacterStatusComponent->SetCanAct(false);
-		if (AttackComponent)
-		{
-			GEngine->AddOnScreenDebugMessage(-1, 2.0f, FColor::White, TEXT("AttackComponent Detected"));
-			AttackComponent->ExecuteAttack();
-		}
-		GetWorld()->GetTimerManager().SetTimer(ActionTimer, TimerFunction, 100.0f/AttackSpeed, false);
+	CharacterStatusComponent->SetIsActing(true);
+	CharacterStatusComponent->SetCanAct(false);
+	if (AttackComponent)
+	{
+		GEngine->AddOnScreenDebugMessage(-1, 2.0f, FColor::White, TEXT("AttackComponent Detected"));
+		AttackComponent->ExecuteAttack();
 	}
+	GetWorld()->GetTimerManager().SetTimer(ActionTimer, TimerFunction, 100.0f/AttackSpeed, false);
 }
 
 void UCharacterCombatComponent::ApplyDamage(AActor* Target)
@@ -93,6 +92,5 @@ void UCharacterCombatComponent::HandleTakeDamage(UCharacterStatusComponent* Char
 
 void UCharacterCombatComponent::ResetAnimation(UCharacterStatusComponent* CharacterStatusComponent)
 {
-	CharacterStatusComponent->SetIsActing(false);
-	CharacterStatusComponent->SetCanAct(true);
+	CharacterStatusComponent->ResetActionState();
 }
