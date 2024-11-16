@@ -56,6 +56,7 @@ void AGameCharacter::BeginPlay()
     {
         SkillComponent->InitializeSkills();
     }
+	CurrentAnimation = nullptr;
 }
 
 // Called every frame
@@ -111,64 +112,85 @@ void AGameCharacter::ExecuteMontage(UAnimMontage* MontageToPlay)
 {
 	if (CharacterMesh)
 	{
-		UE_LOG(LogTemp, Log, TEXT("CharacterMesh"));
-		UAnimInstance* Testt = CharacterMesh->GetAnimInstance();
-		if (Testt)
+		UAnimInstance* AnimInstance = CharacterMesh->GetAnimInstance();
+		if (AnimInstance)
 		{
-			UE_LOG(LogTemp, Log, TEXT("Montage_Play"));
 			CharacterMesh->GetAnimInstance()->Montage_Stop(0.0f);
 			CharacterMesh->GetAnimInstance()->Montage_Play(MontageToPlay, 1.0f);
 		}
 	}
 }
 
-void AGameCharacter::ExecuteAnimation(UAnimSequence* AnimationToPlay)
+void AGameCharacter::ExecuteAnimation(UAnimSequence* AnimationToPlay, bool bLoop)
 {
 	if (CharacterMesh)
 	{
-		UE_LOG(LogTemp, Log, TEXT("CharacterMesh"));
-		UE_LOG(LogTemp, Log, TEXT("PlayAnimation"));
-		CharacterMesh->PlayAnimation(AnimationToPlay, false);
+		CharacterMesh->PlayAnimation(AnimationToPlay, true);
 	}
 }
 
 void AGameCharacter::MoveTriggered(const FInputActionValue& Value)
 {
 	FVector2D MoveActionValue = Value.Get<FVector2D>();
-	if (StatusComponent->GetCanMove() && !MoveActionValue.IsNearlyZero())
+	if (StatusComponent->GetCanMove())
 	{
-		MoveActionValue.Normalize();
-		float DeltaTime = GetWorld()->DeltaTimeSeconds;
-
-		FVector2D MoveDistance = MoveActionValue * StatusComponent->GetMoveSpeed() * DeltaTime;
-		FVector CurrentLocation = GetActorLocation();
-
-		// set initial desired location
-		FVector NewLocation = CurrentLocation + FVector(MoveDistance.X, -MoveDistance.Y, 0.0f);
-		if (false) // blocked by left/right obstacle
+		bool bIsMoving = !MoveActionValue.IsNearlyZero();
+		if (MoveAnimation)
 		{
-			// remove corresponding movement direction
-			NewLocation -= FVector(MoveDistance.X, 0.0f, 0.0f);
-		}
-		if (false) // blocked by up/down obstacle
-		{
-			// remove corresponding movement direction
-			NewLocation -= FVector(0.0f, -MoveDistance.Y, 0.0f);
+			if (bIsMoving && CurrentAnimation != MoveAnimation)
+			{
+				ExecuteAnimation(MoveAnimation, true);
+				CurrentAnimation = MoveAnimation;
+			}
+			else if (!bIsMoving && CurrentAnimation == MoveAnimation)
+			{
+				CurrentAnimation = nullptr;
+				CharacterMesh->SetAnimation(nullptr); // Loop idle animation
+				CharacterMesh->SetAnimationMode(EAnimationMode::AnimationBlueprint);
+			}
 		}
 
-		SetActorLocation(NewLocation);
+		if (bIsMoving)
+		{
+			MoveActionValue.Normalize();
+			float DeltaTime = GetWorld()->DeltaTimeSeconds;
 
-		// rotate character
-		FVector MoveDirection = (BaseGameConfig::BaseCharacterForwardDirection() * MoveActionValue.Y) + (BaseGameConfig::BaseCharacterRightDirection() * MoveActionValue.X);
-		MoveDirection.Normalize();
-		FRotator NewRotation = MoveDirection.Rotation();
-		SetActorRotation(NewRotation);
+			FVector2D MoveDistance = MoveActionValue * StatusComponent->GetMoveSpeed() * DeltaTime;
+			FVector CurrentLocation = GetActorLocation();
+
+			// set initial desired location
+			FVector NewLocation = CurrentLocation + FVector(MoveDistance.X, -MoveDistance.Y, 0.0f);
+			if (false) // blocked by left/right obstacle
+			{
+				// remove corresponding movement direction
+				NewLocation -= FVector(MoveDistance.X, 0.0f, 0.0f);
+			}
+			if (false) // blocked by up/down obstacle
+			{
+				// remove corresponding movement direction
+				NewLocation -= FVector(0.0f, -MoveDistance.Y, 0.0f);
+			}
+
+			SetActorLocation(NewLocation);
+
+			// rotate character
+			FVector MoveDirection = (BaseGameConfig::BaseCharacterForwardDirection() * MoveActionValue.Y) + (BaseGameConfig::BaseCharacterRightDirection() * MoveActionValue.X);
+			MoveDirection.Normalize();
+			FRotator NewRotation = MoveDirection.Rotation();
+			SetActorRotation(NewRotation);
+		}
 	}
 }
 
 void AGameCharacter::MoveCompleted(const FInputActionValue& Value)
 {
-
+	FVector2D MoveActionValue = Value.Get<FVector2D>();
+	if (CurrentAnimation == MoveAnimation && MoveActionValue.IsNearlyZero())
+	{
+		CurrentAnimation = nullptr;
+		CharacterMesh->SetAnimation(nullptr); // Loop idle animation
+		CharacterMesh->SetAnimationMode(EAnimationMode::AnimationBlueprint);
+	}
 }
 
 // void AGameCharacter::MoveTriggered(const FInputActionValue& Value)

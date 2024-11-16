@@ -44,6 +44,10 @@ private:
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, meta = (AllowPrivateAccess = "true"))
     class UCharacterDashComponent* DashComponent;
 
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Animation", meta = (AllowPrivateAccess = "true"))
+    UAnimSequence* MoveAnimation;
+	UAnimSequence* CurrentAnimation;
+
 public:	
 	virtual void Tick(float DeltaTime) override;
 	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
@@ -55,7 +59,7 @@ public:
 
 	FVector GetForwardCharacterLocation(float ForwardDistance = 0.0f);
     void ExecuteMontage(UAnimMontage* MontageToPlay);
-    void ExecuteAnimation(UAnimSequence* AnimationToPlay);
+    void ExecuteAnimation(UAnimSequence* AnimationToPlay, bool bLoop = false);
 	void MoveTriggered(const struct FInputActionValue& Value);
 	void MoveCompleted(const struct FInputActionValue& Value);
 	void AttackTriggered();
