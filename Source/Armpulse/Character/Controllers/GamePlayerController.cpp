@@ -66,7 +66,11 @@ void AGamePlayerController::OnMoveTriggered(const FInputActionValue& Value)
 
 void AGamePlayerController::OnMoveReleased(const FInputActionValue& Value)
 {
-    
+	AGameCharacter* PlayerGameCharacter = Cast<AGameCharacter>(GetPawn());
+	if (PlayerGameCharacter)
+	{
+		PlayerGameCharacter->MoveCompleted(Value);
+	}
 }
 
 void AGamePlayerController::OnAttackTriggered()
