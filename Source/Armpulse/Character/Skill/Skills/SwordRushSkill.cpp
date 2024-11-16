@@ -65,8 +65,6 @@ void USwordRushSkill::ActivateSkill(AGameCharacter* Instigator, AController* Ins
     }
 
     Instigator->GetDashComponent()->StartDash(RushDistance, RushSpeed);
-    FVector CharacterTargetLocation = Instigator->GetForwardCharacterLocation(TargetHitboxRadius * 2);
-    Instigator->SetActorLocation(CharacterTargetLocation, true);
 
     DrawDebugBox(GetWorld(), HitboxSpawnLocation, HitboxSize, HitboxRotation, FColor::Green, false, 1.0f); // Duration is 1 second
 
