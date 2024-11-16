@@ -48,6 +48,8 @@ public:
 	bool GetCanMove();
 	void SetCanMove(bool NewCanMove);
 
+	void ResetActionState();
+
 private:
 	// combat section ------------------------------------------------------------------------------------------
 	float AttackPower;

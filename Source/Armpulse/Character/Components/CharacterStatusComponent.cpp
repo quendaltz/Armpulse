@@ -151,3 +151,9 @@ void UCharacterStatusComponent::SetCanMove(bool NewCanMove)
 {
 	CanMove = NewCanMove;
 }
+
+void UCharacterStatusComponent::ResetActionState()
+{
+	IsActing = false;
+	CanAct = true;
+}
