@@ -236,6 +236,6 @@ void AGameCharacter::CastSkill(FName SkillName)
 {
 	if (SkillComponent)
 	{
-		SkillComponent->ActivateSkill(SkillName);
+		SkillComponent->CastSkill(SkillName, StatusComponent);
 	}
 }
