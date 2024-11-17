@@ -54,7 +54,7 @@ void UCharacterCombatComponent::Attack(UCharacterStatusComponent* CharacterStatu
 	if (AttackComponent)
 	{
 		GEngine->AddOnScreenDebugMessage(-1, 2.0f, FColor::White, TEXT("AttackComponent Detected"));
-		AttackComponent->ExecuteAttack();
+		AttackComponent->ExecuteAttack(100.0f/AttackSpeed);
 	}
 
 	GetWorld()->GetTimerManager().SetTimer(ActionTimer, TimerFunction, 100.0f/AttackSpeed, false);

@@ -14,6 +14,7 @@
 USwordRushSkill::USwordRushSkill()
 {
     SkillName = "Sword Rush";
+    ActionLockTime = 2.0f;
     CooldownTime = 4.0f;
 }
 
@@ -60,7 +61,7 @@ void USwordRushSkill::ActivateSkill(AGameCharacter* Instigator, AController* Ins
 
     if (SwordRushMontage)
     {
-        Instigator->ExecuteMontage(SwordRushMontage);
+        Instigator->ExecuteMontage(SwordRushMontage, true, ActionLockTime);
     }
 
     Instigator->GetDashComponent()->StartDash(RushDistance, RushSpeed);

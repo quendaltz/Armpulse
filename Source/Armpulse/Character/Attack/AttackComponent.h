@@ -16,7 +16,7 @@ public:
 
     // Function to trigger the attack
     UFUNCTION(BlueprintCallable, Category="Attack")
-    void ExecuteAttack();
+    void ExecuteAttack(float AttackDuration);
 
 protected:
 	virtual void BeginPlay() override;

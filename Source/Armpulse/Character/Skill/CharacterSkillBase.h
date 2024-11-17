@@ -13,6 +13,7 @@ class ARMPULSE_API UCharacterSkillBase : public UObject
 public:
     virtual void ActivateSkill(AGameCharacter* Instigator, AController* InstigatorController); // Base function to activate the skill
 
+    FORCEINLINE float GetActionLockTime() const { return ActionLockTime; }
     FORCEINLINE float GetCooldownTime() const { return CooldownTime; }
     
 protected:
@@ -20,7 +21,7 @@ protected:
     FName SkillName;
 
     UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Skill")
-    float ManaCost;
+    float ActionLockTime;
 
     UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Skill")
     float CooldownTime;

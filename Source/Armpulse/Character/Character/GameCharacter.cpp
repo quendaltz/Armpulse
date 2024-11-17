@@ -108,15 +108,23 @@ FVector AGameCharacter::GetForwardCharacterLocation(float ForwardDistance)
 	return CurrentLocation + (RightVector * ForwardDistance);
 }
 
-void AGameCharacter::ExecuteMontage(UAnimMontage* MontageToPlay)
+void AGameCharacter::ExecuteMontage(UAnimMontage* TargetMontage, bool DynamicDuration, float DesiredDuration)
 {
 	if (CharacterMesh)
 	{
 		UAnimInstance* AnimInstance = CharacterMesh->GetAnimInstance();
 		if (AnimInstance)
 		{
+			float PlayRate = 1.0f; // default playrate
+			if (DynamicDuration && DesiredDuration > 0.0f)
+			{
+				float OriginalDuration = TargetMontage->GetPlayLength();
+				PlayRate = OriginalDuration / DesiredDuration;
+				UE_LOG(LogTemp, Warning, TEXT("ExecuteMontage: %f, %f, %f"), OriginalDuration, DesiredDuration, PlayRate);
+			}
+
 			CharacterMesh->GetAnimInstance()->Montage_Stop(0.0f);
-			CharacterMesh->GetAnimInstance()->Montage_Play(MontageToPlay, 1.0f);
+			CharacterMesh->GetAnimInstance()->Montage_Play(TargetMontage, PlayRate);
 		}
 	}
 }
@@ -132,7 +140,7 @@ void AGameCharacter::ExecuteAnimation(UAnimSequence* AnimationToPlay, bool bLoop
 void AGameCharacter::MoveTriggered(const FInputActionValue& Value)
 {
 	FVector2D MoveActionValue = Value.Get<FVector2D>();
-	if (StatusComponent->GetCanMove())
+	if (StatusComponent->GetCanMove() && StatusComponent->GetCanAct())
 	{
 		bool bIsMoving = !MoveActionValue.IsNearlyZero();
 		if (MoveAnimation)

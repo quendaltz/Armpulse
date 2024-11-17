@@ -31,7 +31,7 @@ void UAttackComponent::TickComponent(float DeltaTime, ELevelTick TickType, FActo
 	Super::TickComponent(DeltaTime, TickType, ThisTickFunction);
 }
 
-void UAttackComponent::ExecuteAttack()
+void UAttackComponent::ExecuteAttack(float AttackDuration)
 {
     AActor* OwnerActor = GetOwner();
     AGameCharacter* OwnerCharacter = nullptr;
@@ -81,7 +81,7 @@ void UAttackComponent::ExecuteAttack()
 
         if (AttackMontage)
         {
-            OwnerCharacter->ExecuteMontage(AttackMontage);
+            OwnerCharacter->ExecuteMontage(AttackMontage, true, AttackDuration);
         }
         
         DrawDebugBox(GetWorld(), HitboxSpawnLocation, HitboxSize, HitboxRotation, FColor::Green, false, 1.0f); // Duration is 1 second

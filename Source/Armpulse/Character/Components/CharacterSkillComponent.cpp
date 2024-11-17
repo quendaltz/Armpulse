@@ -64,13 +64,14 @@ void UCharacterSkillComponent::CastSkill(FName SkillName, UCharacterStatusCompon
 
             GEngine->AddOnScreenDebugMessage(-1, 2.0f, FColor::White, TEXT("Sword Rush Found!"));
             UCharacterSkillBase* SkillInstance = NewObject<UCharacterSkillBase>(this, Skill);
+            float ActionLockTime = SkillInstance->GetActionLockTime();
             float SkillCooldownTime = SkillInstance->GetCooldownTime();
 
             SkillInstance->ActivateSkill(OwnerCharacter, OwnerInstigator);
             CharacterStatusComponent->SetIsActing(true);
 	        CharacterStatusComponent->SetCanAct(false);
 
-            GetWorld()->GetTimerManager().SetTimer(ActionTimer, TimerFunction, SkillCooldownTime, false);
+            GetWorld()->GetTimerManager().SetTimer(ActionTimer, TimerFunction, ActionLockTime, false);
         }
     }
 }
