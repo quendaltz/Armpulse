@@ -120,9 +120,15 @@ void AGameCharacter::ExecuteMontage(UAnimMontage* TargetMontage, bool DynamicDur
 			{
 				float OriginalDuration = TargetMontage->GetPlayLength();
 				PlayRate = OriginalDuration / DesiredDuration;
-				UE_LOG(LogTemp, Warning, TEXT("ExecuteMontage: %f, %f, %f"), OriginalDuration, DesiredDuration, PlayRate);
 			}
 
+			if (CurrentAnimation)
+			{
+				CurrentAnimation = nullptr;
+				CharacterMesh->SetAnimation(nullptr);
+				CharacterMesh->SetAnimationMode(EAnimationMode::AnimationBlueprint);
+			}
+			
 			CharacterMesh->GetAnimInstance()->Montage_Stop(0.0f);
 			CharacterMesh->GetAnimInstance()->Montage_Play(TargetMontage, PlayRate);
 		}
@@ -196,7 +202,7 @@ void AGameCharacter::MoveCompleted(const FInputActionValue& Value)
 	if (CurrentAnimation == MoveAnimation && MoveActionValue.IsNearlyZero())
 	{
 		CurrentAnimation = nullptr;
-		CharacterMesh->SetAnimation(nullptr); // Loop idle animation
+		CharacterMesh->SetAnimation(nullptr);
 		CharacterMesh->SetAnimationMode(EAnimationMode::AnimationBlueprint);
 	}
 }

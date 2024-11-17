@@ -67,9 +67,9 @@ void UCharacterSkillComponent::CastSkill(FName SkillName, UCharacterStatusCompon
             float ActionLockTime = SkillInstance->GetActionLockTime();
             float SkillCooldownTime = SkillInstance->GetCooldownTime();
 
-            SkillInstance->ActivateSkill(OwnerCharacter, OwnerInstigator);
             CharacterStatusComponent->SetIsActing(true);
 	        CharacterStatusComponent->SetCanAct(false);
+            SkillInstance->ActivateSkill(OwnerCharacter, OwnerInstigator);
 
             GetWorld()->GetTimerManager().SetTimer(ActionTimer, TimerFunction, ActionLockTime, false);
         }
