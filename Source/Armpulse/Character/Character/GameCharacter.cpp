@@ -64,6 +64,7 @@ void AGameCharacter::BeginPlay()
         SkillComponent->InitializeSkills();
     }
 	CurrentAnimation = nullptr;
+	WidgetComponent->SetCastShadow(false);
 }
 
 // Called every frame
