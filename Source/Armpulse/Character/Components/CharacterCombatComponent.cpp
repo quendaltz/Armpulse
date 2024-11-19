@@ -65,11 +65,12 @@ void UCharacterCombatComponent::ApplyDamage(AActor* Target)
 
 }
 
-void UCharacterCombatComponent::HandleTakeDamage(UCharacterStatusComponent* CharacterStatusComponent, float DamageAmount, FDamageEvent const& DamageEvent, AController* EventInstigator, AActor* DamageCauser)
+float UCharacterCombatComponent::HandleTakeDamage(UCharacterStatusComponent* CharacterStatusComponent, float DamageAmount, FDamageEvent const& DamageEvent, AController* EventInstigator, AActor* DamageCauser)
 {
+	float ActualDamage = 0.0f;
 	if (DamageAmount <= 0.f)
 	{
-		return;
+		return ActualDamage;
 	}
 
 	if (CharacterStatusComponent)
@@ -77,7 +78,6 @@ void UCharacterCombatComponent::HandleTakeDamage(UCharacterStatusComponent* Char
 		float CurrentHealth = CharacterStatusComponent->GetHealth();
 		if (CurrentHealth > 0.f)
 		{
-			float ActualDamage = 0.0f;
 			float CurrentDefense = CharacterStatusComponent->GetDefense();
 			ActualDamage = DamageAmount - CurrentDefense;
 			CurrentHealth = CurrentHealth - ActualDamage;
@@ -89,6 +89,8 @@ void UCharacterCombatComponent::HandleTakeDamage(UCharacterStatusComponent* Char
 			}
 		}
 	}
+
+	return ActualDamage;
 }
 
 void UCharacterCombatComponent::ResetAnimation(UCharacterStatusComponent* CharacterStatusComponent)

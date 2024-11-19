@@ -48,6 +48,12 @@ private:
     UAnimSequence* MoveAnimation;
 	UAnimSequence* CurrentAnimation;
 
+	UPROPERTY(EditDefaultsOnly, Category = "UI")
+	TSubclassOf<class UDamageWidget> DamageWidgetClass;
+
+	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, meta = (AllowPrivateAccess = "true"))
+	class UWidgetComponent* WidgetComponent;
+
 public:	
 	virtual void Tick(float DeltaTime) override;
 	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
@@ -64,4 +70,5 @@ public:
 	void MoveCompleted(const struct FInputActionValue& Value);
 	void AttackTriggered();
 	void CastSkill(FName SkillName);
+	void DisplayDamage(float Damage, AGameCharacter* HitActor);
 };

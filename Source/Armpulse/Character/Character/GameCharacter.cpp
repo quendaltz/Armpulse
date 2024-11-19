@@ -6,11 +6,13 @@
 #include "Animation/AnimInstance.h"
 #include "GameFramework/Character.h"
 #include "GameFramework/Controller.h"
+#include "Kismet/GameplayStatics.h"
 
 #include "Components/CapsuleComponent.h"
 #include "Components/InputComponent.h"
 #include "Components/SceneComponent.h"
 #include "Components/SkeletalMeshComponent.h"
+#include "Components/WidgetComponent.h"
 
 #include "PaperFlipbookComponent.h"
 #include "PaperSpriteComponent.h"
@@ -22,6 +24,7 @@
 #include "../Components/CharacterStatusComponent.h"
 #include "../Components/Movement/CharacterDashComponent.h"
 #include "../../Utility/BaseGameConfig.h"
+#include "../../Utility/Widgets/DamageWidget/DamageWidget.h"
 
 #include "DrawDebugHelpers.h"
 
@@ -43,8 +46,12 @@ AGameCharacter::AGameCharacter()
 	StatusComponent = CreateDefaultSubobject<UCharacterStatusComponent>(TEXT("StatusComponent"));
 	DashComponent = CreateDefaultSubobject<UCharacterDashComponent>(TEXT("DashComponent"));
 
+	// Setup display component
 	CharacterMesh = CreateDefaultSubobject<USkeletalMeshComponent>(TEXT("CharacterMesh"));
 	CharacterMesh->SetupAttachment(RootComponent);
+
+	WidgetComponent = CreateDefaultSubobject<UWidgetComponent>(TEXT("WidgetComponent"));
+    WidgetComponent->SetupAttachment(CharacterMesh);
 }
 
 // Called when the game starts or when spawned
@@ -93,9 +100,11 @@ void AGameCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputCompo
 // override
 float AGameCharacter::TakeDamage(float DamageAmount, FDamageEvent const& DamageEvent, AController* EventInstigator, AActor* DamageCauser)
 {
+	// override
 	if (CombatComponent)
     {
-        CombatComponent->HandleTakeDamage(StatusComponent, DamageAmount, DamageEvent, EventInstigator, DamageCauser);
+        float DamageTakenAmount = CombatComponent->HandleTakeDamage(StatusComponent, DamageAmount, DamageEvent, EventInstigator, DamageCauser);
+		DisplayDamage(DamageTakenAmount, this);
     }
     
     return DamageAmount;
@@ -252,4 +261,36 @@ void AGameCharacter::CastSkill(FName SkillName)
 	{
 		SkillComponent->CastSkill(SkillName, StatusComponent);
 	}
+}
+
+void AGameCharacter::DisplayDamage(float Damage, AGameCharacter* HitActor)
+{
+    if (!HitActor || !DamageWidgetClass) return;
+
+    // Create the widget instance
+    //UDamageWidget* DamageWidget = CreateWidget<UDamageWidget>(GetWorld(), DamageWidgetClass);
+	UDamageWidget* DamageWidget = Cast<UDamageWidget>(WidgetComponent->GetUserWidgetObject());
+    if (DamageWidget)
+    {
+        DamageWidget->SetDamageValue(Damage);
+		DamageWidget->PlayDamageAnimation();
+
+        // Add to the viewport
+        //DamageWidget->AddToViewport();
+
+        // Optionally, position the widget in 3D space
+        // FVector HitLocation = HitActor->GetActorLocation();
+        // FVector2D ScreenPosition;
+        // if (UGameplayStatics::ProjectWorldToScreen(GetWorld()->GetFirstPlayerController(), HitLocation, ScreenPosition))
+        // {
+        //     DamageWidget->SetPositionInViewport(ScreenPosition);
+        // }
+
+        // Set a timer to remove the widget after some time
+        FTimerHandle RemoveTimer;
+        // GetWorld()->GetTimerManager().SetTimer(RemoveTimer, [DamageWidget]()
+        // {
+        //     DamageWidget->RemoveFromParent();
+        // }, 3.0f, false);
+    }
 }
