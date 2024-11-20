@@ -33,8 +33,11 @@ public:
 	float GetDefense();
 	void SetDefense(float NewDefense);
 
-	float GetHealth();
-	void SetHealth(float NewHealth);
+	float GetMaxHealth();
+	void SetMaxHealth(float NewHealth);
+
+	float GetCurrentHealth();
+	void SetCurrentHealth(float NewHealth);
 
 	bool GetIsActing();
 	void SetIsActing(bool NewIsActing);
@@ -56,7 +59,8 @@ private:
 	float AttackRadius;
 	float AttackSpeed;
 	float Defense;
-	float Health;
+	float MaxHealth;
+	float CurrentHealth;
 
 	bool IsActing;
 	bool CanAct;

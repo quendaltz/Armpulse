@@ -89,19 +89,34 @@ void UCharacterStatusComponent::SetDefense(float NewDefense)
 	Defense = NewDefense;
 }
 
-// HP	
-float UCharacterStatusComponent::GetHealth()
+// Max HP	
+float UCharacterStatusComponent::GetMaxHealth()
 {
-	return Health;
+	return MaxHealth;
 }
 
-void UCharacterStatusComponent::SetHealth(float NewHealth)
+void UCharacterStatusComponent::SetMaxHealth(float NewHealth)
+{
+	if (NewHealth < 1.0f)
+	{
+		NewHealth = 1.0f;
+	}
+	MaxHealth = NewHealth;
+}
+
+// HP	
+float UCharacterStatusComponent::GetCurrentHealth()
+{
+	return CurrentHealth;
+}
+
+void UCharacterStatusComponent::SetCurrentHealth(float NewHealth)
 {
 	if (NewHealth < 0.0f)
 	{
 		NewHealth = 0.0f;
 	}
-	Health = NewHealth;
+	CurrentHealth = NewHealth;
 }
 
 // IS ACT

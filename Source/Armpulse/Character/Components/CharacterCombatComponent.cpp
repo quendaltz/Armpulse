@@ -75,13 +75,13 @@ float UCharacterCombatComponent::HandleTakeDamage(UCharacterStatusComponent* Cha
 
 	if (CharacterStatusComponent)
 	{
-		float CurrentHealth = CharacterStatusComponent->GetHealth();
+		float CurrentHealth = CharacterStatusComponent->GetCurrentHealth();
 		if (CurrentHealth > 0.f)
 		{
 			float CurrentDefense = CharacterStatusComponent->GetDefense();
 			ActualDamage = DamageAmount - CurrentDefense;
 			CurrentHealth = CurrentHealth - ActualDamage;
-			CharacterStatusComponent->SetHealth(CurrentHealth);
+			CharacterStatusComponent->SetCurrentHealth(CurrentHealth);
 			if (CurrentHealth <= 0.f)
 			{
 				UE_LOG(LogTemp, Warning, TEXT("Die: %s, HP: %f"), *this->GetName(), CurrentHealth);

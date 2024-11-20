@@ -17,7 +17,7 @@ void AEnemyCharacter::BeginPlay()
     UCharacterStatusComponent* ParentStatusComponent = GetStatusComponent();
     if (ParentStatusComponent)
     {
-        ParentStatusComponent->SetHealth(100.0f);
+        ParentStatusComponent->SetCurrentHealth(100.0f);
         ParentStatusComponent->SetDefense(5.0f);
     }
 }

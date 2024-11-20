@@ -25,6 +25,7 @@
 #include "../Components/Movement/CharacterDashComponent.h"
 #include "../../Utility/BaseGameConfig.h"
 #include "../../Utility/Widgets/DamageWidget/DamageWidget.h"
+#include "../../Utility/Widgets/HealthBar/HealthBar.h"
 
 #include "DrawDebugHelpers.h"
 
@@ -50,11 +51,13 @@ AGameCharacter::AGameCharacter()
 	CharacterMesh = CreateDefaultSubobject<USkeletalMeshComponent>(TEXT("CharacterMesh"));
 	CharacterMesh->SetupAttachment(RootComponent);
 
-	WidgetComponent = CreateDefaultSubobject<UWidgetComponent>(TEXT("WidgetComponent"));
-    WidgetComponent->SetupAttachment(CharacterMesh);
+	DamageWidgetComponent = CreateDefaultSubobject<UWidgetComponent>(TEXT("DamageWidgetComponent"));
+    DamageWidgetComponent->SetupAttachment(CharacterMesh);
+	HealthBarComponent = CreateDefaultSubobject<UWidgetComponent>(TEXT("HealthBarComponent"));
+    HealthBarComponent->SetupAttachment(CharacterMesh);
 }
 
-// Called when the game starts or when spawned
+// Called when thDamageWidgetComponente game starts or when spawned
 void AGameCharacter::BeginPlay()
 {
 	Super::BeginPlay();
@@ -64,7 +67,9 @@ void AGameCharacter::BeginPlay()
         SkillComponent->InitializeSkills();
     }
 	CurrentAnimation = nullptr;
-	WidgetComponent->SetCastShadow(false);
+	DamageWidgetComponent->SetCastShadow(false);
+
+	HealthBarComponent->SetWidgetSpace(EWidgetSpace::Screen);
 }
 
 // Called every frame
@@ -87,7 +92,7 @@ void AGameCharacter::Tick(float DeltaTime)
 
 	if (StatusComponent)
 	{
-		auto Test = StatusComponent->GetHealth();
+		auto Test = StatusComponent->GetCurrentHealth();
 		//UE_LOG(LogTemp, Warning, TEXT("Hit: %s, %f"), *this->GetName(), Test);
 	}
 }
@@ -105,6 +110,8 @@ float AGameCharacter::TakeDamage(float DamageAmount, FDamageEvent const& DamageE
 	if (CombatComponent)
     {
         float DamageTakenAmount = CombatComponent->HandleTakeDamage(StatusComponent, DamageAmount, DamageEvent, EventInstigator, DamageCauser);
+		float CurrentHealthPercent = StatusComponent->GetCurrentHealth() / StatusComponent->GetMaxHealth();
+		UpdateHealthBar(CurrentHealthPercent);
 		DisplayDamage(DamageTakenAmount, this);
     }
     
@@ -270,7 +277,7 @@ void AGameCharacter::DisplayDamage(float Damage, AGameCharacter* HitActor)
 
     // Create the widget instance
     //UDamageWidget* DamageWidget = CreateWidget<UDamageWidget>(GetWorld(), DamageWidgetClass);
-	UDamageWidget* DamageWidget = Cast<UDamageWidget>(WidgetComponent->GetUserWidgetObject());
+	UDamageWidget* DamageWidget = Cast<UDamageWidget>(DamageWidgetComponent->GetUserWidgetObject());
     if (DamageWidget)
     {
         DamageWidget->SetDamageValue(Damage);
@@ -294,4 +301,15 @@ void AGameCharacter::DisplayDamage(float Damage, AGameCharacter* HitActor)
         //     DamageWidget->RemoveFromParent();
         // }, 3.0f, false);
     }
+}
+
+void AGameCharacter::UpdateHealthBar(float HealthPercent)
+{
+	if (!HealthBarComponent) return;
+
+	UHealthBar* HealthBarWidget = Cast<UHealthBar>(HealthBarComponent->GetUserWidgetObject());
+	if (HealthBarWidget)
+	{
+		HealthBarWidget->UpdateHealthProgressBar(HealthPercent);
+	}
 }

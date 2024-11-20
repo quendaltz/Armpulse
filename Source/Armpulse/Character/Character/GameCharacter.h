@@ -6,6 +6,7 @@
 
 class UCapsuleComponent;
 class UAnimMontage;
+class UWidgetComponent;
 UCLASS()
 class ARMPULSE_API AGameCharacter : public APawn
 {
@@ -51,8 +52,11 @@ private:
 	UPROPERTY(EditDefaultsOnly, Category = "UI")
 	TSubclassOf<class UDamageWidget> DamageWidgetClass;
 
+	// widgets
 	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, meta = (AllowPrivateAccess = "true"))
-	class UWidgetComponent* WidgetComponent;
+	UWidgetComponent* DamageWidgetComponent;
+	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, meta = (AllowPrivateAccess = "true"))
+	UWidgetComponent* HealthBarComponent;
 
 public:	
 	virtual void Tick(float DeltaTime) override;
@@ -71,4 +75,5 @@ public:
 	void AttackTriggered();
 	void CastSkill(FName SkillName);
 	void DisplayDamage(float Damage, AGameCharacter* HitActor);
+	void UpdateHealthBar(float HealthPercent);
 };
