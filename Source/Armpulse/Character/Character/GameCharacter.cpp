@@ -152,6 +152,48 @@ void AGameCharacter::ExecuteMontage(UAnimMontage* TargetMontage, bool DynamicDur
 	}
 }
 
+void AGameCharacter::PauseMontage(UAnimMontage* TargetMontage, float PauseTime, float PauseDuration, float ResumePlayRate)
+{
+	UAnimInstance* AnimInstance = CharacterMesh->GetAnimInstance();
+    if (TargetMontage && AnimInstance)
+	{
+		FTimerHandle PauseMontageTimerHandle;
+        FTimerDelegate PauseMontageFunction;
+        PauseMontageFunction.BindLambda([AnimInstance, TargetMontage]()
+        {
+            AnimInstance->Montage_Pause(TargetMontage);
+        });
+        GetWorld()->GetTimerManager().SetTimer(PauseMontageTimerHandle, PauseMontageFunction, PauseTime, false);
+
+		FTimerHandle ResumeTimerHandle;
+		FTimerDelegate ResumeMontageFunction;
+		ResumeMontageFunction.BindLambda([AnimInstance, TargetMontage, ResumePlayRate]()
+        {
+			AnimInstance->Montage_SetPlayRate(TargetMontage, ResumePlayRate);
+            AnimInstance->Montage_Resume(TargetMontage);
+        });
+		GetWorld()->GetTimerManager().SetTimer(ResumeTimerHandle, ResumeMontageFunction, PauseDuration, false);
+	}
+}
+
+void AGameCharacter::ResumeMontage(UAnimMontage* TargetMontage)
+{
+	UAnimInstance* AnimInstance = CharacterMesh->GetAnimInstance();
+    if (TargetMontage && AnimInstance)
+	{
+		AnimInstance->Montage_Resume(TargetMontage);
+	}   
+}
+
+void AGameCharacter::SetMontagePlayRate(UAnimMontage* TargetMontage, float PlayRate)
+{
+	UAnimInstance* AnimInstance = CharacterMesh->GetAnimInstance();
+    if (TargetMontage && AnimInstance)
+	{
+		AnimInstance->Montage_SetPlayRate(TargetMontage, PlayRate);
+	}   
+}
+
 void AGameCharacter::ExecuteAnimation(UAnimSequence* AnimationToPlay, bool bLoop)
 {
 	if (CharacterMesh)

@@ -14,8 +14,8 @@
 USwordRushSkill::USwordRushSkill()
 {
     SkillName = "Sword Rush";
-    ActionLockTime = 2.0f;
-    CooldownTime = 4.0f;
+    ActionLockTime = 2.2f;
+    CooldownTime = 5.0f;
 }
 
 void USwordRushSkill::ActivateSkill(AGameCharacter* Instigator, AController* InstigatorController)
@@ -27,8 +27,12 @@ void USwordRushSkill::ActivateSkill(AGameCharacter* Instigator, AController* Ins
     // skill properties
     float RushMultiplier = 0.8f; // 240% rush total damage
     float RushHit = 3.0f; // 3 hits
-    float RushDistance = 200.0f;
+    float RushDistance = 400.0f;
     float RushSpeed = 3000.0f;
+    float ChargeStartTime = 0.04f; // before dash
+    float ChargeDuration = 1.26f;
+    float DashDuration = 0.2f;
+    float EndDuration = 0.6f;
 
     auto DamageTypeClass = UDamageType::StaticClass();
     float CharacterAttackPower = 0.0f;
@@ -47,6 +51,7 @@ void USwordRushSkill::ActivateSkill(AGameCharacter* Instigator, AController* Ins
     }
 
     float SkillDamage = CharacterAttackPower * RushMultiplier;
+    UE_LOG(LogTemp, Display, TEXT("Cal: %f, %f, %f"), CharacterAttackPower, RushMultiplier, SkillDamage);
 
     FRotator AttackRotation = Instigator->GetActorRotation();
     FVector HitboxSpawnLocation = Instigator->GetForwardCharacterLocation(RushDistance / 2.0f);
@@ -61,14 +66,57 @@ void USwordRushSkill::ActivateSkill(AGameCharacter* Instigator, AController* Ins
 
     if (SwordRushMontage)
     {
-        Instigator->ExecuteMontage(SwordRushMontage, true, ActionLockTime);
+        float AnimationTimeMultipiler = ActionLockTime / SwordRushMontage->GetPlayLength();
+
+        Instigator->ExecuteMontage(SwordRushMontage); // play as default 1x rate
+
+        FTimerHandle StartChargeTimer;
+        FTimerDelegate StartChargeFunction;
+        StartChargeFunction.BindLambda([this, Instigator, ChargeDuration]()
+        {
+            //UE_LOG(LogTemp, Display, TEXT("0.5f"));
+            Instigator->SetMontagePlayRate(SwordRushMontage, 0.02f/ChargeDuration);
+        });
+
+        FTimerHandle ReleaseChargeTimer;
+        FTimerDelegate ReleaseChargeFunction;
+        ReleaseChargeFunction.BindLambda([this, Instigator, DashDuration]()
+        {
+            //UE_LOG(LogTemp, Display, TEXT("0.4f ?? 0.9f"));
+            Instigator->SetMontagePlayRate(SwordRushMontage, 0.32f/DashDuration);
+        });
+
+        FTimerHandle EndTimer;
+        FTimerDelegate EndFunction;
+        EndFunction.BindLambda([this, Instigator, EndDuration]()
+        {
+            Instigator->SetMontagePlayRate(SwordRushMontage, 0.82f/EndDuration);
+        });
+
+        // animation 1.2 secs > swing 0.04 / charge 0.04 > 0.06 / dash 0.06 > 0.38 / end 0.38 > 1.20
+        // desire 2 secs > swing 0.04 / charge 1.26 / dash 0.2 / end 0.6
+
+        // holysht SetTimer is not await function :/
+        GetWorld()->GetTimerManager().SetTimer(StartChargeTimer, StartChargeFunction, ChargeStartTime, false); // start charge
+        GetWorld()->GetTimerManager().SetTimer(ReleaseChargeTimer, ReleaseChargeFunction, ChargeStartTime + ChargeDuration, false); // start dash
+        GetWorld()->GetTimerManager().SetTimer(EndTimer, EndFunction, ChargeStartTime + ChargeDuration + DashDuration, false); // attack end
     }
 
-    Instigator->GetDashComponent()->StartDash(RushDistance, RushSpeed);
+    FTimerHandle RemoveTimer;
+    FTimerDelegate StartDashFunction;
+	StartDashFunction.BindLambda([Instigator, RushDistance, RushSpeed]()
+	{
+		Instigator->GetDashComponent()->StartDash(RushDistance, RushSpeed);
+	});
+    // ChargeStartTime + ChargeDuration = Start Dash
+    GetWorld()->GetTimerManager().SetTimer(RemoveTimer, StartDashFunction, ChargeStartTime + ChargeDuration, false);
 
+    //UE_LOG(LogTemp, Warning, TEXT("AnimationTime: %f, %f"), ActionLockTime, );
+    
     DrawDebugBox(GetWorld(), HitboxSpawnLocation, HitboxSize, HitboxRotation, FColor::Green, false, 1.0f); // Duration is 1 second
 
     // Check for enemies within the hitbox
+    // TO FIX: deal damage after dash ends
     TArray<FOverlapResult> OverlapResults;
     bool bOverlap = GetWorld()->OverlapMultiByChannel(
         OverlapResults,

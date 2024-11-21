@@ -68,8 +68,13 @@ public:
 	FORCEINLINE UCharacterDashComponent* GetDashComponent() const { return DashComponent; }
 
 	FVector GetForwardCharacterLocation(float ForwardDistance = 0.0f);
-    void ExecuteMontage(UAnimMontage* TargetMontage, bool DynamicDuration, float DesiredDuration = 0.0f);
+
+    void ExecuteMontage(UAnimMontage* TargetMontage, bool DynamicDuration = false, float DesiredDuration = 0.0f);
+	void PauseMontage(UAnimMontage* TargetMontage, float PauseTime, float PauseDuration, float ResumePlayRate = 1.0f);
+	void ResumeMontage(UAnimMontage* TargetMontage);
+	void SetMontagePlayRate(UAnimMontage* TargetMontage, float PlayRate);
     void ExecuteAnimation(UAnimSequence* AnimationToPlay, bool bLoop = false);
+
 	void MoveTriggered(const struct FInputActionValue& Value);
 	void MoveCompleted(const struct FInputActionValue& Value);
 	void AttackTriggered();
