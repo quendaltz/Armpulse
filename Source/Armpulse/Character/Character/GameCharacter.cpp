@@ -326,7 +326,7 @@ void AGameCharacter::DisplayDamage(float Damage, AGameCharacter* HitActor)
     // Create the widget instance
     //UDamageWidget* DamageWidget = CreateWidget<UDamageWidget>(GetWorld(), DamageWidgetClass);
 	UDamageWidget* DamageWidget = Cast<UDamageWidget>(DamageWidgetComponent->GetUserWidgetObject());
-    if (DamageWidget)
+    if (DamageWidget && Damage > 0.0f)
     {
         DamageWidget->SetDamageValue(Damage);
 		DamageWidget->PlayDamageAnimation();
@@ -343,7 +343,6 @@ void AGameCharacter::DisplayDamage(float Damage, AGameCharacter* HitActor)
         // }
 
         // Set a timer to remove the widget after some time
-        FTimerHandle RemoveTimer;
         // GetWorld()->GetTimerManager().SetTimer(RemoveTimer, [DamageWidget]()
         // {
         //     DamageWidget->RemoveFromParent();
