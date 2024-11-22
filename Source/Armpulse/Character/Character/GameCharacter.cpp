@@ -207,7 +207,7 @@ void AGameCharacter::MoveTriggered(const FInputActionValue& Value)
 	FVector2D MoveActionValue = Value.Get<FVector2D>();
 	if (StatusComponent->GetCanMove() && StatusComponent->GetCanAct())
 	{
-		bool bIsMoving = !MoveActionValue.IsNearlyZero();
+		bool bIsMoving = !MoveActionValue.IsNearlyZero(); // input value -> moving
 		if (MoveAnimation)
 		{
 			if (bIsMoving && CurrentAnimation != MoveAnimation)
@@ -230,21 +230,27 @@ void AGameCharacter::MoveTriggered(const FInputActionValue& Value)
 
 			FVector2D MoveDistance = MoveActionValue * StatusComponent->GetMoveSpeed() * DeltaTime;
 			FVector CurrentLocation = GetActorLocation();
-
 			// set initial desired location
 			FVector NewLocation = CurrentLocation + FVector(MoveDistance.X, -MoveDistance.Y, 0.0f);
-			if (false) // blocked by left/right obstacle
-			{
-				// remove corresponding movement direction
-				NewLocation -= FVector(MoveDistance.X, 0.0f, 0.0f);
-			}
-			if (false) // blocked by up/down obstacle
-			{
-				// remove corresponding movement direction
-				NewLocation -= FVector(0.0f, -MoveDistance.Y, 0.0f);
-			}
 
-			SetActorLocation(NewLocation);
+			float ActorCapsuleRadius = CapsuleComponent->GetScaledCapsuleRadius();
+			FHitResult HitResult;
+			FCollisionQueryParams CollisionParams;
+			CollisionParams.AddIgnoredActor(this);  // Ignore self
+			bool bHit = GetWorld()->SweepSingleByChannel(
+				HitResult,
+				CurrentLocation,
+				NewLocation,
+				FQuat::Identity,
+				ECC_Visibility,
+				FCollisionShape::MakeSphere(ActorCapsuleRadius),
+				CollisionParams
+			);
+
+			if (!bHit) // blocked by obstacle
+			{
+				SetActorLocation(NewLocation); // Stop moving if collision found
+			}
 
 			// rotate character
 			FVector MoveDirection = (BaseGameConfig::BaseCharacterForwardDirection() * MoveActionValue.Y) + (BaseGameConfig::BaseCharacterRightDirection() * MoveActionValue.X);
