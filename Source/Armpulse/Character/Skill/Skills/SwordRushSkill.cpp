@@ -102,41 +102,47 @@ void USwordRushSkill::ActivateSkill(AGameCharacter* Instigator, AController* Ins
         GetWorld()->GetTimerManager().SetTimer(EndTimer, EndFunction, ChargeStartTime + ChargeDuration + DashDuration, false); // attack end
     }
 
-    FTimerHandle RemoveTimer;
+    FTimerHandle StartDashTimer;
     FTimerDelegate StartDashFunction;
 	StartDashFunction.BindLambda([Instigator, RushDistance, RushSpeed]()
 	{
 		Instigator->GetDashComponent()->StartDash(RushDistance, RushSpeed);
 	});
     // ChargeStartTime + ChargeDuration = Start Dash
-    GetWorld()->GetTimerManager().SetTimer(RemoveTimer, StartDashFunction, ChargeStartTime + ChargeDuration, false);
+    GetWorld()->GetTimerManager().SetTimer(StartDashTimer, StartDashFunction, ChargeStartTime + ChargeDuration, false);
 
     //UE_LOG(LogTemp, Warning, TEXT("AnimationTime: %f, %f"), ActionLockTime, );
     
     DrawDebugBox(GetWorld(), HitboxSpawnLocation, HitboxSize, HitboxRotation, FColor::Green, false, 1.0f); // Duration is 1 second
 
     // Check for enemies within the hitbox
-    // TO FIX: deal damage after dash ends
-    TArray<FOverlapResult> OverlapResults;
-    bool bOverlap = GetWorld()->OverlapMultiByChannel(
-        OverlapResults,
-        HitboxSpawnLocation,
-        HitboxRotation,
-        ECC_GameTraceChannel1,
-        Hitbox,
-        CollisionParams
-    );
 
-    if (bOverlap)
-    {
-        for (FOverlapResult& Overlap : OverlapResults)
+    FTimerHandle DashAttackTimer;
+    FTimerDelegate DashAttackFunction;
+	DashAttackFunction.BindLambda([=, this]()
+	{
+		TArray<FOverlapResult> OverlapResults;
+        bool bOverlap = GetWorld()->OverlapMultiByChannel(
+            OverlapResults,
+            HitboxSpawnLocation,
+            HitboxRotation,
+            ECC_GameTraceChannel1,
+            Hitbox,
+            CollisionParams
+        );
+
+        if (bOverlap)
         {
-            if (AActor* OverlapActor = Overlap.GetActor())
+            for (FOverlapResult& Overlap : OverlapResults)
             {
-                // Apply damage or other effects
-                UE_LOG(LogTemp, Warning, TEXT("Overlap: %s"), *OverlapActor->GetName());
-                UGameplayStatics::ApplyDamage(OverlapActor, SkillDamage, InstigatorController, Instigator, DamageTypeClass);
+                if (AActor* OverlapActor = Overlap.GetActor())
+                {
+                    // Apply damage or other effects
+                    UE_LOG(LogTemp, Warning, TEXT("Overlap: %s"), *OverlapActor->GetName());
+                    UGameplayStatics::ApplyDamage(OverlapActor, SkillDamage, InstigatorController, Instigator, DamageTypeClass);
+                }
             }
         }
-    }
+	});
+    GetWorld()->GetTimerManager().SetTimer(DashAttackTimer, DashAttackFunction, ChargeStartTime + ChargeDuration + DashDuration, false);
 }
