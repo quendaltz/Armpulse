@@ -111,16 +111,11 @@ void USwordRushSkill::ActivateSkill(AGameCharacter* Instigator, AController* Ins
     // ChargeStartTime + ChargeDuration = Start Dash
     GetWorld()->GetTimerManager().SetTimer(StartDashTimer, StartDashFunction, ChargeStartTime + ChargeDuration, false);
 
-    //UE_LOG(LogTemp, Warning, TEXT("AnimationTime: %f, %f"), ActionLockTime, );
-    
-    DrawDebugBox(GetWorld(), HitboxSpawnLocation, HitboxSize, HitboxRotation, FColor::Green, false, 1.0f); // Duration is 1 second
-
-    // Check for enemies within the hitbox
-
     FTimerHandle DashAttackTimer;
     FTimerDelegate DashAttackFunction;
 	DashAttackFunction.BindLambda([=, this]()
 	{
+        // Check for enemies within the hitbox
 		TArray<FOverlapResult> OverlapResults;
         bool bOverlap = GetWorld()->OverlapMultiByChannel(
             OverlapResults,
@@ -143,6 +138,8 @@ void USwordRushSkill::ActivateSkill(AGameCharacter* Instigator, AController* Ins
                 }
             }
         }
+
+        DrawDebugBox(GetWorld(), HitboxSpawnLocation, HitboxSize, HitboxRotation, FColor::Green, false, 1.0f); // Duration is 1 second
 	});
     GetWorld()->GetTimerManager().SetTimer(DashAttackTimer, DashAttackFunction, ChargeStartTime + ChargeDuration + DashDuration, false);
 }

@@ -2,9 +2,11 @@
 
 #include "Components/CapsuleComponent.h"
 
-#include "../../Character/GameCharacter.h"
-
 #include "Kismet/KismetSystemLibrary.h"
+
+#include "../../Character/GameCharacter.h"
+#include "../../../Utility/BaseGameConfig.h"
+
 
 UCharacterDashComponent::UCharacterDashComponent()
 {
@@ -43,11 +45,13 @@ void UCharacterDashComponent::StartDash(float Distance, float Speed = 1000.0f)
     DashStartLocation = OwnerCharacter->GetActorLocation();
     DashEndLocation = OwnerCharacter->GetForwardCharacterLocation(DashDistance);
 
+    float DeltaTime = GetWorld()->DeltaTimeSeconds;
+    FVector CharacterCollisionBlockSize = BaseGameConfig::BaseCharacterForwardDirection() * ActorCapsuleRadius * DeltaTime;
+
     // Perform collision check to stop dash early if needed
     FHitResult HitResult;
     FCollisionQueryParams CollisionParams;
     CollisionParams.AddIgnoredActor(OwnerCharacter);  // Ignore self
-
     bool bHit = GetWorld()->SweepSingleByChannel(
         HitResult,
         DashStartLocation,
@@ -60,7 +64,9 @@ void UCharacterDashComponent::StartDash(float Distance, float Speed = 1000.0f)
 
     if (bHit)
     {
-        DashEndLocation = HitResult.Location;  // Stop at collision
+        // Stop at collision
+        // -CharacterCollisionBlockSize to prevent character stuck
+        DashEndLocation = HitResult.Location - CharacterCollisionBlockSize;
     }
 
     // Start dashing
