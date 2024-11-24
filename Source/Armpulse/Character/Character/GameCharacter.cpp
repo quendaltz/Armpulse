@@ -372,5 +372,11 @@ void AGameCharacter::UpdateHealthBar(float HealthPercent)
 
 void AGameCharacter::Die()
 {
-	SetLifeSpan(3.0f);
+	FTimerHandle DieTimerHandle;
+	FTimerDelegate DieFunction;
+	DieFunction.BindLambda([this]()
+	{
+		Destroy();
+	});
+	GetWorld()->GetTimerManager().SetTimer(DieTimerHandle, DieFunction, 3.0f, false);
 }
