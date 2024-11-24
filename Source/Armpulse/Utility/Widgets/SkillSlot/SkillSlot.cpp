@@ -9,6 +9,7 @@
 void USkillSlot::SetAssignedSkill(UCharacterSkillBase* NewSkill)
 {
     AssignedSkill = NewSkill;
+    SkillCooldownOverlay->SetVisibility(ESlateVisibility::Hidden);
     UTexture2D* SkillIconTexture = NewSkill->GetSkillIcon();
     if (SkillIcon && SkillIconTexture)
     {
@@ -39,13 +40,6 @@ void USkillSlot::NativeTick(const FGeometry& MyGeometry, float InDeltaTime)
     if (SkillCurrentCooldown > 0.0f)
     {
         SkillCurrentCooldown -= InDeltaTime;
-
-        // Update Cooldown Overlay Alpha or Scale
-        if (SkillCooldownOverlay)
-        {
-            float Alpha = SkillCurrentCooldown / SkillTotalCooldown;
-            SkillCooldownOverlay->SetRenderOpacity(Alpha); // Adjust opacity based on remaining time
-        }
 
         // Update Cooldown Text
         if (SkillCooldownText)

@@ -67,7 +67,7 @@ void AGamePlayerController::SetupWidget()
         if (SkillBarWidgetInstance)
         {
             SkillBarWidgetInstance->AddToViewport();
-			FVector2D SkillBarWidgetPosition(100.0f, 50.0f);
+			FVector2D SkillBarWidgetPosition(150.0f, 100.0f);
 			SkillBarWidgetInstance->SetPositionInViewport(SkillBarWidgetPosition, false);
 
 			USkillBar* SkillBar = Cast<USkillBar>(SkillBarWidgetInstance);
