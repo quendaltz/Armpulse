@@ -53,7 +53,7 @@ void UCharacterCombatComponent::Attack(UCharacterStatusComponent* CharacterStatu
 	CharacterStatusComponent->SetCanAct(false);
 	if (AttackComponent)
 	{
-		GEngine->AddOnScreenDebugMessage(-1, 2.0f, FColor::White, TEXT("AttackComponent Detected"));
+		//GEngine->AddOnScreenDebugMessage(-1, 2.0f, FColor::White, TEXT("AttackComponent Detected"));
 		AttackComponent->ExecuteAttack(100.0f/AttackSpeed);
 	}
 

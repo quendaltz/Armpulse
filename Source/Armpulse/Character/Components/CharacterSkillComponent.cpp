@@ -62,7 +62,7 @@ bool UCharacterSkillComponent::CastSkill(int32 SkillIndex, UCharacterStatusCompo
         TSubclassOf<UCharacterSkillBase> Skill = *ActiveSkills[SkillIndex];
         if (Skill)
         {
-            GEngine->AddOnScreenDebugMessage(-1, 2.0f, FColor::White, TEXT("Skill [0] Found!"));
+            //GEngine->AddOnScreenDebugMessage(-1, 2.0f, FColor::White, TEXT("Skill [0] Found!"));
 
             UCharacterSkillBase* SkillInstance = NewObject<UCharacterSkillBase>(this, Skill);
             UE_LOG(LogTemp, Display, TEXT("%d"), IsCooldown);
