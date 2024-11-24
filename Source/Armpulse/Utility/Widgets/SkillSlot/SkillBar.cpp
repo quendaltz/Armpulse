@@ -10,11 +10,13 @@
 void USkillBar::InitializeSkillBar(const TArray<TSubclassOf<UCharacterSkillBase>>& ActiveSkills)
 {
     if (!SkillBarContainer) return;
-    for (const auto& Skill : ActiveSkills)
+    for (int32 Index = 0; Index < ActiveSkills.Num(); Index++)
     {
+        const auto& Skill = ActiveSkills[Index];
         USkillSlot* SkillSlot = CreateWidget<USkillSlot>(GetWorld(), SkillSlotClass);
         if (SkillSlot)
         {
+            SkillSlot->SetSkillKey(SkillKeys[Index]);
             if (Skill)
             {
                 UCharacterSkillBase* SkillInstance = NewObject<UCharacterSkillBase>(this, Skill);

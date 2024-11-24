@@ -6,6 +6,11 @@
 
 #include "../../../Character/Skill/CharacterSkillBase.h"
 
+void USkillSlot::SetSkillKey(FString Key)
+{
+    SkillKeyText->SetText(FText::FromString(Key));
+}
+
 void USkillSlot::SetAssignedSkill(UCharacterSkillBase* NewSkill)
 {
     AssignedSkill = NewSkill;

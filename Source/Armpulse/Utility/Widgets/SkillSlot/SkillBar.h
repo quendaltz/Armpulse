@@ -24,4 +24,7 @@ public:
 private:
     UPROPERTY(meta = (BindWidget))
     UHorizontalBox* SkillBarContainer;
+
+    UPROPERTY(EditAnywhere, BlueprintReadWrite, meta = (AllowPrivateAccess = "true"))
+    TArray<FString> SkillKeys = { TEXT("A"), TEXT("S"), TEXT("D"), TEXT("F") };
 };

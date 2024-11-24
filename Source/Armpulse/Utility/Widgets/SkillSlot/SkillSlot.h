@@ -5,6 +5,8 @@
 #include "SkillSlot.generated.h"
 
 class UCharacterSkillBase;
+class UImage;
+class UTextBlock;
 UCLASS()
 class ARMPULSE_API USkillSlot : public UUserWidget
 {
@@ -19,16 +21,20 @@ protected:
 
 public:
     UPROPERTY(meta = (BindWidget)) // Bound to the Skill Icon widget
-    class UImage* SkillIcon;
+    UImage* SkillIcon;
 
     UPROPERTY(meta = (BindWidget)) // Bound to the Cooldown Overlay widget
-    class UImage* SkillCooldownOverlay;
+    UImage* SkillCooldownOverlay;
 
     UPROPERTY(meta = (BindWidget)) // Bound to the Cooldown Text widget
-    class UTextBlock* SkillCooldownText;
+    UTextBlock* SkillCooldownText;
+
+    UPROPERTY(meta = (BindWidget)) // Bound to the Cooldown Text widget
+    UTextBlock* SkillKeyText;
 
     UFUNCTION(BlueprintCallable)
     void SetAssignedSkill(UCharacterSkillBase* NewSkill);
+    void SetSkillKey(FString Key);
     
     void SetSkillCooldown();
 
