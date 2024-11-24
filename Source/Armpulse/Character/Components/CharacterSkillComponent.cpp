@@ -11,6 +11,7 @@ UCharacterSkillComponent::UCharacterSkillComponent()
 {
     PrimaryComponentTick.bCanEverTick = false;
     ActiveSkills.Init(nullptr, 4);
+    CooldownSkills.Init(false, 4);
 }
 
 void UCharacterSkillComponent::InitializeSkills()
@@ -55,27 +56,42 @@ bool UCharacterSkillComponent::CastSkill(int32 SkillIndex, UCharacterStatusCompo
     {
         bool IsActing = CharacterStatusComponent->GetIsActing();
         bool CanAction = CharacterStatusComponent->GetCanAct();
-        if (!CanAction && IsActing) return false;
+        bool IsCooldown = CooldownSkills[SkillIndex];
+        if (!CanAction || IsActing || IsCooldown) return false;
 
         TSubclassOf<UCharacterSkillBase> Skill = *ActiveSkills[SkillIndex];
         if (Skill)
         {
-            FTimerDelegate TimerFunction;
-            TimerFunction.BindLambda([this, CharacterStatusComponent]()
+            GEngine->AddOnScreenDebugMessage(-1, 2.0f, FColor::White, TEXT("Skill [0] Found!"));
+
+            UCharacterSkillBase* SkillInstance = NewObject<UCharacterSkillBase>(this, Skill);
+            UE_LOG(LogTemp, Display, TEXT("%d"), IsCooldown);
+            if (IsCooldown) return false;
+
+            FTimerHandle ResetActionTimer;
+            FTimerDelegate ResetActionFunction;
+            ResetActionFunction.BindLambda([this, CharacterStatusComponent]()
             {
                 CharacterStatusComponent->ResetActionState();
             });
 
-            GEngine->AddOnScreenDebugMessage(-1, 2.0f, FColor::White, TEXT("Sword Rush Found!"));
-            UCharacterSkillBase* SkillInstance = NewObject<UCharacterSkillBase>(this, Skill);
+            FTimerHandle ResetCooldownTimer;
+            FTimerDelegate ResetCooldownFunction;
+            ResetCooldownFunction.BindLambda([this, SkillIndex]()
+            {
+                CooldownSkills[SkillIndex] = false;
+            });
+
             float ActionLockTime = SkillInstance->GetActionLockTime();
             float SkillCooldownTime = SkillInstance->GetCooldownTime();
 
+            CooldownSkills[SkillIndex] = true;
             CharacterStatusComponent->SetIsActing(true);
 	        CharacterStatusComponent->SetCanAct(false);
             SkillInstance->ActivateSkill(OwnerCharacter, OwnerInstigator);
 
-            GetWorld()->GetTimerManager().SetTimer(ActionTimer, TimerFunction, ActionLockTime, false);
+            GetWorld()->GetTimerManager().SetTimer(ResetActionTimer, ResetActionFunction, ActionLockTime, false);
+            GetWorld()->GetTimerManager().SetTimer(ResetCooldownTimer, ResetCooldownFunction, SkillCooldownTime, false);
         }
         return true;
     }

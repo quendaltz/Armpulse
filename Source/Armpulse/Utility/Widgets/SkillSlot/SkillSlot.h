@@ -4,6 +4,7 @@
 #include "Blueprint/UserWidget.h"
 #include "SkillSlot.generated.h"
 
+class UCharacterSkillBase;
 UCLASS()
 class ARMPULSE_API USkillSlot : public UUserWidget
 {
@@ -27,7 +28,9 @@ public:
     class UTextBlock* SkillCooldownText;
 
     UFUNCTION(BlueprintCallable)
-    void SetSkillCooldown(float NewCooldownDuration);
+    void SetAssignedSkill(UCharacterSkillBase* NewSkill);
+    
+    void SetSkillCooldown();
 
 protected:
     virtual void NativeTick(const FGeometry& MyGeometry, float InDeltaTime) override;
@@ -36,4 +39,5 @@ private:
     float SkillCurrentCooldown;
     float SkillTotalCooldown;
     
+    UCharacterSkillBase* AssignedSkill;
 };

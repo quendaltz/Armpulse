@@ -27,6 +27,6 @@ protected:
     UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Skills")
     TArray<TSubclassOf<UCharacterSkillBase>> ActiveSkills;
 
-private:
-	FTimerHandle ActionTimer;
+    UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Skills")
+    TArray<bool> CooldownSkills;
 };
