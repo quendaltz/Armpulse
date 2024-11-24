@@ -2,11 +2,10 @@
 
 #include "CoreMinimal.h"
 
-#include "../Skill/CharacterSkillBase.h"
-
 #include "CharacterSkillComponent.generated.h"
 
 class UCharacterStatusComponent;
+class UCharacterSkillBase;
 UCLASS(ClassGroup=(Custom), meta=(BlueprintSpawnableComponent))
 class ARMPULSE_API UCharacterSkillComponent : public UActorComponent
 {
