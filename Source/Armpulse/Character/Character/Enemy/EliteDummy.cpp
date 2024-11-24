@@ -1,26 +1,26 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
 
-#include "EnemyCharacter.h"
+#include "EliteDummy.h"
 
 #include "../../Components/CharacterStatusComponent.h"
 
-AEnemyCharacter::AEnemyCharacter()
+AEliteDummy::AEliteDummy()
 {
 
 }
 
-void AEnemyCharacter::BeginPlay()
+void AEliteDummy::BeginPlay()
 {
     Super::BeginPlay();
 
     UCharacterStatusComponent* ParentStatusComponent = GetStatusComponent();
     if (ParentStatusComponent)
     {
-        float InitialHealth = 150.0f;
+        float InitialHealth = 200.0f;
         ParentStatusComponent->SetMaxHealth(InitialHealth);
         ParentStatusComponent->SetCurrentHealth(InitialHealth);
-        ParentStatusComponent->SetDefense(5.0f);
+        ParentStatusComponent->SetDefense(10.0f);
         UpdateHealthBar(InitialHealth/InitialHealth);
     }
 }

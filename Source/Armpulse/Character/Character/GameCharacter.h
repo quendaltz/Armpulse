@@ -82,4 +82,6 @@ public:
 	bool CastSkill(int32 SkillIndex);
 	void DisplayDamage(float Damage, AGameCharacter* HitActor);
 	void UpdateHealthBar(float HealthPercent);
+
+	void Die();
 };

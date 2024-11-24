@@ -110,9 +110,16 @@ float AGameCharacter::TakeDamage(float DamageAmount, FDamageEvent const& DamageE
 	if (CombatComponent)
     {
         float DamageTakenAmount = CombatComponent->HandleTakeDamage(StatusComponent, DamageAmount, DamageEvent, EventInstigator, DamageCauser);
-		float CurrentHealthPercent = StatusComponent->GetCurrentHealth() / StatusComponent->GetMaxHealth();
+		float CurrentHealth = StatusComponent->GetCurrentHealth();
+		float CurrentHealthPercent = CurrentHealth / StatusComponent->GetMaxHealth();
 		UpdateHealthBar(CurrentHealthPercent);
 		DisplayDamage(DamageTakenAmount, this);
+
+		if (CurrentHealth <= 0.f)
+		{
+			UE_LOG(LogTemp, Warning, TEXT("Die: %s, HP: %f"), *this->GetName(), CurrentHealth);
+			Die();
+		}
     }
     
     return DamageAmount;
@@ -361,4 +368,9 @@ void AGameCharacter::UpdateHealthBar(float HealthPercent)
 	{
 		HealthBarWidget->UpdateHealthProgressBar(HealthPercent);
 	}
+}
+
+void AGameCharacter::Die()
+{
+	SetLifeSpan(3.0f);
 }

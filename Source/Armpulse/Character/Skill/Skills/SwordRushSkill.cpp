@@ -25,8 +25,8 @@ void USwordRushSkill::ActivateSkill(AGameCharacter* Instigator, AController* Ins
     UCharacterStatusComponent* CharacterStatusComponent = Instigator->GetStatusComponent();
 
     // skill properties
-    float RushMultiplier = 0.8f; // 240% rush total damage
-    float RushHit = 3.0f; // 3 hits
+    float RushMultiplier = 1.7f; // 170% rush damage
+    //float RushHit = 3.0f; // 3 hits
     float RushDistance = 400.0f;
     float RushSpeed = 3000.0f;
     float ChargeStartTime = 0.04f; // before dash

@@ -82,11 +82,6 @@ float UCharacterCombatComponent::HandleTakeDamage(UCharacterStatusComponent* Cha
 			ActualDamage = DamageAmount - CurrentDefense;
 			CurrentHealth = CurrentHealth - ActualDamage;
 			CharacterStatusComponent->SetCurrentHealth(CurrentHealth);
-			if (CurrentHealth <= 0.f)
-			{
-				UE_LOG(LogTemp, Warning, TEXT("Die: %s, HP: %f"), *this->GetName(), CurrentHealth);
-				//Die();  // Custom function to handle death
-			}
 		}
 	}
 
