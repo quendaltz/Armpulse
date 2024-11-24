@@ -84,7 +84,7 @@ void UAttackComponent::ExecuteAttack(float AttackDuration)
             OwnerCharacter->ExecuteMontage(AttackMontage, true, AttackDuration);
         }
         
-        DrawDebugBox(GetWorld(), HitboxSpawnLocation, HitboxSize, HitboxRotation, FColor::Green, false, 1.0f); // Duration is 1 second
+        //DrawDebugBox(GetWorld(), HitboxSpawnLocation, HitboxSize, HitboxRotation, FColor::Green, false, 1.0f); // Duration is 1 second
 
         // Check for enemies within the hitbox
         TArray<FOverlapResult> OverlapResults;

@@ -14,7 +14,10 @@
 		"npm.autoDetect": "off",
 		"files.associations": {
 			"*.rh": "cpp",
-			"random": "cpp"
+			"random": "cpp",
+			"__config": "cpp",
+			"xiosbase": "cpp",
+			"fft": "cpp"
 		}
 	},
 	"extensions": {

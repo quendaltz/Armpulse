@@ -87,7 +87,7 @@ void AGameCharacter::Tick(float DeltaTime)
         float Duration = 0.0f; // The sphere will stay for 5 seconds
         float Thickness = 2.0f; // Optional, for the line thickness
 
-        DrawDebugCapsule(GetWorld(), CapsuleLocation, CapsuleHalfHeight, CapsuleRadius, FQuat::Identity, DebugColor, false, Duration, 0, Thickness);
+        //DrawDebugCapsule(GetWorld(), CapsuleLocation, CapsuleHalfHeight, CapsuleRadius, FQuat::Identity, DebugColor, false, Duration, 0, Thickness);
     }
 
 	if (StatusComponent)
