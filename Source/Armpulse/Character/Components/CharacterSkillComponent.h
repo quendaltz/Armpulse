@@ -16,14 +16,16 @@ public:
 
     void InitializeSkills();
     //void InitializeSkills(FName CharacterClass, FName WeaponType);
-    void CastSkill(FName SkillName, UCharacterStatusComponent* CharacterStatusComponent);
+    void CastSkill(int32 SkillIndex, UCharacterStatusComponent* CharacterStatusComponent);
 
 protected:
+    virtual void BeginPlay() override;
+
     UPROPERTY(EditDefaultsOnly, Category = "Skills")
     class USkillSet* SkillSet;
 
     UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Skills")
-    TMap<FName, TSubclassOf<UCharacterSkillBase>> ActiveSkills;
+    TArray<TSubclassOf<UCharacterSkillBase>> ActiveSkills;
 
 private:
 	FTimerHandle ActionTimer;

@@ -311,12 +311,14 @@ void AGameCharacter::AttackTriggered()
 	}
 }
 
-void AGameCharacter::CastSkill(FName SkillName)
+bool AGameCharacter::CastSkill(int32 SkillIndex)
 {
 	if (SkillComponent)
 	{
-		SkillComponent->CastSkill(SkillName, StatusComponent);
+		SkillComponent->CastSkill(SkillIndex, StatusComponent);
+		return true;
 	}
+	return false;
 }
 
 void AGameCharacter::DisplayDamage(float Damage, AGameCharacter* HitActor)

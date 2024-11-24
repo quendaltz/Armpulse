@@ -100,6 +100,10 @@ void AGamePlayerController::OnSkillTriggered()
 	AGameCharacter* PlayerGameCharacter = Cast<AGameCharacter>(GetPawn());
 	if (PlayerGameCharacter)
 	{
-		PlayerGameCharacter->CastSkill("Sword Rush");
+		bool CastSuccess = PlayerGameCharacter->CastSkill(0);
+		if (CastSuccess)
+		{
+			
+		}
 	}
 }

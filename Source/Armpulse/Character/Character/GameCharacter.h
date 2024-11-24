@@ -78,7 +78,7 @@ public:
 	void MoveTriggered(const struct FInputActionValue& Value);
 	void MoveCompleted(const struct FInputActionValue& Value);
 	void AttackTriggered();
-	void CastSkill(FName SkillName);
+	bool CastSkill(int32 SkillIndex);
 	void DisplayDamage(float Damage, AGameCharacter* HitActor);
 	void UpdateHealthBar(float HealthPercent);
 };

@@ -10,16 +10,25 @@
 UCharacterSkillComponent::UCharacterSkillComponent()
 {
     PrimaryComponentTick.bCanEverTick = false;
+    ActiveSkills.Init(nullptr, 4);
+}
+
+void UCharacterSkillComponent::BeginPlay()
+{
+    
 }
 
 void UCharacterSkillComponent::InitializeSkills()
 {
+    // set in blueprint
+    
+
     // Load skills based on character class and weapon type
     // ActiveSkills.Empty();
 
-    // USwordRushSkill* SwordRushSkill = NewObject<USwordRushSkill>(this);
+    //USwordRushSkill* SwordRushSkill = NewObject<USwordRushSkill>(this);
+    ActiveSkills[0] = USwordRushSkill::StaticClass();
 
-    // ActiveSkills.Add("Sword Rush", SwordRushSkill);
     // if (SkillSet)
     // {
     //     for (const auto& Elem : SkillSet->ClassSkills)
@@ -40,20 +49,22 @@ void UCharacterSkillComponent::InitializeSkills()
     //         }
     //     }
     // }
+
+    
 }
 
-void UCharacterSkillComponent::CastSkill(FName SkillName, UCharacterStatusComponent* CharacterStatusComponent)
+void UCharacterSkillComponent::CastSkill(int32 SkillIndex, UCharacterStatusComponent* CharacterStatusComponent)
 {
     AGameCharacter* OwnerCharacter = Cast<AGameCharacter>(GetOwner());
     AController* OwnerInstigator = GetOwner()->GetInstigatorController();
 
-    if (OwnerCharacter && CharacterStatusComponent && ActiveSkills.Contains(SkillName))
+    if (OwnerCharacter && CharacterStatusComponent && ActiveSkills.IsValidIndex(SkillIndex) && ActiveSkills[SkillIndex] != nullptr)
     {
         bool IsActing = CharacterStatusComponent->GetIsActing();
         bool CanAction = CharacterStatusComponent->GetCanAct();
         if (!CanAction && IsActing) return;
 
-        TSubclassOf<UCharacterSkillBase> Skill = *ActiveSkills.Find(SkillName);
+        TSubclassOf<UCharacterSkillBase> Skill = *ActiveSkills[SkillIndex];
         if (Skill)
         {
             FTimerDelegate TimerFunction;

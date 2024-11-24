@@ -15,6 +15,7 @@ public:
 
     FORCEINLINE float GetActionLockTime() const { return ActionLockTime; }
     FORCEINLINE float GetCooldownTime() const { return CooldownTime; }
+    FORCEINLINE UTexture2D* GetSkillIcon() const { return SkillIcon; }
     
 protected:
     UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Skill")
@@ -26,5 +27,6 @@ protected:
     UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Skill")
     float CooldownTime;
 
-    // Additional properties like damage, range, etc., can be added here.
+    UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Skill")
+    UTexture2D* SkillIcon;
 };
