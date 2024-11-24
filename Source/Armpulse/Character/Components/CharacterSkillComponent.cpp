@@ -13,11 +13,6 @@ UCharacterSkillComponent::UCharacterSkillComponent()
     ActiveSkills.Init(nullptr, 4);
 }
 
-// void UCharacterSkillComponent::BeginPlay()
-// {
-    
-// }
-
 void UCharacterSkillComponent::InitializeSkills()
 {
     // set in blueprint
@@ -48,9 +43,7 @@ void UCharacterSkillComponent::InitializeSkills()
     //             ActiveSkills.Add(Elem.Key, NewSkill);
     //         }
     //     }
-    // }
-
-    
+    // } 
 }
 
 bool UCharacterSkillComponent::CastSkill(int32 SkillIndex, UCharacterStatusComponent* CharacterStatusComponent)

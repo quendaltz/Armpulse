@@ -1,18 +1,42 @@
 #include "SkillBar.h"
 #include "SkillSlot.h"
 
-// void USkillBarWidget::InitializeSkillBar(const TMap<FName, USkillBase*>& ActiveSkills)
-// {
-//     for (const auto& SkillPair : ActiveSkills)
-//     {
-//         USkillSlotWidget* SkillSlot = CreateWidget<USkillSlotWidget>(GetWorld(), SkillSlotClass);
-//         if (SkillSlot)
-//         {
-//             // Set initial icon, cooldown, etc.
-//             SkillSlot->SetCooldown(SkillPair.Value->GetCooldownTime());
+#include "Components/HorizontalBox.h"
 
-//             // Add to skill bar UI
-//             SkillBarContainer->AddChild(SkillSlot);
-//         }
-//     }
-// }
+#include "../../../Character/Components/CharacterSkillComponent.h"
+#include "../../../Character/Skill/CharacterSkillBase.h"
+
+void USkillBar::InitializeSkillBar(const TArray<TSubclassOf<UCharacterSkillBase>>& ActiveSkills)
+{
+    if (!SkillBarContainer) return;
+    for (const auto& Skill : ActiveSkills)
+    {
+        USkillSlot* SkillSlot = CreateWidget<USkillSlot>(GetWorld(), SkillSlotClass);
+        if (SkillSlot)
+        {
+            if (Skill)
+            {
+                UCharacterSkillBase* SkillInstance = NewObject<UCharacterSkillBase>(this, Skill);
+                SkillSlot->SetAssignedSkill(SkillInstance);
+            }
+
+            // Add to skill bar UI
+            SkillBarContainer->AddChild(SkillSlot);
+        }
+    }
+}
+
+void USkillBar::StartCooldownTimer(int32 SkillIndex)
+{
+    if (SkillBarContainer && SkillBarContainer->GetChildrenCount() > SkillIndex)
+    {
+        // Get the child widget at the specified index
+        UWidget* SkillSlotWidget = SkillBarContainer->GetChildAt(SkillIndex);
+
+        USkillSlot* SkillSlot = Cast<USkillSlot>(SkillSlotWidget);
+        if (SkillSlot)
+        {
+            SkillSlot->SetSkillCooldown();
+        }
+    }
+}

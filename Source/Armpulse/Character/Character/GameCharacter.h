@@ -65,6 +65,7 @@ public:
 	FORCEINLINE UCapsuleComponent* GetCapsuleComponent() const { return CapsuleComponent; }
 	FORCEINLINE UCharacterStatusComponent* GetStatusComponent() const { return StatusComponent; }
 	FORCEINLINE UCharacterCombatComponent* GetCombatComponent() const { return CombatComponent; }
+	FORCEINLINE UCharacterSkillComponent* GetSkillComponent() const { return SkillComponent; }
 	FORCEINLINE UCharacterDashComponent* GetDashComponent() const { return DashComponent; }
 
 	FVector GetForwardCharacterLocation(float ForwardDistance = 0.0f);

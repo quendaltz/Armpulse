@@ -2,9 +2,26 @@
 
 #include "Components/Image.h"
 #include "Components/TextBlock.h"
+#include "Styling/SlateBrush.h"
 
-void USkillSlot::SetSkillCooldown(float NewCooldownDuration)
+#include "../../../Character/Skill/CharacterSkillBase.h"
+
+void USkillSlot::SetAssignedSkill(UCharacterSkillBase* NewSkill)
 {
+    AssignedSkill = NewSkill;
+    UTexture2D* SkillIconTexture = NewSkill->GetSkillIcon();
+    if (SkillIcon && SkillIconTexture)
+    {
+        FSlateBrush Brush;
+        Brush.SetResourceObject(SkillIconTexture);
+        Brush.ImageSize = FVector2D(SkillIconTexture->GetSizeX(), SkillIconTexture->GetSizeY());
+        SkillIcon->SetBrush(Brush);
+    }
+}
+
+void USkillSlot::SetSkillCooldown()
+{
+    float NewCooldownDuration = AssignedSkill->GetCooldownTime();
     SkillTotalCooldown = NewCooldownDuration;
     SkillCurrentCooldown = NewCooldownDuration;
 

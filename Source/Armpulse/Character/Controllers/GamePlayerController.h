@@ -42,6 +42,7 @@ public:
 
 protected:
 	virtual void SetupInputComponent() override;
+	void SetupWidget();
 
 	virtual void BeginPlay();
 
@@ -50,4 +51,8 @@ protected:
 
 	void OnAttackTriggered();
 	void OnSkillTriggered();
+
+private:
+	UUserWidget* SkillBarWidgetInstance;
+
 };

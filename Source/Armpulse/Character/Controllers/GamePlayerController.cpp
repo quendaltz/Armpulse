@@ -7,6 +7,7 @@
 #include "EnhancedInputSubsystems.h"
 
 #include "../Character/GameCharacter.h"
+#include "../Components/CharacterSkillComponent.h"
 #include "../../Utility/Widgets/SkillSlot/SkillBar.h"
 
 AGamePlayerController::AGamePlayerController()
@@ -19,16 +20,7 @@ void AGamePlayerController::BeginPlay()
 	// Call the base class  
 	Super::BeginPlay();
 
-	if (SkillBarWidgetClass) // Make sure to set this in the editor or via code
-    {
-        UUserWidget* SkillBarWidget = CreateWidget<UUserWidget>(this, SkillBarWidgetClass);
-        if (SkillBarWidget)
-        {
-            SkillBarWidget->AddToViewport();
-			FVector2D SkillBarWidgetPosition(100.0f, 50.0f);
-			SkillBarWidget->SetPositionInViewport(SkillBarWidgetPosition, false);
-        }
-    }
+	SetupWidget();
 }
 
 void AGamePlayerController::SetupInputComponent()
@@ -67,6 +59,32 @@ void AGamePlayerController::SetupInputComponent()
 	}
 }
 
+void AGamePlayerController::SetupWidget()
+{
+	if (SkillBarWidgetClass) // Make sure to set this in the editor or via code
+    {
+        SkillBarWidgetInstance = CreateWidget<UUserWidget>(this, SkillBarWidgetClass);
+        if (SkillBarWidgetInstance)
+        {
+            SkillBarWidgetInstance->AddToViewport();
+			FVector2D SkillBarWidgetPosition(100.0f, 50.0f);
+			SkillBarWidgetInstance->SetPositionInViewport(SkillBarWidgetPosition, false);
+
+			USkillBar* SkillBar = Cast<USkillBar>(SkillBarWidgetInstance);
+			if (SkillBar)
+            {
+				AGameCharacter* PlayerGameCharacter = Cast<AGameCharacter>(GetPawn());
+				if (PlayerGameCharacter)
+				{
+
+					TArray<TSubclassOf<UCharacterSkillBase>> ActiveSkills = PlayerGameCharacter->GetSkillComponent()->GetActiveSkills();
+					SkillBar->InitializeSkillBar(ActiveSkills);
+				}
+            }
+        }
+    }
+}
+
 void AGamePlayerController::OnMoveTriggered(const FInputActionValue& Value)
 {
 	AGameCharacter* PlayerGameCharacter = Cast<AGameCharacter>(GetPawn());
@@ -101,9 +119,13 @@ void AGamePlayerController::OnSkillTriggered()
 	if (PlayerGameCharacter)
 	{
 		bool CastSuccess = PlayerGameCharacter->CastSkill(0);
-		if (CastSuccess)
+		if (CastSuccess && SkillBarWidgetInstance)
 		{
-			
+			USkillBar* SkillBar = Cast<USkillBar>(SkillBarWidgetInstance);
+			if (SkillBar)
+			{
+				SkillBar->StartCooldownTimer(0);
+			}
 		}
 	}
 }

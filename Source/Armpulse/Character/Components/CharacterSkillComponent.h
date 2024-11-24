@@ -16,11 +16,11 @@ public:
 
     void InitializeSkills();
     //void InitializeSkills(FName CharacterClass, FName WeaponType);
-    void CastSkill(int32 SkillIndex, UCharacterStatusComponent* CharacterStatusComponent);
+    bool CastSkill(int32 SkillIndex, UCharacterStatusComponent* CharacterStatusComponent);
+
+    FORCEINLINE TArray<TSubclassOf<UCharacterSkillBase>> GetActiveSkills() const { return ActiveSkills; }
 
 protected:
-    virtual void BeginPlay() override;
-
     UPROPERTY(EditDefaultsOnly, Category = "Skills")
     class USkillSet* SkillSet;
 
