@@ -13,10 +13,10 @@ UCharacterSkillComponent::UCharacterSkillComponent()
     ActiveSkills.Init(nullptr, 4);
 }
 
-void UCharacterSkillComponent::BeginPlay()
-{
+// void UCharacterSkillComponent::BeginPlay()
+// {
     
-}
+// }
 
 void UCharacterSkillComponent::InitializeSkills()
 {
@@ -27,7 +27,7 @@ void UCharacterSkillComponent::InitializeSkills()
     // ActiveSkills.Empty();
 
     //USwordRushSkill* SwordRushSkill = NewObject<USwordRushSkill>(this);
-    ActiveSkills[0] = USwordRushSkill::StaticClass();
+    //ActiveSkills[0] = USwordRushSkill::StaticClass();
 
     // if (SkillSet)
     // {
@@ -53,7 +53,7 @@ void UCharacterSkillComponent::InitializeSkills()
     
 }
 
-void UCharacterSkillComponent::CastSkill(int32 SkillIndex, UCharacterStatusComponent* CharacterStatusComponent)
+bool UCharacterSkillComponent::CastSkill(int32 SkillIndex, UCharacterStatusComponent* CharacterStatusComponent)
 {
     AGameCharacter* OwnerCharacter = Cast<AGameCharacter>(GetOwner());
     AController* OwnerInstigator = GetOwner()->GetInstigatorController();
@@ -62,7 +62,7 @@ void UCharacterSkillComponent::CastSkill(int32 SkillIndex, UCharacterStatusCompo
     {
         bool IsActing = CharacterStatusComponent->GetIsActing();
         bool CanAction = CharacterStatusComponent->GetCanAct();
-        if (!CanAction && IsActing) return;
+        if (!CanAction && IsActing) return false;
 
         TSubclassOf<UCharacterSkillBase> Skill = *ActiveSkills[SkillIndex];
         if (Skill)
@@ -84,5 +84,8 @@ void UCharacterSkillComponent::CastSkill(int32 SkillIndex, UCharacterStatusCompo
 
             GetWorld()->GetTimerManager().SetTimer(ActionTimer, TimerFunction, ActionLockTime, false);
         }
+        return true;
     }
+
+    return false;
 }
