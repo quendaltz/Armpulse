@@ -46,7 +46,8 @@ void UCharacterDashComponent::StartDash(float Distance, float Speed = 1000.0f)
     DashEndLocation = OwnerCharacter->GetForwardCharacterLocation(DashDistance);
 
     float DeltaTime = GetWorld()->DeltaTimeSeconds;
-    FVector CharacterCollisionBlockSize = BaseGameConfig::BaseCharacterForwardDirection() * ActorCapsuleRadius * DeltaTime;
+    // GetActorRightVector due to Unreal's default model
+    FVector CharacterCollisionBlockSize = OwnerCharacter->GetActorRightVector() * ActorCapsuleRadius * DeltaTime;
 
     // Perform collision check to stop dash early if needed
     FHitResult HitResult;
@@ -61,7 +62,6 @@ void UCharacterDashComponent::StartDash(float Distance, float Speed = 1000.0f)
         FCollisionShape::MakeSphere(ActorCapsuleRadius),  // Adjust size to suit dash
         CollisionParams
     );
-
     if (bHit)
     {
         // Stop at collision

@@ -15,7 +15,7 @@ USwordRushSkill::USwordRushSkill()
 {
     SkillName = "Sword Rush";
     ActionLockTime = 2.2f;
-    CooldownTime = 8.0f;
+    CooldownTime = 7.0f;
 }
 
 void USwordRushSkill::ActivateSkill(AGameCharacter* Instigator, AController* InstigatorController)
