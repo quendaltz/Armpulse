@@ -36,6 +36,10 @@ public:
 	UPROPERTY(EditAnywhere, BlueprintReadOnly)
 	UInputAction* CastSkillAction;
 
+	// Widget
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "UI")
+	TSubclassOf<UUserWidget> SkillBarWidgetClass;
+
 protected:
 	virtual void SetupInputComponent() override;
 

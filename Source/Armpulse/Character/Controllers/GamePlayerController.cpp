@@ -7,6 +7,7 @@
 #include "EnhancedInputSubsystems.h"
 
 #include "../Character/GameCharacter.h"
+#include "../../Utility/Widgets/SkillSlot/SkillBar.h"
 
 AGamePlayerController::AGamePlayerController()
 {
@@ -17,6 +18,17 @@ void AGamePlayerController::BeginPlay()
 {
 	// Call the base class  
 	Super::BeginPlay();
+
+	if (SkillBarWidgetClass) // Make sure to set this in the editor or via code
+    {
+        UUserWidget* SkillBarWidget = CreateWidget<UUserWidget>(this, SkillBarWidgetClass);
+        if (SkillBarWidget)
+        {
+            SkillBarWidget->AddToViewport();
+			FVector2D SkillBarWidgetPosition(100.0f, 50.0f);
+			SkillBarWidget->SetPositionInViewport(SkillBarWidgetPosition, false);
+        }
+    }
 }
 
 void AGamePlayerController::SetupInputComponent()
