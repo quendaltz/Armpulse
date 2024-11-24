@@ -55,17 +55,26 @@ public:
 
 private:
 	// combat section ------------------------------------------------------------------------------------------
+	UPROPERTY(EditAnywhere, Category = "Status", meta = (AllowPrivateAccess = "true"))
 	float AttackPower;
+	UPROPERTY(EditAnywhere, Category = "Status", meta = (AllowPrivateAccess = "true"))
 	float AttackRadius;
+	UPROPERTY(EditAnywhere, Category = "Status", meta = (AllowPrivateAccess = "true"))
 	float AttackSpeed;
+
+	UPROPERTY(EditAnywhere, Category = "Status", meta = (AllowPrivateAccess = "true"))
 	float Defense;
+
+	UPROPERTY(EditAnywhere, Category = "Status", meta = (AllowPrivateAccess = "true"))
 	float MaxHealth;
+	UPROPERTY(EditAnywhere, Category = "Status", meta = (AllowPrivateAccess = "true"))
 	float CurrentHealth;
 
 	bool IsActing;
 	bool CanAct;
 
 	// movement section
+	UPROPERTY(EditAnywhere, Category = "Status", meta = (AllowPrivateAccess = "true"))
 	float MoveSpeed;
 	float DashSpeed;
 
