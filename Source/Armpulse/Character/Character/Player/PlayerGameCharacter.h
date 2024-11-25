@@ -6,9 +6,8 @@
 #include "../GameCharacter.h"
 #include "PlayerGameCharacter.generated.h"
 
-/**
- * 
- */
+class USpringArmComponent;
+class UCameraComponent;
 UCLASS()
 class ARMPULSE_API APlayerGameCharacter : public AGameCharacter
 {
@@ -17,14 +16,13 @@ class ARMPULSE_API APlayerGameCharacter : public AGameCharacter
 public:
 	APlayerGameCharacter();
 
-	UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
-	class USpringArmComponent* SpringArm;
-
-	UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
-	class UCameraComponent* Camera;
-
 protected:
 	virtual void BeginPlay() override;
 
 private:
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, meta = (AllowPrivateAccess = "true"))
+	USpringArmComponent* SpringArm;
+
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, meta = (AllowPrivateAccess = "true"))
+	UCameraComponent* Camera;
 };

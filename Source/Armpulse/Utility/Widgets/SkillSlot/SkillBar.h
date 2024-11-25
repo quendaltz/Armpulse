@@ -17,6 +17,7 @@ public:
     void InitializeSkillBar(const TArray<TSubclassOf<UCharacterSkillBase>>& ActiveSkills);
     void StartCooldownTimer(int32 SkillIndex);
 
+protected:
     // Widget
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "UI")
 	TSubclassOf<UUserWidget> SkillSlotClass;

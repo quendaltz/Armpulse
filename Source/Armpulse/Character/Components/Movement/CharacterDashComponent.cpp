@@ -37,7 +37,6 @@ void UCharacterDashComponent::StartDash(float Distance, float Speed = 1000.0f)
     AGameCharacter* OwnerCharacter = Cast<AGameCharacter>(GetOwner());
     if (!OwnerCharacter) return;
 
-    // set
     DashDistance = Distance;
     DashSpeed = Speed;
     float ActorCapsuleRadius = OwnerCharacter->GetCapsuleComponent()->GetScaledCapsuleRadius();
@@ -97,6 +96,4 @@ void UCharacterDashComponent::PerformDash(float DeltaTime)
 void UCharacterDashComponent::StopDash()
 {
     bIsDashing = false;
-
-    UE_LOG(LogTemp, Log, TEXT("Dash Complete!"));
 }

@@ -1,23 +1,13 @@
 #include "CharacterStatusComponent.h"
 
-// Sets default values for this component's properties
 UCharacterStatusComponent::UCharacterStatusComponent()
 {
-	// Set this component to be initialized when the game starts, and to be ticked every frame.  You can turn these features
-	// off to improve performance if you don't need them.
 	PrimaryComponentTick.bCanEverTick = true;
-
-	// ...
 }
 
-
-// Called when the game starts
 void UCharacterStatusComponent::BeginPlay()
 {
 	Super::BeginPlay();
-
-	// ...
-	
 }
 
 
@@ -25,8 +15,6 @@ void UCharacterStatusComponent::BeginPlay()
 void UCharacterStatusComponent::TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction)
 {
 	Super::TickComponent(DeltaTime, TickType, ThisTickFunction);
-
-	// ...
 }
 
 // ATK POW
@@ -89,7 +77,7 @@ void UCharacterStatusComponent::SetDefense(float NewDefense)
 	Defense = NewDefense;
 }
 
-// Max HP	
+// Max HP
 float UCharacterStatusComponent::GetMaxHealth()
 {
 	return MaxHealth;
@@ -104,7 +92,7 @@ void UCharacterStatusComponent::SetMaxHealth(float NewHealth)
 	MaxHealth = NewHealth;
 }
 
-// HP	
+// HP
 float UCharacterStatusComponent::GetCurrentHealth()
 {
 	return CurrentHealth;

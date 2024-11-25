@@ -13,13 +13,13 @@ class ARMPULSE_API USkillSlot : public UUserWidget
 	GENERATED_BODY()
 
 public:
-    //UFUNCTION(BlueprintCallable, Category = "UI")
-    
+    void SetAssignedSkill(UCharacterSkillBase* NewSkill);
+    void SetSkillKey(FString Key);
+    void SetSkillCooldown();
 
 protected:
-    //UPROPERTY(meta = (BindWidget))
+    virtual void NativeTick(const FGeometry& MyGeometry, float InDeltaTime) override;
 
-public:
     UPROPERTY(meta = (BindWidget)) // Bound to the Skill Icon widget
     UImage* SkillIcon;
 
@@ -31,15 +31,6 @@ public:
 
     UPROPERTY(meta = (BindWidget)) // Bound to the Cooldown Text widget
     UTextBlock* SkillKeyText;
-
-    UFUNCTION(BlueprintCallable)
-    void SetAssignedSkill(UCharacterSkillBase* NewSkill);
-    void SetSkillKey(FString Key);
-    
-    void SetSkillCooldown();
-
-protected:
-    virtual void NativeTick(const FGeometry& MyGeometry, float InDeltaTime) override;
 
 private:
     float SkillCurrentCooldown;

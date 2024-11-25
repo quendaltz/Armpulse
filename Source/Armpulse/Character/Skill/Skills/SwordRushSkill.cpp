@@ -60,7 +60,6 @@ void USwordRushSkill::ActivateSkill(AGameCharacter* Instigator, AController* Ins
     FCollisionShape Hitbox = FCollisionShape::MakeBox(HitboxSize);
     FQuat HitboxRotation = AttackRotation.Quaternion();
     
-    // Define collision parameters and check for overlaps
     FCollisionQueryParams CollisionParams;
     CollisionParams.AddIgnoredActor(Instigator); // Ignore self in overlap check
 
@@ -74,7 +73,6 @@ void USwordRushSkill::ActivateSkill(AGameCharacter* Instigator, AController* Ins
         FTimerDelegate StartChargeFunction;
         StartChargeFunction.BindLambda([this, Instigator, ChargeDuration]()
         {
-            //UE_LOG(LogTemp, Display, TEXT("0.5f"));
             Instigator->SetMontagePlayRate(SwordRushMontage, 0.02f/ChargeDuration);
         });
 
@@ -82,7 +80,6 @@ void USwordRushSkill::ActivateSkill(AGameCharacter* Instigator, AController* Ins
         FTimerDelegate ReleaseChargeFunction;
         ReleaseChargeFunction.BindLambda([this, Instigator, DashDuration]()
         {
-            //UE_LOG(LogTemp, Display, TEXT("0.4f ?? 0.9f"));
             Instigator->SetMontagePlayRate(SwordRushMontage, 0.32f/DashDuration);
         });
 
@@ -96,7 +93,7 @@ void USwordRushSkill::ActivateSkill(AGameCharacter* Instigator, AController* Ins
         // animation 1.2 secs > swing 0.04 / charge 0.04 > 0.06 / dash 0.06 > 0.38 / end 0.38 > 1.20
         // desire 2 secs > swing 0.04 / charge 1.26 / dash 0.2 / end 0.6
 
-        // holysht SetTimer is not await function :/
+        // SetTimer is not await function :/
         GetWorld()->GetTimerManager().SetTimer(StartChargeTimer, StartChargeFunction, ChargeStartTime, false); // start charge
         GetWorld()->GetTimerManager().SetTimer(ReleaseChargeTimer, ReleaseChargeFunction, ChargeStartTime + ChargeDuration, false); // start dash
         GetWorld()->GetTimerManager().SetTimer(EndTimer, EndFunction, ChargeStartTime + ChargeDuration + DashDuration, false); // attack end
@@ -132,13 +129,10 @@ void USwordRushSkill::ActivateSkill(AGameCharacter* Instigator, AController* Ins
             {
                 if (AActor* OverlapActor = Overlap.GetActor())
                 {
-                    // Apply damage or other effects
-                    UE_LOG(LogTemp, Warning, TEXT("Overlap: %s"), *OverlapActor->GetName());
                     UGameplayStatics::ApplyDamage(OverlapActor, SkillDamage, InstigatorController, Instigator, DamageTypeClass);
                 }
             }
         }
-
         //DrawDebugBox(GetWorld(), HitboxSpawnLocation, HitboxSize, HitboxRotation, FColor::Green, false, 1.0f); // Duration is 1 second
 	});
     GetWorld()->GetTimerManager().SetTimer(DashAttackTimer, DashAttackFunction, ChargeStartTime + ChargeDuration + DashDuration, false);

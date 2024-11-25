@@ -63,11 +63,6 @@ void UAttackComponent::ExecuteAttack(float AttackDuration)
             Damage = 0.0f;
         }
 
-        // FVector ActorLocation = OwnerActor->GetActorLocation();
-        // FVector RightVector = OwnerActor->GetActorRightVector();
-        // UE_LOG(LogTemp, Log, TEXT("AttackRotation %s"), *AttackRotation.ToString());
-        // UE_LOG(LogTemp, Log, TEXT("RightVector %s"), *RightVector.ToString());
-
         FRotator AttackRotation = OwnerCharacter->GetActorRotation();
         FVector HitboxSpawnLocation = OwnerCharacter->GetForwardCharacterLocation(ActorCapsuleRadius + TargetHitboxRadius);
         
@@ -83,8 +78,6 @@ void UAttackComponent::ExecuteAttack(float AttackDuration)
         {
             OwnerCharacter->ExecuteMontage(AttackMontage, true, AttackDuration);
         }
-        
-        //DrawDebugBox(GetWorld(), HitboxSpawnLocation, HitboxSize, HitboxRotation, FColor::Green, false, 1.0f); // Duration is 1 second
 
         // Check for enemies within the hitbox
         TArray<FOverlapResult> OverlapResults;
@@ -109,47 +102,5 @@ void UAttackComponent::ExecuteAttack(float AttackDuration)
                 }
             }
         }
-    }
-}
-
-// Handle overlap events
-void UAttackComponent::OnHitboxOverlap(
-    UPrimitiveComponent* OverlappedComponent,
-    AActor* OtherActor,
-    UPrimitiveComponent* OtherComponent,
-    int32 OtherBodyIndex,
-    bool bFromSweep,
-    const FHitResult & SweepResult)
-{
-    AActor* OwnerActor = GetOwner();
-    AGameCharacter* OwnerCharacter = nullptr;
-    AController* OwnerInstigator = nullptr;
-    float Damage = 0.0f;
-    auto DamageTypeClass = UDamageType::StaticClass();
-    UE_LOG(LogTemp, Warning, TEXT("Hit: %s"), *OtherActor->GetName());
-    if (OwnerActor)
-    {
-        OwnerCharacter = Cast<AGameCharacter>(OwnerActor);
-        OwnerInstigator = OwnerActor->GetInstigatorController();
-    }
-
-    if (OwnerCharacter)
-    {
-        Damage = OwnerCharacter->GetStatusComponent()->GetAttackPower();
-    }
-
-    if (OtherActor && OtherActor != GetOwner())
-    {
-        UE_LOG(LogTemp, Warning, TEXT("Hit: %s"), *OtherActor->GetName());
-        // Implement damage, effects, etc.
-        UGameplayStatics::ApplyDamage(OtherActor, Damage, OwnerInstigator, OwnerActor, DamageTypeClass);
-        // if(HitParticles)
-        // {
-        //     UGameplayStatics::SpawnEmitterAtLocation(this, HitParticles, GetActorLocation(), GetActorRotation());
-        // }
-        // if (HitSound)
-        // {
-        //     UGameplayStatics::PlaySoundAtLocation(this, HitSound, GetActorLocation());
-        // }
     }
 }

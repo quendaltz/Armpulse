@@ -41,10 +41,10 @@ public:
 	TSubclassOf<UUserWidget> SkillBarWidgetClass;
 
 protected:
-	virtual void SetupInputComponent() override;
-	void SetupWidget();
-
 	virtual void BeginPlay();
+	virtual void SetupInputComponent() override;
+	
+	void SetupWidget();
 
 	void OnMoveTriggered(const FInputActionValue& Value);
 	void OnMoveReleased(const FInputActionValue& Value);

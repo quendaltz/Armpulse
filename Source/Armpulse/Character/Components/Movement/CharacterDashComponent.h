@@ -12,6 +12,8 @@ class ARMPULSE_API UCharacterDashComponent : public UActorComponent
 public:
     UCharacterDashComponent();
 
+    void StartDash(float Distance, float Speed);
+
 protected:
     virtual void BeginPlay() override;
     virtual void TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction) override;
@@ -22,17 +24,14 @@ private:
     float DashProgress;
     bool bIsDashing;
 
-    UPROPERTY(EditAnywhere, Category = "Dash")
-    float DashDistance = 0.0f;  // Distance to dash
-
-    UPROPERTY(EditAnywhere, Category = "Dash")
-    float DashSpeed = 1000.0f;  // Speed in units per second
-
     FTimerHandle DashTimerHandle;
+    UPROPERTY(EditAnywhere, Category = "Dash")
+    float DashDistance = 0.0f;
+
+    UPROPERTY(EditAnywhere, Category = "Dash")
+    float DashSpeed = 1000.0f;
 
     void PerformDash(float DeltaTime);
     void StopDash();
-
-public:
-    void StartDash(float Distance, float Speed);
+    
 };

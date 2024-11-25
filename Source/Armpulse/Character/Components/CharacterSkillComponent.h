@@ -14,10 +14,7 @@ class ARMPULSE_API UCharacterSkillComponent : public UActorComponent
 public:
     UCharacterSkillComponent();
 
-    void InitializeSkills();
-    //void InitializeSkills(FName CharacterClass, FName WeaponType);
     bool CastSkill(int32 SkillIndex, UCharacterStatusComponent* CharacterStatusComponent);
-
     FORCEINLINE TArray<TSubclassOf<UCharacterSkillBase>> GetActiveSkills() const { return ActiveSkills; }
 
 protected:

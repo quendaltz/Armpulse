@@ -29,10 +29,8 @@
 
 #include "DrawDebugHelpers.h"
 
-// Sets default values
 AGameCharacter::AGameCharacter()
 {
- 	// Set this pawn to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
 	PrimaryActorTick.bCanEverTick = true;
 
 	CapsuleComponent = CreateDefaultSubobject<UCapsuleComponent>(TEXT("CapsuleComponent"));
@@ -57,22 +55,16 @@ AGameCharacter::AGameCharacter()
     HealthBarComponent->SetupAttachment(CharacterMesh);
 }
 
-// Called when thDamageWidgetComponente game starts or when spawned
 void AGameCharacter::BeginPlay()
 {
 	Super::BeginPlay();
 
-	if (SkillComponent)
-    {
-        SkillComponent->InitializeSkills();
-    }
 	CurrentAnimation = nullptr;
 	DamageWidgetComponent->SetCastShadow(false);
 
 	HealthBarComponent->SetWidgetSpace(EWidgetSpace::Screen);
 }
 
-// Called every frame
 void AGameCharacter::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
@@ -84,8 +76,8 @@ void AGameCharacter::Tick(float DeltaTime)
         float CapsuleHalfHeight = CapsuleComponent->GetScaledCapsuleHalfHeight();
         
         FColor DebugColor = FColor::Red;
-        float Duration = 0.0f; // The sphere will stay for 5 seconds
-        float Thickness = 2.0f; // Optional, for the line thickness
+        float Duration = 0.0f;
+        float Thickness = 2.0f;
 
         //DrawDebugCapsule(GetWorld(), CapsuleLocation, CapsuleHalfHeight, CapsuleRadius, FQuat::Identity, DebugColor, false, Duration, 0, Thickness);
     }
@@ -93,11 +85,9 @@ void AGameCharacter::Tick(float DeltaTime)
 	if (StatusComponent)
 	{
 		auto Test = StatusComponent->GetCurrentHealth();
-		//UE_LOG(LogTemp, Warning, TEXT("Hit: %s, %f"), *this->GetName(), Test);
 	}
 }
 
-// Called to bind functionality to input
 void AGameCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
 {
 	Super::SetupPlayerInputComponent(PlayerInputComponent);
@@ -279,37 +269,6 @@ void AGameCharacter::MoveCompleted(const FInputActionValue& Value)
 	}
 }
 
-// void AGameCharacter::MoveTriggered(const FInputActionValue& Value)
-// {
-// 	FVector2D MoveActionValue = Value.Get<FVector2D>();
-// 	if (CanMove)
-// 	{
-// 		MoveDirection = MoveActionValue;
-// 		CharacterFlipbook->SetFlipbook(RunFlipbook);
-// 		FVector FlipbookScale = CharacterFlipbook->GetComponentScale();
-// 		if (MoveDirection.X < 0.0f)
-// 		{
-// 			if (FlipbookScale.X < 0.0f)
-// 			{
-// 				CharacterFlipbook->SetWorldScale3D(FVector(1.0f, FlipbookScale.Y, FlipbookScale.Z));
-// 			}
-// 		}
-// 		else if (MoveDirection.X > 0.0f)
-// 		{
-// 			if (FlipbookScale.X > 0.0f)
-// 			{
-// 				CharacterFlipbook->SetWorldScale3D(FVector(-1.0f, FlipbookScale.Y, FlipbookScale.Z));
-// 			}
-// 		}
-// 	}
-// }
-
-// void AGameCharacter::MoveCompleted(const FInputActionValue& Value)
-// {
-// 	MoveDirection = FVector2D(0.0f, 0.0f);
-// 	CharacterFlipbook->SetFlipbook(IdleFlipbook);
-// }
-
 void AGameCharacter::AttackTriggered()
 {
 	if (CombatComponent)
@@ -333,29 +292,11 @@ void AGameCharacter::DisplayDamage(float Damage, AGameCharacter* HitActor)
     if (!HitActor || !DamageWidgetClass) return;
 
     // Create the widget instance
-    //UDamageWidget* DamageWidget = CreateWidget<UDamageWidget>(GetWorld(), DamageWidgetClass);
 	UDamageWidget* DamageWidget = Cast<UDamageWidget>(DamageWidgetComponent->GetUserWidgetObject());
     if (DamageWidget && Damage > 0.0f)
     {
         DamageWidget->SetDamageValue(Damage);
 		DamageWidget->PlayDamageAnimation();
-
-        // Add to the viewport
-        //DamageWidget->AddToViewport();
-
-        // Optionally, position the widget in 3D space
-        // FVector HitLocation = HitActor->GetActorLocation();
-        // FVector2D ScreenPosition;
-        // if (UGameplayStatics::ProjectWorldToScreen(GetWorld()->GetFirstPlayerController(), HitLocation, ScreenPosition))
-        // {
-        //     DamageWidget->SetPositionInViewport(ScreenPosition);
-        // }
-
-        // Set a timer to remove the widget after some time
-        // GetWorld()->GetTimerManager().SetTimer(RemoveTimer, [DamageWidget]()
-        // {
-        //     DamageWidget->RemoveFromParent();
-        // }, 3.0f, false);
     }
 }
 

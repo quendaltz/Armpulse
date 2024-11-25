@@ -20,19 +20,12 @@ public:
 
 protected:
 	virtual void BeginPlay() override;
+    virtual void TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction) override;
 
     UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Animation")
     UAnimMontage* AttackMontage;
     UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Animation")
     UAnimSequence* AttackAnimation;
-
-    // Collision function for when the hitbox overlaps with another actor
-    UFUNCTION()
-    void OnHitboxOverlap(UPrimitiveComponent* OverlappedComp, class AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, 
-        bool bFromSweep, const FHitResult & SweepResult);
-
-public:
-	virtual void TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction) override;
 
 private:
 

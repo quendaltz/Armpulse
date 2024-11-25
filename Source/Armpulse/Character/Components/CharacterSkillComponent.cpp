@@ -14,39 +14,6 @@ UCharacterSkillComponent::UCharacterSkillComponent()
     CooldownSkills.Init(false, 4);
 }
 
-void UCharacterSkillComponent::InitializeSkills()
-{
-    // set in blueprint
-    
-
-    // Load skills based on character class and weapon type
-    // ActiveSkills.Empty();
-
-    //USwordRushSkill* SwordRushSkill = NewObject<USwordRushSkill>(this);
-    //ActiveSkills[0] = USwordRushSkill::StaticClass();
-
-    // if (SkillSet)
-    // {
-    //     for (const auto& Elem : SkillSet->ClassSkills)
-    //     {
-    //         if (Elem.Key == CharacterClass)
-    //         {
-    //             UCharacterSkillBase* NewSkill = NewObject<UCharacterSkillBase>(this, Elem.Value);
-    //             ActiveSkills.Add(Elem.Key, NewSkill);
-    //         }
-    //     }
-
-    //     for (const auto& Elem : SkillSet->WeaponSkills)
-    //     {
-    //         if (Elem.Key == WeaponType)
-    //         {
-    //             UCharacterSkillBase* NewSkill = NewObject<UCharacterSkillBase>(this, Elem.Value);
-    //             ActiveSkills.Add(Elem.Key, NewSkill);
-    //         }
-    //     }
-    // } 
-}
-
 bool UCharacterSkillComponent::CastSkill(int32 SkillIndex, UCharacterStatusComponent* CharacterStatusComponent)
 {
     AGameCharacter* OwnerCharacter = Cast<AGameCharacter>(GetOwner());
@@ -62,10 +29,7 @@ bool UCharacterSkillComponent::CastSkill(int32 SkillIndex, UCharacterStatusCompo
         TSubclassOf<UCharacterSkillBase> Skill = *ActiveSkills[SkillIndex];
         if (Skill)
         {
-            //GEngine->AddOnScreenDebugMessage(-1, 2.0f, FColor::White, TEXT("Skill [0] Found!"));
-
             UCharacterSkillBase* SkillInstance = NewObject<UCharacterSkillBase>(this, Skill);
-            UE_LOG(LogTemp, Display, TEXT("%d"), IsCooldown);
             if (IsCooldown) return false;
 
             FTimerHandle ResetActionTimer;
