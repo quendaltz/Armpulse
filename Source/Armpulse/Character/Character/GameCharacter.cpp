@@ -63,6 +63,9 @@ void AGameCharacter::BeginPlay()
 	DamageWidgetComponent->SetCastShadow(false);
 
 	HealthBarComponent->SetWidgetSpace(EWidgetSpace::Screen);
+	
+	DamageWidgetComponent->SetCollisionProfileName(FName("NoCollision"));
+	HealthBarComponent->SetCollisionProfileName(FName("NoCollision"));
 }
 
 void AGameCharacter::Tick(float DeltaTime)

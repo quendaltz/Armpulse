@@ -102,5 +102,9 @@ void UAttackComponent::ExecuteAttack(float AttackDuration)
                 }
             }
         }
+
+        float GameTime = GetWorld()->GetTimeSeconds();
+        UE_LOG(LogTemp, Display, TEXT("%f"), GameTime);
+
     }
 }

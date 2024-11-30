@@ -37,5 +37,11 @@ void APlayerGameCharacter::BeginPlay()
         ParentStatusComponent->SetIsActing(false);
         ParentStatusComponent->SetCanAct(true);
         ParentStatusComponent->SetCanMove(true);
+
+        float InitialHealth = 200.0f;
+        ParentStatusComponent->SetMaxHealth(InitialHealth);
+        ParentStatusComponent->SetCurrentHealth(InitialHealth);
+        ParentStatusComponent->SetDefense(10.0f);
+        UpdateHealthBar(InitialHealth/InitialHealth);
     }
 }
