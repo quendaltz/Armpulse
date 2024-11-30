@@ -4,8 +4,9 @@
 #include "GameFramework/Pawn.h"
 #include "GameCharacter.generated.h"
 
-class UCapsuleComponent;
+class AAttackIndicator;
 class UAnimMontage;
+class UCapsuleComponent;
 class UWidgetComponent;
 class USkeletalMeshComponent;
 class UCharacterStatusComponent;
@@ -23,6 +24,7 @@ public:
 	AGameCharacter();
 
 	FORCEINLINE UCapsuleComponent* GetCapsuleComponent() const { return CapsuleComponent; }
+	FORCEINLINE AAttackIndicator* GetAttackIndicatorActor() const { return AttackIndicator; }
 	FORCEINLINE UCharacterStatusComponent* GetStatusComponent() const { return StatusComponent; }
 	FORCEINLINE UCharacterCombatComponent* GetCombatComponent() const { return CombatComponent; }
 	FORCEINLINE UCharacterSkillComponent* GetSkillComponent() const { return SkillComponent; }
@@ -39,6 +41,7 @@ public:
 	void MoveTriggered(const struct FInputActionValue& Value);
 	void MoveCompleted(const struct FInputActionValue& Value);
 	void AttackTriggered();
+	void ShowAttackArea(FVector Location, FRotator Rotation, float AreaDuration);
 	bool CastSkill(int32 SkillIndex);
 	void Die();
 
@@ -58,7 +61,12 @@ private:
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, meta = (AllowPrivateAccess = "true"))
 	USkeletalMeshComponent* CharacterMesh;
-	// components
+
+	// actor componeent
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, meta = (AllowPrivateAccess = "true"))
+	AAttackIndicator* AttackIndicator;
+	
+	// custom components
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, meta = (AllowPrivateAccess = "true"))
     UCharacterStatusComponent* StatusComponent;
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, meta = (AllowPrivateAccess = "true"))
@@ -72,10 +80,9 @@ private:
     UAnimSequence* MoveAnimation;
 	UAnimSequence* CurrentAnimation;
 
+	// widgets
 	UPROPERTY(EditDefaultsOnly, Category = "UI")
 	TSubclassOf<UDamageWidget> DamageWidgetClass;
-
-	// widgets
 	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, meta = (AllowPrivateAccess = "true"))
 	UWidgetComponent* DamageWidgetComponent;
 	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, meta = (AllowPrivateAccess = "true"))

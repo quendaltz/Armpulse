@@ -23,6 +23,7 @@
 #include "../Components/CharacterSkillComponent.h"
 #include "../Components/CharacterStatusComponent.h"
 #include "../Components/Movement/CharacterDashComponent.h"
+#include "../../Character/Attack/AttackIndicator.h"
 #include "../../Utility/BaseGameConfig.h"
 #include "../../Utility/Widgets/DamageWidget/DamageWidget.h"
 #include "../../Utility/Widgets/HealthBar/HealthBar.h"
@@ -49,6 +50,7 @@ AGameCharacter::AGameCharacter()
 	CharacterMesh = CreateDefaultSubobject<USkeletalMeshComponent>(TEXT("CharacterMesh"));
 	CharacterMesh->SetupAttachment(RootComponent);
 
+	// Setup Widget
 	DamageWidgetComponent = CreateDefaultSubobject<UWidgetComponent>(TEXT("DamageWidgetComponent"));
     DamageWidgetComponent->SetupAttachment(CharacterMesh);
 	HealthBarComponent = CreateDefaultSubobject<UWidgetComponent>(TEXT("HealthBarComponent"));
@@ -66,6 +68,19 @@ void AGameCharacter::BeginPlay()
 	
 	DamageWidgetComponent->SetCollisionProfileName(FName("NoCollision"));
 	HealthBarComponent->SetCollisionProfileName(FName("NoCollision"));
+
+	// Setup actor components
+	if (!AttackIndicator)
+    {
+        FActorSpawnParameters SpawnParams;
+        SpawnParams.Owner = this;
+        SpawnParams.Instigator = GetInstigator();
+
+		FVector ActorLocation = GetActorLocation();
+		ActorLocation.Z = 0.0f;
+
+        AttackIndicator = GetWorld()->SpawnActor<AAttackIndicator>(AAttackIndicator::StaticClass(), ActorLocation, FRotator::ZeroRotator, SpawnParams);
+    }
 }
 
 void AGameCharacter::Tick(float DeltaTime)
@@ -269,6 +284,14 @@ void AGameCharacter::MoveCompleted(const FInputActionValue& Value)
 		CurrentAnimation = nullptr;
 		CharacterMesh->SetAnimation(nullptr);
 		CharacterMesh->SetAnimationMode(EAnimationMode::AnimationBlueprint);
+	}
+}
+
+void AGameCharacter::ShowAttackArea(FVector Location, FRotator Rotation, float AreaDuration)
+{
+	if (AttackIndicator)
+	{
+		AttackIndicator->PrepareAttack(Location, Rotation, AreaDuration);
 	}
 }
 

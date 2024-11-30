@@ -16,6 +16,7 @@ class ARMPULSE_API UCharacterCombatComponent : public UActorComponent
 public:	
 	UCharacterCombatComponent();
 
+	//void PrepareAttack(float PrepareTime);
 	void Attack(UCharacterStatusComponent* CharacterStatusComponent);
 	void ResetAnimation(UCharacterStatusComponent* CharacterStatusComponent);
 	float HandleTakeDamage(UCharacterStatusComponent* CharacterStatusComponent, float DamageAmount, FDamageEvent const& DamageEvent, AController* EventInstigator, AActor* DamageCauser);

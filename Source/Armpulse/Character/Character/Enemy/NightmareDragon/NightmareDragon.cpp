@@ -34,7 +34,7 @@ void ANightmareDragon::BeginPlay()
         AttackTimerHandle,
         this,
         &ANightmareDragon::SweepAttack,
-        5.0f,
+        10.0f,
         true
     );
 }
@@ -60,7 +60,9 @@ void ANightmareDragon::SweepAttack()
     UCharacterCombatComponent* ParentCombatComponent = GetCombatComponent();
     if (ParentCombatComponent)
 	{
-		ParentCombatComponent->Attack(ParentStatusComponent);
+        //ShowAttackArea(GetActorLocation() + FVector(0, 0, 10), GetActorRotation(), 5.0f);
+        //ParentCombatComponent->PrepareAttack(5.0f);
+		//ParentCombatComponent->Attack(ParentStatusComponent);
         UE_LOG(LogTemp, Display, TEXT("drag atrtackl"));
 	}
 }
