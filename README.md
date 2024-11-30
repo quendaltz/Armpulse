@@ -10,6 +10,8 @@ and epic games's free asset for character model and animation (e.g. move, attack
 
 you can dowload here [itch.io](https://quendaltz.itch.io/armpulse-prototype)
 
+(still updating on ue5.5 branch)
+
 ## Features
 
 - Move
