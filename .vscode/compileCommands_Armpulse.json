@@ -2,121 +2,329 @@
 	{
 		"file": "D:\\Work\\PrivateProjects\\Armpulse\\Source\\Armpulse\\Armpulse.Build.cs",
 		"arguments": [
-			"D:\\Program Files (x86)\\Microsoft Visual Studio\\2022\\BuildTools\\VC\\Tools\\MSVC\\14.41.34120\\bin\\Hostx64\\x64\\cl.exe",
+			"D:\\Program Files (x86)\\Microsoft Visual Studio\\2022\\BuildTools\\VC\\Tools\\MSVC\\14.42.34433\\bin\\Hostx64\\x64\\cl.exe",
 			"@D:\\Work\\PrivateProjects\\Armpulse\\.vscode\\compileCommands_Armpulse\\Armpulse.1.rsp"
 		],
-		"directory": "D:\\Program Files\\Epic Games\\UE_5.4\\Engine\\Source"
+		"directory": "D:\\Program Files\\UE_5.5\\Engine\\Source"
 	},
 	{
 		"file": "D:\\Work\\PrivateProjects\\Armpulse\\Source\\Armpulse\\Armpulse.cpp",
 		"arguments": [
-			"D:\\Program Files (x86)\\Microsoft Visual Studio\\2022\\BuildTools\\VC\\Tools\\MSVC\\14.41.34120\\bin\\Hostx64\\x64\\cl.exe",
+			"D:\\Program Files (x86)\\Microsoft Visual Studio\\2022\\BuildTools\\VC\\Tools\\MSVC\\14.42.34433\\bin\\Hostx64\\x64\\cl.exe",
 			"@D:\\Work\\PrivateProjects\\Armpulse\\.vscode\\compileCommands_Armpulse\\Armpulse.1.rsp"
 		],
-		"directory": "D:\\Program Files\\Epic Games\\UE_5.4\\Engine\\Source"
+		"directory": "D:\\Program Files\\UE_5.5\\Engine\\Source"
 	},
 	{
 		"file": "D:\\Work\\PrivateProjects\\Armpulse\\Source\\Armpulse\\Armpulse.h",
 		"arguments": [
-			"D:\\Program Files (x86)\\Microsoft Visual Studio\\2022\\BuildTools\\VC\\Tools\\MSVC\\14.41.34120\\bin\\Hostx64\\x64\\cl.exe",
+			"D:\\Program Files (x86)\\Microsoft Visual Studio\\2022\\BuildTools\\VC\\Tools\\MSVC\\14.42.34433\\bin\\Hostx64\\x64\\cl.exe",
 			"@D:\\Work\\PrivateProjects\\Armpulse\\.vscode\\compileCommands_Armpulse\\Armpulse.1.rsp"
 		],
-		"directory": "D:\\Program Files\\Epic Games\\UE_5.4\\Engine\\Source"
+		"directory": "D:\\Program Files\\UE_5.5\\Engine\\Source"
 	},
 	{
-		"file": "D:\\Work\\PrivateProjects\\Armpulse\\Source\\Armpulse\\ArmpulseCharacter.cpp",
+		"file": "D:\\Work\\PrivateProjects\\Armpulse\\Source\\Armpulse\\Character\\Attack\\AttackComponent.cpp",
 		"arguments": [
-			"D:\\Program Files (x86)\\Microsoft Visual Studio\\2022\\BuildTools\\VC\\Tools\\MSVC\\14.41.34120\\bin\\Hostx64\\x64\\cl.exe",
+			"D:\\Program Files (x86)\\Microsoft Visual Studio\\2022\\BuildTools\\VC\\Tools\\MSVC\\14.42.34433\\bin\\Hostx64\\x64\\cl.exe",
 			"@D:\\Work\\PrivateProjects\\Armpulse\\.vscode\\compileCommands_Armpulse\\Armpulse.1.rsp"
 		],
-		"directory": "D:\\Program Files\\Epic Games\\UE_5.4\\Engine\\Source"
+		"directory": "D:\\Program Files\\UE_5.5\\Engine\\Source"
 	},
 	{
-		"file": "D:\\Work\\PrivateProjects\\Armpulse\\Source\\Armpulse\\ArmpulseCharacter.h",
+		"file": "D:\\Work\\PrivateProjects\\Armpulse\\Source\\Armpulse\\Character\\Attack\\AttackComponent.h",
 		"arguments": [
-			"D:\\Program Files (x86)\\Microsoft Visual Studio\\2022\\BuildTools\\VC\\Tools\\MSVC\\14.41.34120\\bin\\Hostx64\\x64\\cl.exe",
+			"D:\\Program Files (x86)\\Microsoft Visual Studio\\2022\\BuildTools\\VC\\Tools\\MSVC\\14.42.34433\\bin\\Hostx64\\x64\\cl.exe",
 			"@D:\\Work\\PrivateProjects\\Armpulse\\.vscode\\compileCommands_Armpulse\\Armpulse.1.rsp"
 		],
-		"directory": "D:\\Program Files\\Epic Games\\UE_5.4\\Engine\\Source"
+		"directory": "D:\\Program Files\\UE_5.5\\Engine\\Source"
 	},
 	{
-		"file": "D:\\Work\\PrivateProjects\\Armpulse\\Source\\Armpulse\\ArmpulsePlayerController.cpp",
+		"file": "D:\\Work\\PrivateProjects\\Armpulse\\Source\\Armpulse\\Character\\Character\\Enemy\\EliteDummy.cpp",
 		"arguments": [
-			"D:\\Program Files (x86)\\Microsoft Visual Studio\\2022\\BuildTools\\VC\\Tools\\MSVC\\14.41.34120\\bin\\Hostx64\\x64\\cl.exe",
+			"D:\\Program Files (x86)\\Microsoft Visual Studio\\2022\\BuildTools\\VC\\Tools\\MSVC\\14.42.34433\\bin\\Hostx64\\x64\\cl.exe",
 			"@D:\\Work\\PrivateProjects\\Armpulse\\.vscode\\compileCommands_Armpulse\\Armpulse.1.rsp"
 		],
-		"directory": "D:\\Program Files\\Epic Games\\UE_5.4\\Engine\\Source"
+		"directory": "D:\\Program Files\\UE_5.5\\Engine\\Source"
 	},
 	{
-		"file": "D:\\Work\\PrivateProjects\\Armpulse\\Source\\Armpulse\\ArmpulsePlayerController.h",
+		"file": "D:\\Work\\PrivateProjects\\Armpulse\\Source\\Armpulse\\Character\\Character\\Enemy\\EliteDummy.h",
 		"arguments": [
-			"D:\\Program Files (x86)\\Microsoft Visual Studio\\2022\\BuildTools\\VC\\Tools\\MSVC\\14.41.34120\\bin\\Hostx64\\x64\\cl.exe",
+			"D:\\Program Files (x86)\\Microsoft Visual Studio\\2022\\BuildTools\\VC\\Tools\\MSVC\\14.42.34433\\bin\\Hostx64\\x64\\cl.exe",
 			"@D:\\Work\\PrivateProjects\\Armpulse\\.vscode\\compileCommands_Armpulse\\Armpulse.1.rsp"
 		],
-		"directory": "D:\\Program Files\\Epic Games\\UE_5.4\\Engine\\Source"
+		"directory": "D:\\Program Files\\UE_5.5\\Engine\\Source"
+	},
+	{
+		"file": "D:\\Work\\PrivateProjects\\Armpulse\\Source\\Armpulse\\Character\\Character\\Enemy\\EnemyCharacter.cpp",
+		"arguments": [
+			"D:\\Program Files (x86)\\Microsoft Visual Studio\\2022\\BuildTools\\VC\\Tools\\MSVC\\14.42.34433\\bin\\Hostx64\\x64\\cl.exe",
+			"@D:\\Work\\PrivateProjects\\Armpulse\\.vscode\\compileCommands_Armpulse\\Armpulse.1.rsp"
+		],
+		"directory": "D:\\Program Files\\UE_5.5\\Engine\\Source"
+	},
+	{
+		"file": "D:\\Work\\PrivateProjects\\Armpulse\\Source\\Armpulse\\Character\\Character\\Enemy\\EnemyCharacter.h",
+		"arguments": [
+			"D:\\Program Files (x86)\\Microsoft Visual Studio\\2022\\BuildTools\\VC\\Tools\\MSVC\\14.42.34433\\bin\\Hostx64\\x64\\cl.exe",
+			"@D:\\Work\\PrivateProjects\\Armpulse\\.vscode\\compileCommands_Armpulse\\Armpulse.1.rsp"
+		],
+		"directory": "D:\\Program Files\\UE_5.5\\Engine\\Source"
+	},
+	{
+		"file": "D:\\Work\\PrivateProjects\\Armpulse\\Source\\Armpulse\\Character\\Character\\GameCharacter.cpp",
+		"arguments": [
+			"D:\\Program Files (x86)\\Microsoft Visual Studio\\2022\\BuildTools\\VC\\Tools\\MSVC\\14.42.34433\\bin\\Hostx64\\x64\\cl.exe",
+			"@D:\\Work\\PrivateProjects\\Armpulse\\.vscode\\compileCommands_Armpulse\\Armpulse.1.rsp"
+		],
+		"directory": "D:\\Program Files\\UE_5.5\\Engine\\Source"
+	},
+	{
+		"file": "D:\\Work\\PrivateProjects\\Armpulse\\Source\\Armpulse\\Character\\Character\\GameCharacter.h",
+		"arguments": [
+			"D:\\Program Files (x86)\\Microsoft Visual Studio\\2022\\BuildTools\\VC\\Tools\\MSVC\\14.42.34433\\bin\\Hostx64\\x64\\cl.exe",
+			"@D:\\Work\\PrivateProjects\\Armpulse\\.vscode\\compileCommands_Armpulse\\Armpulse.1.rsp"
+		],
+		"directory": "D:\\Program Files\\UE_5.5\\Engine\\Source"
+	},
+	{
+		"file": "D:\\Work\\PrivateProjects\\Armpulse\\Source\\Armpulse\\Character\\Character\\Player\\PlayerGameCharacter.cpp",
+		"arguments": [
+			"D:\\Program Files (x86)\\Microsoft Visual Studio\\2022\\BuildTools\\VC\\Tools\\MSVC\\14.42.34433\\bin\\Hostx64\\x64\\cl.exe",
+			"@D:\\Work\\PrivateProjects\\Armpulse\\.vscode\\compileCommands_Armpulse\\Armpulse.1.rsp"
+		],
+		"directory": "D:\\Program Files\\UE_5.5\\Engine\\Source"
+	},
+	{
+		"file": "D:\\Work\\PrivateProjects\\Armpulse\\Source\\Armpulse\\Character\\Character\\Player\\PlayerGameCharacter.h",
+		"arguments": [
+			"D:\\Program Files (x86)\\Microsoft Visual Studio\\2022\\BuildTools\\VC\\Tools\\MSVC\\14.42.34433\\bin\\Hostx64\\x64\\cl.exe",
+			"@D:\\Work\\PrivateProjects\\Armpulse\\.vscode\\compileCommands_Armpulse\\Armpulse.1.rsp"
+		],
+		"directory": "D:\\Program Files\\UE_5.5\\Engine\\Source"
 	},
 	{
 		"file": "D:\\Work\\PrivateProjects\\Armpulse\\Source\\Armpulse\\Character\\Components\\CharacterCombatComponent.cpp",
 		"arguments": [
-			"D:\\Program Files (x86)\\Microsoft Visual Studio\\2022\\BuildTools\\VC\\Tools\\MSVC\\14.41.34120\\bin\\Hostx64\\x64\\cl.exe",
+			"D:\\Program Files (x86)\\Microsoft Visual Studio\\2022\\BuildTools\\VC\\Tools\\MSVC\\14.42.34433\\bin\\Hostx64\\x64\\cl.exe",
 			"@D:\\Work\\PrivateProjects\\Armpulse\\.vscode\\compileCommands_Armpulse\\Armpulse.1.rsp"
 		],
-		"directory": "D:\\Program Files\\Epic Games\\UE_5.4\\Engine\\Source"
+		"directory": "D:\\Program Files\\UE_5.5\\Engine\\Source"
 	},
 	{
 		"file": "D:\\Work\\PrivateProjects\\Armpulse\\Source\\Armpulse\\Character\\Components\\CharacterCombatComponent.h",
 		"arguments": [
-			"D:\\Program Files (x86)\\Microsoft Visual Studio\\2022\\BuildTools\\VC\\Tools\\MSVC\\14.41.34120\\bin\\Hostx64\\x64\\cl.exe",
+			"D:\\Program Files (x86)\\Microsoft Visual Studio\\2022\\BuildTools\\VC\\Tools\\MSVC\\14.42.34433\\bin\\Hostx64\\x64\\cl.exe",
 			"@D:\\Work\\PrivateProjects\\Armpulse\\.vscode\\compileCommands_Armpulse\\Armpulse.1.rsp"
 		],
-		"directory": "D:\\Program Files\\Epic Games\\UE_5.4\\Engine\\Source"
+		"directory": "D:\\Program Files\\UE_5.5\\Engine\\Source"
+	},
+	{
+		"file": "D:\\Work\\PrivateProjects\\Armpulse\\Source\\Armpulse\\Character\\Components\\CharacterSkillComponent.cpp",
+		"arguments": [
+			"D:\\Program Files (x86)\\Microsoft Visual Studio\\2022\\BuildTools\\VC\\Tools\\MSVC\\14.42.34433\\bin\\Hostx64\\x64\\cl.exe",
+			"@D:\\Work\\PrivateProjects\\Armpulse\\.vscode\\compileCommands_Armpulse\\Armpulse.1.rsp"
+		],
+		"directory": "D:\\Program Files\\UE_5.5\\Engine\\Source"
+	},
+	{
+		"file": "D:\\Work\\PrivateProjects\\Armpulse\\Source\\Armpulse\\Character\\Components\\CharacterSkillComponent.h",
+		"arguments": [
+			"D:\\Program Files (x86)\\Microsoft Visual Studio\\2022\\BuildTools\\VC\\Tools\\MSVC\\14.42.34433\\bin\\Hostx64\\x64\\cl.exe",
+			"@D:\\Work\\PrivateProjects\\Armpulse\\.vscode\\compileCommands_Armpulse\\Armpulse.1.rsp"
+		],
+		"directory": "D:\\Program Files\\UE_5.5\\Engine\\Source"
+	},
+	{
+		"file": "D:\\Work\\PrivateProjects\\Armpulse\\Source\\Armpulse\\Character\\Components\\CharacterStatusComponent.cpp",
+		"arguments": [
+			"D:\\Program Files (x86)\\Microsoft Visual Studio\\2022\\BuildTools\\VC\\Tools\\MSVC\\14.42.34433\\bin\\Hostx64\\x64\\cl.exe",
+			"@D:\\Work\\PrivateProjects\\Armpulse\\.vscode\\compileCommands_Armpulse\\Armpulse.1.rsp"
+		],
+		"directory": "D:\\Program Files\\UE_5.5\\Engine\\Source"
+	},
+	{
+		"file": "D:\\Work\\PrivateProjects\\Armpulse\\Source\\Armpulse\\Character\\Components\\CharacterStatusComponent.h",
+		"arguments": [
+			"D:\\Program Files (x86)\\Microsoft Visual Studio\\2022\\BuildTools\\VC\\Tools\\MSVC\\14.42.34433\\bin\\Hostx64\\x64\\cl.exe",
+			"@D:\\Work\\PrivateProjects\\Armpulse\\.vscode\\compileCommands_Armpulse\\Armpulse.1.rsp"
+		],
+		"directory": "D:\\Program Files\\UE_5.5\\Engine\\Source"
+	},
+	{
+		"file": "D:\\Work\\PrivateProjects\\Armpulse\\Source\\Armpulse\\Character\\Components\\Movement\\CharacterDashComponent.cpp",
+		"arguments": [
+			"D:\\Program Files (x86)\\Microsoft Visual Studio\\2022\\BuildTools\\VC\\Tools\\MSVC\\14.42.34433\\bin\\Hostx64\\x64\\cl.exe",
+			"@D:\\Work\\PrivateProjects\\Armpulse\\.vscode\\compileCommands_Armpulse\\Armpulse.1.rsp"
+		],
+		"directory": "D:\\Program Files\\UE_5.5\\Engine\\Source"
+	},
+	{
+		"file": "D:\\Work\\PrivateProjects\\Armpulse\\Source\\Armpulse\\Character\\Components\\Movement\\CharacterDashComponent.h",
+		"arguments": [
+			"D:\\Program Files (x86)\\Microsoft Visual Studio\\2022\\BuildTools\\VC\\Tools\\MSVC\\14.42.34433\\bin\\Hostx64\\x64\\cl.exe",
+			"@D:\\Work\\PrivateProjects\\Armpulse\\.vscode\\compileCommands_Armpulse\\Armpulse.1.rsp"
+		],
+		"directory": "D:\\Program Files\\UE_5.5\\Engine\\Source"
 	},
 	{
 		"file": "D:\\Work\\PrivateProjects\\Armpulse\\Source\\Armpulse\\Character\\Controllers\\GamePlayerController.cpp",
 		"arguments": [
-			"D:\\Program Files (x86)\\Microsoft Visual Studio\\2022\\BuildTools\\VC\\Tools\\MSVC\\14.41.34120\\bin\\Hostx64\\x64\\cl.exe",
+			"D:\\Program Files (x86)\\Microsoft Visual Studio\\2022\\BuildTools\\VC\\Tools\\MSVC\\14.42.34433\\bin\\Hostx64\\x64\\cl.exe",
 			"@D:\\Work\\PrivateProjects\\Armpulse\\.vscode\\compileCommands_Armpulse\\Armpulse.1.rsp"
 		],
-		"directory": "D:\\Program Files\\Epic Games\\UE_5.4\\Engine\\Source"
+		"directory": "D:\\Program Files\\UE_5.5\\Engine\\Source"
 	},
 	{
 		"file": "D:\\Work\\PrivateProjects\\Armpulse\\Source\\Armpulse\\Character\\Controllers\\GamePlayerController.h",
 		"arguments": [
-			"D:\\Program Files (x86)\\Microsoft Visual Studio\\2022\\BuildTools\\VC\\Tools\\MSVC\\14.41.34120\\bin\\Hostx64\\x64\\cl.exe",
+			"D:\\Program Files (x86)\\Microsoft Visual Studio\\2022\\BuildTools\\VC\\Tools\\MSVC\\14.42.34433\\bin\\Hostx64\\x64\\cl.exe",
 			"@D:\\Work\\PrivateProjects\\Armpulse\\.vscode\\compileCommands_Armpulse\\Armpulse.1.rsp"
 		],
-		"directory": "D:\\Program Files\\Epic Games\\UE_5.4\\Engine\\Source"
+		"directory": "D:\\Program Files\\UE_5.5\\Engine\\Source"
 	},
 	{
-		"file": "D:\\Work\\PrivateProjects\\Armpulse\\Source\\Armpulse\\Character\\GameCharacter.cpp",
+		"file": "D:\\Work\\PrivateProjects\\Armpulse\\Source\\Armpulse\\Character\\Skill\\CharacterSkillBase.cpp",
 		"arguments": [
-			"D:\\Program Files (x86)\\Microsoft Visual Studio\\2022\\BuildTools\\VC\\Tools\\MSVC\\14.41.34120\\bin\\Hostx64\\x64\\cl.exe",
+			"D:\\Program Files (x86)\\Microsoft Visual Studio\\2022\\BuildTools\\VC\\Tools\\MSVC\\14.42.34433\\bin\\Hostx64\\x64\\cl.exe",
 			"@D:\\Work\\PrivateProjects\\Armpulse\\.vscode\\compileCommands_Armpulse\\Armpulse.1.rsp"
 		],
-		"directory": "D:\\Program Files\\Epic Games\\UE_5.4\\Engine\\Source"
+		"directory": "D:\\Program Files\\UE_5.5\\Engine\\Source"
 	},
 	{
-		"file": "D:\\Work\\PrivateProjects\\Armpulse\\Source\\Armpulse\\Character\\GameCharacter.h",
+		"file": "D:\\Work\\PrivateProjects\\Armpulse\\Source\\Armpulse\\Character\\Skill\\CharacterSkillBase.h",
 		"arguments": [
-			"D:\\Program Files (x86)\\Microsoft Visual Studio\\2022\\BuildTools\\VC\\Tools\\MSVC\\14.41.34120\\bin\\Hostx64\\x64\\cl.exe",
+			"D:\\Program Files (x86)\\Microsoft Visual Studio\\2022\\BuildTools\\VC\\Tools\\MSVC\\14.42.34433\\bin\\Hostx64\\x64\\cl.exe",
 			"@D:\\Work\\PrivateProjects\\Armpulse\\.vscode\\compileCommands_Armpulse\\Armpulse.1.rsp"
 		],
-		"directory": "D:\\Program Files\\Epic Games\\UE_5.4\\Engine\\Source"
+		"directory": "D:\\Program Files\\UE_5.5\\Engine\\Source"
+	},
+	{
+		"file": "D:\\Work\\PrivateProjects\\Armpulse\\Source\\Armpulse\\Character\\Skill\\SkillSet\\SkillSet.cpp",
+		"arguments": [
+			"D:\\Program Files (x86)\\Microsoft Visual Studio\\2022\\BuildTools\\VC\\Tools\\MSVC\\14.42.34433\\bin\\Hostx64\\x64\\cl.exe",
+			"@D:\\Work\\PrivateProjects\\Armpulse\\.vscode\\compileCommands_Armpulse\\Armpulse.1.rsp"
+		],
+		"directory": "D:\\Program Files\\UE_5.5\\Engine\\Source"
+	},
+	{
+		"file": "D:\\Work\\PrivateProjects\\Armpulse\\Source\\Armpulse\\Character\\Skill\\SkillSet\\SkillSet.h",
+		"arguments": [
+			"D:\\Program Files (x86)\\Microsoft Visual Studio\\2022\\BuildTools\\VC\\Tools\\MSVC\\14.42.34433\\bin\\Hostx64\\x64\\cl.exe",
+			"@D:\\Work\\PrivateProjects\\Armpulse\\.vscode\\compileCommands_Armpulse\\Armpulse.1.rsp"
+		],
+		"directory": "D:\\Program Files\\UE_5.5\\Engine\\Source"
+	},
+	{
+		"file": "D:\\Work\\PrivateProjects\\Armpulse\\Source\\Armpulse\\Character\\Skill\\Skills\\SwordRushSkill.cpp",
+		"arguments": [
+			"D:\\Program Files (x86)\\Microsoft Visual Studio\\2022\\BuildTools\\VC\\Tools\\MSVC\\14.42.34433\\bin\\Hostx64\\x64\\cl.exe",
+			"@D:\\Work\\PrivateProjects\\Armpulse\\.vscode\\compileCommands_Armpulse\\Armpulse.1.rsp"
+		],
+		"directory": "D:\\Program Files\\UE_5.5\\Engine\\Source"
+	},
+	{
+		"file": "D:\\Work\\PrivateProjects\\Armpulse\\Source\\Armpulse\\Character\\Skill\\Skills\\SwordRushSkill.h",
+		"arguments": [
+			"D:\\Program Files (x86)\\Microsoft Visual Studio\\2022\\BuildTools\\VC\\Tools\\MSVC\\14.42.34433\\bin\\Hostx64\\x64\\cl.exe",
+			"@D:\\Work\\PrivateProjects\\Armpulse\\.vscode\\compileCommands_Armpulse\\Armpulse.1.rsp"
+		],
+		"directory": "D:\\Program Files\\UE_5.5\\Engine\\Source"
 	},
 	{
 		"file": "D:\\Work\\PrivateProjects\\Armpulse\\Source\\Armpulse\\GameMode\\ArmpulseGameMode.cpp",
 		"arguments": [
-			"D:\\Program Files (x86)\\Microsoft Visual Studio\\2022\\BuildTools\\VC\\Tools\\MSVC\\14.41.34120\\bin\\Hostx64\\x64\\cl.exe",
+			"D:\\Program Files (x86)\\Microsoft Visual Studio\\2022\\BuildTools\\VC\\Tools\\MSVC\\14.42.34433\\bin\\Hostx64\\x64\\cl.exe",
 			"@D:\\Work\\PrivateProjects\\Armpulse\\.vscode\\compileCommands_Armpulse\\Armpulse.1.rsp"
 		],
-		"directory": "D:\\Program Files\\Epic Games\\UE_5.4\\Engine\\Source"
+		"directory": "D:\\Program Files\\UE_5.5\\Engine\\Source"
 	},
 	{
 		"file": "D:\\Work\\PrivateProjects\\Armpulse\\Source\\Armpulse\\GameMode\\ArmpulseGameMode.h",
 		"arguments": [
-			"D:\\Program Files (x86)\\Microsoft Visual Studio\\2022\\BuildTools\\VC\\Tools\\MSVC\\14.41.34120\\bin\\Hostx64\\x64\\cl.exe",
+			"D:\\Program Files (x86)\\Microsoft Visual Studio\\2022\\BuildTools\\VC\\Tools\\MSVC\\14.42.34433\\bin\\Hostx64\\x64\\cl.exe",
 			"@D:\\Work\\PrivateProjects\\Armpulse\\.vscode\\compileCommands_Armpulse\\Armpulse.1.rsp"
 		],
-		"directory": "D:\\Program Files\\Epic Games\\UE_5.4\\Engine\\Source"
+		"directory": "D:\\Program Files\\UE_5.5\\Engine\\Source"
+	},
+	{
+		"file": "D:\\Work\\PrivateProjects\\Armpulse\\Source\\Armpulse\\Utility\\BaseGameConfig.cpp",
+		"arguments": [
+			"D:\\Program Files (x86)\\Microsoft Visual Studio\\2022\\BuildTools\\VC\\Tools\\MSVC\\14.42.34433\\bin\\Hostx64\\x64\\cl.exe",
+			"@D:\\Work\\PrivateProjects\\Armpulse\\.vscode\\compileCommands_Armpulse\\Armpulse.1.rsp"
+		],
+		"directory": "D:\\Program Files\\UE_5.5\\Engine\\Source"
+	},
+	{
+		"file": "D:\\Work\\PrivateProjects\\Armpulse\\Source\\Armpulse\\Utility\\BaseGameConfig.h",
+		"arguments": [
+			"D:\\Program Files (x86)\\Microsoft Visual Studio\\2022\\BuildTools\\VC\\Tools\\MSVC\\14.42.34433\\bin\\Hostx64\\x64\\cl.exe",
+			"@D:\\Work\\PrivateProjects\\Armpulse\\.vscode\\compileCommands_Armpulse\\Armpulse.1.rsp"
+		],
+		"directory": "D:\\Program Files\\UE_5.5\\Engine\\Source"
+	},
+	{
+		"file": "D:\\Work\\PrivateProjects\\Armpulse\\Source\\Armpulse\\Utility\\Widgets\\DamageWidget\\DamageWidget.cpp",
+		"arguments": [
+			"D:\\Program Files (x86)\\Microsoft Visual Studio\\2022\\BuildTools\\VC\\Tools\\MSVC\\14.42.34433\\bin\\Hostx64\\x64\\cl.exe",
+			"@D:\\Work\\PrivateProjects\\Armpulse\\.vscode\\compileCommands_Armpulse\\Armpulse.1.rsp"
+		],
+		"directory": "D:\\Program Files\\UE_5.5\\Engine\\Source"
+	},
+	{
+		"file": "D:\\Work\\PrivateProjects\\Armpulse\\Source\\Armpulse\\Utility\\Widgets\\DamageWidget\\DamageWidget.h",
+		"arguments": [
+			"D:\\Program Files (x86)\\Microsoft Visual Studio\\2022\\BuildTools\\VC\\Tools\\MSVC\\14.42.34433\\bin\\Hostx64\\x64\\cl.exe",
+			"@D:\\Work\\PrivateProjects\\Armpulse\\.vscode\\compileCommands_Armpulse\\Armpulse.1.rsp"
+		],
+		"directory": "D:\\Program Files\\UE_5.5\\Engine\\Source"
+	},
+	{
+		"file": "D:\\Work\\PrivateProjects\\Armpulse\\Source\\Armpulse\\Utility\\Widgets\\HealthBar\\HealthBar.cpp",
+		"arguments": [
+			"D:\\Program Files (x86)\\Microsoft Visual Studio\\2022\\BuildTools\\VC\\Tools\\MSVC\\14.42.34433\\bin\\Hostx64\\x64\\cl.exe",
+			"@D:\\Work\\PrivateProjects\\Armpulse\\.vscode\\compileCommands_Armpulse\\Armpulse.1.rsp"
+		],
+		"directory": "D:\\Program Files\\UE_5.5\\Engine\\Source"
+	},
+	{
+		"file": "D:\\Work\\PrivateProjects\\Armpulse\\Source\\Armpulse\\Utility\\Widgets\\HealthBar\\HealthBar.h",
+		"arguments": [
+			"D:\\Program Files (x86)\\Microsoft Visual Studio\\2022\\BuildTools\\VC\\Tools\\MSVC\\14.42.34433\\bin\\Hostx64\\x64\\cl.exe",
+			"@D:\\Work\\PrivateProjects\\Armpulse\\.vscode\\compileCommands_Armpulse\\Armpulse.1.rsp"
+		],
+		"directory": "D:\\Program Files\\UE_5.5\\Engine\\Source"
+	},
+	{
+		"file": "D:\\Work\\PrivateProjects\\Armpulse\\Source\\Armpulse\\Utility\\Widgets\\SkillSlot\\SkillBar.cpp",
+		"arguments": [
+			"D:\\Program Files (x86)\\Microsoft Visual Studio\\2022\\BuildTools\\VC\\Tools\\MSVC\\14.42.34433\\bin\\Hostx64\\x64\\cl.exe",
+			"@D:\\Work\\PrivateProjects\\Armpulse\\.vscode\\compileCommands_Armpulse\\Armpulse.1.rsp"
+		],
+		"directory": "D:\\Program Files\\UE_5.5\\Engine\\Source"
+	},
+	{
+		"file": "D:\\Work\\PrivateProjects\\Armpulse\\Source\\Armpulse\\Utility\\Widgets\\SkillSlot\\SkillBar.h",
+		"arguments": [
+			"D:\\Program Files (x86)\\Microsoft Visual Studio\\2022\\BuildTools\\VC\\Tools\\MSVC\\14.42.34433\\bin\\Hostx64\\x64\\cl.exe",
+			"@D:\\Work\\PrivateProjects\\Armpulse\\.vscode\\compileCommands_Armpulse\\Armpulse.1.rsp"
+		],
+		"directory": "D:\\Program Files\\UE_5.5\\Engine\\Source"
+	},
+	{
+		"file": "D:\\Work\\PrivateProjects\\Armpulse\\Source\\Armpulse\\Utility\\Widgets\\SkillSlot\\SkillSlot.cpp",
+		"arguments": [
+			"D:\\Program Files (x86)\\Microsoft Visual Studio\\2022\\BuildTools\\VC\\Tools\\MSVC\\14.42.34433\\bin\\Hostx64\\x64\\cl.exe",
+			"@D:\\Work\\PrivateProjects\\Armpulse\\.vscode\\compileCommands_Armpulse\\Armpulse.1.rsp"
+		],
+		"directory": "D:\\Program Files\\UE_5.5\\Engine\\Source"
+	},
+	{
+		"file": "D:\\Work\\PrivateProjects\\Armpulse\\Source\\Armpulse\\Utility\\Widgets\\SkillSlot\\SkillSlot.h",
+		"arguments": [
+			"D:\\Program Files (x86)\\Microsoft Visual Studio\\2022\\BuildTools\\VC\\Tools\\MSVC\\14.42.34433\\bin\\Hostx64\\x64\\cl.exe",
+			"@D:\\Work\\PrivateProjects\\Armpulse\\.vscode\\compileCommands_Armpulse\\Armpulse.1.rsp"
+		],
+		"directory": "D:\\Program Files\\UE_5.5\\Engine\\Source"
 	}
 ]
