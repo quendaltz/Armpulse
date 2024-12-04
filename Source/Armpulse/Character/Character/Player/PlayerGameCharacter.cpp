@@ -71,6 +71,6 @@ void APlayerGameCharacter::AttackTriggered()
 
 		FVector HitboxSpawnLocation = GetForwardCharacterLocation(ActorCapsuleRadius + TargetHitboxRadius);
         DrawDebugBox(GetWorld(), HitboxSpawnLocation, HitboxSize, AttackRotation.Quaternion(), FColor::Green, false, 1.0f); // Duration is 1 second
-		ParentCombatComponent->Attack(ParentStatusComponent, AttackHitbox, AttackRotation, HitboxSpawnLocation);
+		ParentCombatComponent->Attack(ParentStatusComponent, AttackHitbox, AttackRotation, HitboxSpawnLocation, 0.0f);
 	}
 }

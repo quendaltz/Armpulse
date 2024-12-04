@@ -17,7 +17,8 @@ void ANightmareDragon::BeginPlay()
     {
         ParentStatusComponent->SetAttackPower(50.0f);
         ParentStatusComponent->SetAttackRadius(200.0f);
-        ParentStatusComponent->SetAttackSpeed(50.0f);
+        // attack animation time = 100.0f/AttackSpeed
+        ParentStatusComponent->SetAttackSpeed(25.0f);
 
         ParentStatusComponent->SetIsActing(false);
         ParentStatusComponent->SetCanAct(true);
@@ -60,7 +61,9 @@ void ANightmareDragon::SweepAttack()
     UCharacterCombatComponent* ParentCombatComponent = GetCombatComponent();
     if (ParentCombatComponent)
 	{
-        float PrepareTime = 5.0f;
+        float PrepareTime = 3.0f; // show attack area before play animation
+        float ProcessAttackAfterAnimationTime = 2.0f; // after play animation
+        // calculate attack after PrepareTime + ProcessAttackAfterAnimationTime
         FVector AttackCenterLocation = GetForwardCharacterLocation(200.0f);
         AttackCenterLocation.Z = 0.0f;
         float HitboxSize = ParentStatusComponent->GetAttackRadius();
@@ -69,12 +72,12 @@ void ANightmareDragon::SweepAttack()
 
         FTimerHandle SweepAttackTimerHandle;
         FTimerDelegate AttackFunction;
-        AttackFunction.BindLambda([ParentStatusComponent, ParentCombatComponent, AttackHitbox, AttackCenterLocation]()
+        AttackFunction.BindLambda([ParentStatusComponent, ParentCombatComponent, AttackHitbox, AttackCenterLocation, ProcessAttackAfterAnimationTime]()
         {
-            ParentCombatComponent->Attack(ParentStatusComponent, AttackHitbox, FRotator::ZeroRotator, AttackCenterLocation);
+            ParentCombatComponent->Attack(ParentStatusComponent, AttackHitbox, FRotator::ZeroRotator, AttackCenterLocation, ProcessAttackAfterAnimationTime);
         });
 
-        SpawnCircleDecal(AttackCenterLocation, HitboxSize, PrepareTime);
+        SpawnCircleDecal(AttackCenterLocation, HitboxSize, PrepareTime + ProcessAttackAfterAnimationTime);
         DrawDebugSphere(GetWorld(), AttackCenterLocation, HitboxSize, 8, FColor::Green, false, 1.0f); // Duration is 1 second
         GetWorld()->GetTimerManager().SetTimer(SweepAttackTimerHandle, AttackFunction, PrepareTime, false);
 	}

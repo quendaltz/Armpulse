@@ -15,7 +15,7 @@ public:
 	UAttackComponent();
 
     // Function to trigger the attack
-    void ExecuteAttack(FVector HitboxSpawnLocation, FCollisionShape AttackHitbox, FRotator AttackRotation, float AttackAnimcationLockTime);
+    void ExecuteAttack(FVector HitboxSpawnLocation, FCollisionShape AttackHitbox, FRotator AttackRotation, float AttackAnimationLockTime, float ProcessAttackAfterAnimationTime = 0.0f);
 
 protected:
 	virtual void BeginPlay() override;

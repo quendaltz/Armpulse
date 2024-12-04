@@ -31,7 +31,7 @@ void UAttackComponent::TickComponent(float DeltaTime, ELevelTick TickType, FActo
 	Super::TickComponent(DeltaTime, TickType, ThisTickFunction);
 }
 
-void UAttackComponent::ExecuteAttack(FVector HitboxSpawnLocation, FCollisionShape AttackHitbox, FRotator AttackRotation, float AttackAnimcationLockTime)
+void UAttackComponent::ExecuteAttack(FVector HitboxSpawnLocation, FCollisionShape AttackHitbox, FRotator AttackRotation, float AttackAnimationLockTime, float ProcessAttackAfterAnimationTime)
 {
     AActor* OwnerActor = GetOwner();
     AGameCharacter* OwnerCharacter = nullptr;
@@ -60,32 +60,62 @@ void UAttackComponent::ExecuteAttack(FVector HitboxSpawnLocation, FCollisionShap
 
         if (AttackMontage)
         {
-            OwnerCharacter->ExecuteMontage(AttackMontage, true, AttackAnimcationLockTime);
+            OwnerCharacter->ExecuteMontage(AttackMontage, true, AttackAnimationLockTime);
         }
 
-        // Check for enemies within the hitbox
-        TArray<FOverlapResult> OverlapResults;
-        bool bOverlap = GetWorld()->OverlapMultiByChannel(
-            OverlapResults,
-            HitboxSpawnLocation,
-            HitboxRotation,
-            ECC_GameTraceChannel1,
-            AttackHitbox,
-            CollisionParams
-        );
-
-        if (bOverlap)
+        FTimerHandle AttackTimer;
+        FTimerDelegate AttackFunction;
+        AttackFunction.BindLambda([=, this]()
         {
-            for (FOverlapResult& Overlap : OverlapResults)
+            // Check for enemies within the hitbox
+            TArray<FOverlapResult> OverlapResults;
+            bool bOverlap = GetWorld()->OverlapMultiByChannel(
+                OverlapResults,
+                HitboxSpawnLocation,
+                HitboxRotation,
+                ECC_GameTraceChannel1,
+                AttackHitbox,
+                CollisionParams
+            );
+
+            if (bOverlap)
             {
-                if (AActor* OverlapActor = Overlap.GetActor())
+                for (FOverlapResult& Overlap : OverlapResults)
                 {
-                    // Apply damage or other effects
-                    UE_LOG(LogTemp, Warning, TEXT("Overlap: %s"), *OverlapActor->GetName());
-                    UGameplayStatics::ApplyDamage(OverlapActor, Damage, OwnerInstigator, OwnerActor, DamageTypeClass);
+                    if (AActor* OverlapActor = Overlap.GetActor())
+                    {
+                        // Apply damage or other effects
+                        UE_LOG(LogTemp, Warning, TEXT("Overlap: %s"), *OverlapActor->GetName());
+                        UGameplayStatics::ApplyDamage(OverlapActor, Damage, OwnerInstigator, OwnerActor, DamageTypeClass);
+                    }
                 }
             }
-        }
+        });
+        GetWorld()->GetTimerManager().SetTimer(AttackTimer, AttackFunction, ProcessAttackAfterAnimationTime, false);
+
+        // Check for enemies within the hitbox
+        // TArray<FOverlapResult> OverlapResults;
+        // bool bOverlap = GetWorld()->OverlapMultiByChannel(
+        //     OverlapResults,
+        //     HitboxSpawnLocation,
+        //     HitboxRotation,
+        //     ECC_GameTraceChannel1,
+        //     AttackHitbox,
+        //     CollisionParams
+        // );
+
+        // if (bOverlap)
+        // {
+        //     for (FOverlapResult& Overlap : OverlapResults)
+        //     {
+        //         if (AActor* OverlapActor = Overlap.GetActor())
+        //         {
+        //             // Apply damage or other effects
+        //             UE_LOG(LogTemp, Warning, TEXT("Overlap: %s"), *OverlapActor->GetName());
+        //             UGameplayStatics::ApplyDamage(OverlapActor, Damage, OwnerInstigator, OwnerActor, DamageTypeClass);
+        //         }
+        //     }
+        // }
 
         float GameTime = GetWorld()->GetTimeSeconds();
         UE_LOG(LogTemp, Display, TEXT("%f"), GameTime);
