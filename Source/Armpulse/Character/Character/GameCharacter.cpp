@@ -49,12 +49,15 @@ AGameCharacter::AGameCharacter()
 	// Setup display component
 	CharacterMesh = CreateDefaultSubobject<USkeletalMeshComponent>(TEXT("CharacterMesh"));
 	CharacterMesh->SetupAttachment(RootComponent);
-
+	
 	// Setup Widget
 	DamageWidgetComponent = CreateDefaultSubobject<UWidgetComponent>(TEXT("DamageWidgetComponent"));
     DamageWidgetComponent->SetupAttachment(CharacterMesh);
 	HealthBarComponent = CreateDefaultSubobject<UWidgetComponent>(TEXT("HealthBarComponent"));
     HealthBarComponent->SetupAttachment(CharacterMesh);
+
+	// Setup attached actor
+	AttackIndicator = CreateDefaultSubobject<AAttackIndicator>(TEXT("AttackIndicator"));
 }
 
 void AGameCharacter::BeginPlay()
@@ -68,19 +71,6 @@ void AGameCharacter::BeginPlay()
 	
 	DamageWidgetComponent->SetCollisionProfileName(FName("NoCollision"));
 	HealthBarComponent->SetCollisionProfileName(FName("NoCollision"));
-
-	// Setup actor components
-	if (!AttackIndicator)
-    {
-        FActorSpawnParameters SpawnParams;
-        SpawnParams.Owner = this;
-        SpawnParams.Instigator = GetInstigator();
-
-		FVector ActorLocation = GetActorLocation();
-		ActorLocation.Z = 0.0f;
-
-        AttackIndicator = GetWorld()->SpawnActor<AAttackIndicator>(AAttackIndicator::StaticClass(), ActorLocation, FRotator::ZeroRotator, SpawnParams);
-    }
 }
 
 void AGameCharacter::Tick(float DeltaTime)
@@ -287,11 +277,13 @@ void AGameCharacter::MoveCompleted(const FInputActionValue& Value)
 	}
 }
 
-void AGameCharacter::ShowAttackArea(FVector Location, FRotator Rotation, float AreaDuration)
+void AGameCharacter::SpawnCircleDecal(FVector Location, float AreaRadius, float AreaDuration)
 {
+	if (!AttackIndicator) return;
+	
 	if (AttackIndicator)
 	{
-		AttackIndicator->PrepareAttack(Location, Rotation, AreaDuration);
+		AttackIndicator->SpawnCircleArea(Location, AreaRadius, AreaDuration);
 	}
 }
 

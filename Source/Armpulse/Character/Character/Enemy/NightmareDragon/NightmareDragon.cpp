@@ -60,9 +60,9 @@ void ANightmareDragon::SweepAttack()
     UCharacterCombatComponent* ParentCombatComponent = GetCombatComponent();
     if (ParentCombatComponent)
 	{
-        //ShowAttackArea(GetActorLocation() + FVector(0, 0, 10), GetActorRotation(), 5.0f);
-        //ParentCombatComponent->PrepareAttack(5.0f);
+        FVector SpawnLocation = GetActorLocation();
+        SpawnLocation.Z = 0.0f;
+        SpawnCircleDecal(SpawnLocation, ParentStatusComponent->GetAttackRadius(), 5.0f);
 		//ParentCombatComponent->Attack(ParentStatusComponent);
-        UE_LOG(LogTemp, Display, TEXT("drag atrtackl"));
 	}
 }

@@ -41,7 +41,7 @@ public:
 	void MoveTriggered(const struct FInputActionValue& Value);
 	void MoveCompleted(const struct FInputActionValue& Value);
 	void AttackTriggered();
-	void ShowAttackArea(FVector Location, FRotator Rotation, float AreaDuration);
+	void SpawnCircleDecal(FVector Location, float AreaRadius, float AreaDuration);
 	bool CastSkill(int32 SkillIndex);
 	void Die();
 
@@ -62,8 +62,10 @@ private:
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, meta = (AllowPrivateAccess = "true"))
 	USkeletalMeshComponent* CharacterMesh;
 
-	// actor componeent
-	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, meta = (AllowPrivateAccess = "true"))
+	// actor component
+	UPROPERTY(EditDefaultsOnly, Category = "UI")
+	TSubclassOf<AAttackIndicator> AttackIndicatorClass;
+	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, meta = (AllowPrivateAccess = "true"))
 	AAttackIndicator* AttackIndicator;
 	
 	// custom components
