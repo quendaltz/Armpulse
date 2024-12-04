@@ -15,8 +15,7 @@ public:
 	UAttackComponent();
 
     // Function to trigger the attack
-    UFUNCTION(BlueprintCallable, Category="Attack")
-    void ExecuteAttack(FVector HitboxSpawnLocation, float AttackAnimcationLockTime);
+    void ExecuteAttack(FVector HitboxSpawnLocation, FCollisionShape AttackHitbox, FRotator AttackRotation, float AttackAnimcationLockTime);
 
 protected:
 	virtual void BeginPlay() override;
@@ -26,7 +25,6 @@ protected:
     UAnimMontage* AttackMontage;
     UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Animation")
     UAnimSequence* AttackAnimation;
-
 private:
 
 };

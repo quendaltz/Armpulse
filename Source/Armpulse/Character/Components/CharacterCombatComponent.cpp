@@ -26,7 +26,7 @@ void UCharacterCombatComponent::TickComponent(float DeltaTime, ELevelTick TickTy
 	Super::TickComponent(DeltaTime, TickType, ThisTickFunction);
 }
 
-void UCharacterCombatComponent::Attack(UCharacterStatusComponent* CharacterStatusComponent, FVector HitboxSpawnLocation)
+void UCharacterCombatComponent::Attack(UCharacterStatusComponent* CharacterStatusComponent, FCollisionShape AttackHitbox, FRotator AttackRotation, FVector HitboxSpawnLocation)
 {	
 	if (!CharacterStatusComponent) return;
 	
@@ -46,7 +46,7 @@ void UCharacterCombatComponent::Attack(UCharacterStatusComponent* CharacterStatu
 	CharacterStatusComponent->SetCanAct(false);
 	if (AttackComponent)
 	{
-		AttackComponent->ExecuteAttack(HitboxSpawnLocation, 100.0f/AttackSpeed);
+		AttackComponent->ExecuteAttack(HitboxSpawnLocation, AttackHitbox, AttackRotation, 100.0f/AttackSpeed);
 	}
 
 	GetWorld()->GetTimerManager().SetTimer(ResetAnimationTimer, ResetAnimationFunction, 100.0f/AttackSpeed, false);

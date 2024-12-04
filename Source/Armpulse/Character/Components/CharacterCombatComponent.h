@@ -16,7 +16,7 @@ class ARMPULSE_API UCharacterCombatComponent : public UActorComponent
 public:	
 	UCharacterCombatComponent();
 
-	void Attack(UCharacterStatusComponent* CharacterStatusComponent, FVector HitboxSpawnLocation);
+	void Attack(UCharacterStatusComponent* CharacterStatusComponent, FCollisionShape AttackHitbox, FRotator AttackRotation, FVector HitboxSpawnLocation);
 	void ResetAnimation(UCharacterStatusComponent* CharacterStatusComponent);
 	float HandleTakeDamage(UCharacterStatusComponent* CharacterStatusComponent, float DamageAmount, FDamageEvent const& DamageEvent, AController* EventInstigator, AActor* DamageCauser);
 

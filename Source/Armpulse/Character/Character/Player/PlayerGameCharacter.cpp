@@ -10,6 +10,8 @@
 #include "../../Components/CharacterCombatComponent.h"
 #include "../../Components/CharacterStatusComponent.h"
 
+#include "DrawDebugHelpers.h"
+
 APlayerGameCharacter::APlayerGameCharacter()
 {
     // root component is CapsuleComponent from super class >> GameCharacter
@@ -63,7 +65,12 @@ void APlayerGameCharacter::AttackTriggered()
             return;
         }
 
+        FVector HitboxSize = FVector(TargetHitboxRadius, TargetHitboxRadius, 0.0f);
+        FCollisionShape AttackHitbox = FCollisionShape::MakeBox(HitboxSize);
+        FRotator AttackRotation = GetActorRotation();
+
 		FVector HitboxSpawnLocation = GetForwardCharacterLocation(ActorCapsuleRadius + TargetHitboxRadius);
-		ParentCombatComponent->Attack(ParentStatusComponent, HitboxSpawnLocation);
+        DrawDebugBox(GetWorld(), HitboxSpawnLocation, HitboxSize, AttackRotation.Quaternion(), FColor::Green, false, 1.0f); // Duration is 1 second
+		ParentCombatComponent->Attack(ParentStatusComponent, AttackHitbox, AttackRotation, HitboxSpawnLocation);
 	}
 }

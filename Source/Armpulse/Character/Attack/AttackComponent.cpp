@@ -31,7 +31,7 @@ void UAttackComponent::TickComponent(float DeltaTime, ELevelTick TickType, FActo
 	Super::TickComponent(DeltaTime, TickType, ThisTickFunction);
 }
 
-void UAttackComponent::ExecuteAttack(FVector HitboxSpawnLocation, float AttackAnimcationLockTime)
+void UAttackComponent::ExecuteAttack(FVector HitboxSpawnLocation, FCollisionShape AttackHitbox, FRotator AttackRotation, float AttackAnimcationLockTime)
 {
     AActor* OwnerActor = GetOwner();
     AGameCharacter* OwnerCharacter = nullptr;
@@ -48,23 +48,10 @@ void UAttackComponent::ExecuteAttack(FVector HitboxSpawnLocation, float AttackAn
         auto DamageTypeClass = UDamageType::StaticClass();
         Damage = OwnerCharacter->GetStatusComponent()->GetAttackPower();
 
-        float TargetHitboxRadius = 0.0f;
-        TargetHitboxRadius = OwnerCharacter->GetStatusComponent()->GetAttackRadius();
-
-        if (TargetHitboxRadius < 0.0f)
-        {
-            return;
-        }
-
         if (Damage < 0.0f)
         {
             Damage = 0.0f;
         }
-
-        FRotator AttackRotation = OwnerCharacter->GetActorRotation();
-        
-        FVector HitboxSize = FVector(TargetHitboxRadius, TargetHitboxRadius, 0.0f);
-        FCollisionShape Hitbox = FCollisionShape::MakeBox(HitboxSize);
         FQuat HitboxRotation = AttackRotation.Quaternion();
         
         // Define collision parameters and check for overlaps
@@ -83,11 +70,9 @@ void UAttackComponent::ExecuteAttack(FVector HitboxSpawnLocation, float AttackAn
             HitboxSpawnLocation,
             HitboxRotation,
             ECC_GameTraceChannel1,
-            Hitbox,
+            AttackHitbox,
             CollisionParams
         );
-
-        DrawDebugBox(GetWorld(), HitboxSpawnLocation, HitboxSize, HitboxRotation, FColor::Green, false, 1.0f); // Duration is 1 second
 
         if (bOverlap)
         {

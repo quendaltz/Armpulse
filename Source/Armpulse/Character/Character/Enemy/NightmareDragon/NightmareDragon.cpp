@@ -17,7 +17,7 @@ void ANightmareDragon::BeginPlay()
     {
         ParentStatusComponent->SetAttackPower(50.0f);
         ParentStatusComponent->SetAttackRadius(200.0f);
-        ParentStatusComponent->SetAttackSpeed(20.0f);
+        ParentStatusComponent->SetAttackSpeed(50.0f);
 
         ParentStatusComponent->SetIsActing(false);
         ParentStatusComponent->SetCanAct(true);
@@ -63,15 +63,19 @@ void ANightmareDragon::SweepAttack()
         float PrepareTime = 5.0f;
         FVector AttackCenterLocation = GetForwardCharacterLocation(200.0f);
         AttackCenterLocation.Z = 0.0f;
+        float HitboxSize = ParentStatusComponent->GetAttackRadius();
+        FCollisionShape AttackHitbox = FCollisionShape::MakeSphere(HitboxSize);
+        FRotator AttackRotation = GetActorRotation();
 
         FTimerHandle SweepAttackTimerHandle;
         FTimerDelegate AttackFunction;
-        AttackFunction.BindLambda([ParentStatusComponent, ParentCombatComponent, AttackCenterLocation]()
+        AttackFunction.BindLambda([ParentStatusComponent, ParentCombatComponent, AttackHitbox, AttackCenterLocation]()
         {
-            ParentCombatComponent->Attack(ParentStatusComponent, AttackCenterLocation);
+            ParentCombatComponent->Attack(ParentStatusComponent, AttackHitbox, FRotator::ZeroRotator, AttackCenterLocation);
         });
 
-        SpawnCircleDecal(AttackCenterLocation, ParentStatusComponent->GetAttackRadius(), PrepareTime);
+        SpawnCircleDecal(AttackCenterLocation, HitboxSize, PrepareTime);
+        DrawDebugSphere(GetWorld(), AttackCenterLocation, HitboxSize, 8, FColor::Green, false, 1.0f); // Duration is 1 second
         GetWorld()->GetTimerManager().SetTimer(SweepAttackTimerHandle, AttackFunction, PrepareTime, false);
 	}
 }

@@ -1,6 +1,7 @@
 #include "SwordRushSkill.h"
 
 #include "Engine/OverlapResult.h"
+#include "GameFramework/Actor.h"
 #include "Kismet/GameplayStatics.h"
 
 #include "Components/CapsuleComponent.h"
@@ -9,7 +10,7 @@
 #include "../../Components/CharacterStatusComponent.h"
 #include "../../Components/Movement/CharacterDashComponent.h"
 
-#include "GameFramework/Actor.h"
+#include "DrawDebugHelpers.h"
 
 USwordRushSkill::USwordRushSkill()
 {
@@ -133,7 +134,7 @@ void USwordRushSkill::ActivateSkill(AGameCharacter* Instigator, AController* Ins
                 }
             }
         }
-        //DrawDebugBox(GetWorld(), HitboxSpawnLocation, HitboxSize, HitboxRotation, FColor::Green, false, 1.0f); // Duration is 1 second
+        DrawDebugBox(GetWorld(), HitboxSpawnLocation, HitboxSize, HitboxRotation, FColor::Green, false, 1.0f); // Duration is 1 second
 	});
     GetWorld()->GetTimerManager().SetTimer(DashAttackTimer, DashAttackFunction, ChargeStartTime + ChargeDuration + DashDuration, false);
 }

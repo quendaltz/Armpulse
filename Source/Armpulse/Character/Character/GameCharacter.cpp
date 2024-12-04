@@ -289,7 +289,7 @@ void AGameCharacter::SpawnCircleDecal(FVector Location, float AreaRadius, float 
 
 void AGameCharacter::AttackTriggered()
 {
-
+	UE_LOG(LogTemp, Display, TEXT("A Game Character"));
 }
 
 bool AGameCharacter::CastSkill(int32 SkillIndex)
