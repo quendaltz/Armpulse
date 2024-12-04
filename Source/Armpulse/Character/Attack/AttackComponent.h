@@ -16,7 +16,7 @@ public:
 
     // Function to trigger the attack
     UFUNCTION(BlueprintCallable, Category="Attack")
-    void ExecuteAttack(float AttackDuration);
+    void ExecuteAttack(FVector HitboxSpawnLocation, float AttackAnimcationLockTime);
 
 protected:
 	virtual void BeginPlay() override;

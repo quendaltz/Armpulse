@@ -7,6 +7,7 @@
 #include "EnhancedInputSubsystems.h"
 
 #include "../Character/GameCharacter.h"
+#include "../Character/Player/PlayerGameCharacter.h"
 #include "../Components/CharacterSkillComponent.h"
 #include "../../Utility/Widgets/SkillSlot/SkillBar.h"
 
@@ -92,7 +93,8 @@ void AGamePlayerController::OnMoveReleased(const FInputActionValue& Value)
 
 void AGamePlayerController::OnAttackTriggered()
 {
-	AGameCharacter* PlayerGameCharacter = Cast<AGameCharacter>(GetPawn());
+	APlayerGameCharacter* PlayerGameCharacter = Cast<APlayerGameCharacter>(GetPawn());
+	// AGameCharacter* PlayerGameCharacter = Cast<AGameCharacter>(GetPawn());
 	if (PlayerGameCharacter)
 	{
 		PlayerGameCharacter->AttackTriggered();

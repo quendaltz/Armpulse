@@ -31,7 +31,7 @@ void UAttackComponent::TickComponent(float DeltaTime, ELevelTick TickType, FActo
 	Super::TickComponent(DeltaTime, TickType, ThisTickFunction);
 }
 
-void UAttackComponent::ExecuteAttack(float AttackDuration)
+void UAttackComponent::ExecuteAttack(FVector HitboxSpawnLocation, float AttackAnimcationLockTime)
 {
     AActor* OwnerActor = GetOwner();
     AGameCharacter* OwnerCharacter = nullptr;
@@ -48,8 +48,6 @@ void UAttackComponent::ExecuteAttack(float AttackDuration)
         auto DamageTypeClass = UDamageType::StaticClass();
         Damage = OwnerCharacter->GetStatusComponent()->GetAttackPower();
 
-        float ActorCapsuleRadius = 0.0f;
-        ActorCapsuleRadius = OwnerCharacter->GetCapsuleComponent()->GetScaledCapsuleRadius();
         float TargetHitboxRadius = 0.0f;
         TargetHitboxRadius = OwnerCharacter->GetStatusComponent()->GetAttackRadius();
 
@@ -64,7 +62,6 @@ void UAttackComponent::ExecuteAttack(float AttackDuration)
         }
 
         FRotator AttackRotation = OwnerCharacter->GetActorRotation();
-        FVector HitboxSpawnLocation = OwnerCharacter->GetForwardCharacterLocation(ActorCapsuleRadius + TargetHitboxRadius);
         
         FVector HitboxSize = FVector(TargetHitboxRadius, TargetHitboxRadius, 0.0f);
         FCollisionShape Hitbox = FCollisionShape::MakeBox(HitboxSize);
@@ -76,7 +73,7 @@ void UAttackComponent::ExecuteAttack(float AttackDuration)
 
         if (AttackMontage)
         {
-            OwnerCharacter->ExecuteMontage(AttackMontage, true, AttackDuration);
+            OwnerCharacter->ExecuteMontage(AttackMontage, true, AttackAnimcationLockTime);
         }
 
         // Check for enemies within the hitbox
@@ -89,6 +86,8 @@ void UAttackComponent::ExecuteAttack(float AttackDuration)
             Hitbox,
             CollisionParams
         );
+
+        DrawDebugBox(GetWorld(), HitboxSpawnLocation, HitboxSize, HitboxRotation, FColor::Green, false, 1.0f); // Duration is 1 second
 
         if (bOverlap)
         {

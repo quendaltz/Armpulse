@@ -15,6 +15,8 @@ class ARMPULSE_API APlayerGameCharacter : public AGameCharacter
 	
 public:
 	APlayerGameCharacter();
+	
+	virtual void AttackTriggered() override;
 
 protected:
 	virtual void BeginPlay() override;

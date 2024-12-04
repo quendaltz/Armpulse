@@ -3,10 +3,11 @@
 
 #include "PlayerGameCharacter.h"
 
+#include "Camera/CameraComponent.h"
+#include "Components/CapsuleComponent.h"
 #include "GameFramework/SpringArmComponent.h"
 
-#include "Camera/CameraComponent.h"
-
+#include "../../Components/CharacterCombatComponent.h"
 #include "../../Components/CharacterStatusComponent.h"
 
 APlayerGameCharacter::APlayerGameCharacter()
@@ -44,4 +45,25 @@ void APlayerGameCharacter::BeginPlay()
         ParentStatusComponent->SetDefense(10.0f);
         UpdateHealthBar(InitialHealth/InitialHealth);
     }
+}
+
+void APlayerGameCharacter::AttackTriggered()
+{
+    UCharacterCombatComponent* ParentCombatComponent = GetCombatComponent();
+    UCharacterStatusComponent* ParentStatusComponent = GetStatusComponent();
+    if (ParentCombatComponent)
+	{
+		float ActorCapsuleRadius = 0.0f;
+        ActorCapsuleRadius = GetCapsuleComponent()->GetScaledCapsuleRadius();
+        float TargetHitboxRadius = 0.0f;
+        TargetHitboxRadius = ParentStatusComponent->GetAttackRadius();
+
+        if (TargetHitboxRadius < 0.0f)
+        {
+            return;
+        }
+
+		FVector HitboxSpawnLocation = GetForwardCharacterLocation(ActorCapsuleRadius + TargetHitboxRadius);
+		ParentCombatComponent->Attack(ParentStatusComponent, HitboxSpawnLocation);
+	}
 }

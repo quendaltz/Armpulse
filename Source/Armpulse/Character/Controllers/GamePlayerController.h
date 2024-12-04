@@ -7,11 +7,11 @@
 #include "GamePlayerController.generated.h"
 
 // Forward declaration
+class APlayerGameCharacter;
 class UNiagaraSystem;
 class UInputMappingContext;
 class UInputAction;
 struct FInputActionValue;
-
 UCLASS()
 class ARMPULSE_API AGamePlayerController : public APlayerController
 {
@@ -54,5 +54,5 @@ protected:
 
 private:
 	UUserWidget* SkillBarWidgetInstance;
-
+	APlayerGameCharacter* PlayerGameCharacterTest;
 };

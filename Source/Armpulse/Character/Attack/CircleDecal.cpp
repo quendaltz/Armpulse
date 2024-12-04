@@ -24,12 +24,9 @@ ACircleDecal::ACircleDecal()
 
 void ACircleDecal::CreateArea(FVector Location, float Radius, float DesireDuration)
 {
-    UE_LOG(LogTemp, Display, TEXT("Create area %f") , Radius);
     Circumference->DecalSize = FVector(1.0f, Radius, Radius);
     Area->DecalSize = FVector(1.0f, Radius, Radius);
     Duration = DesireDuration;
-
-    // SetActorLocation(Location);
 }
 
 void ACircleDecal::SpawnArea()

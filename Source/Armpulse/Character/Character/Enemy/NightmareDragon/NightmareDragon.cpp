@@ -16,7 +16,7 @@ void ANightmareDragon::BeginPlay()
     if (ParentStatusComponent)
     {
         ParentStatusComponent->SetAttackPower(50.0f);
-        ParentStatusComponent->SetAttackRadius(100.0f);
+        ParentStatusComponent->SetAttackRadius(200.0f);
         ParentStatusComponent->SetAttackSpeed(20.0f);
 
         ParentStatusComponent->SetIsActing(false);
@@ -60,9 +60,18 @@ void ANightmareDragon::SweepAttack()
     UCharacterCombatComponent* ParentCombatComponent = GetCombatComponent();
     if (ParentCombatComponent)
 	{
-        FVector SpawnLocation = GetActorLocation();
-        SpawnLocation.Z = 0.0f;
-        SpawnCircleDecal(SpawnLocation, ParentStatusComponent->GetAttackRadius(), 5.0f);
-		//ParentCombatComponent->Attack(ParentStatusComponent);
+        float PrepareTime = 5.0f;
+        FVector AttackCenterLocation = GetForwardCharacterLocation(200.0f);
+        AttackCenterLocation.Z = 0.0f;
+
+        FTimerHandle SweepAttackTimerHandle;
+        FTimerDelegate AttackFunction;
+        AttackFunction.BindLambda([ParentStatusComponent, ParentCombatComponent, AttackCenterLocation]()
+        {
+            ParentCombatComponent->Attack(ParentStatusComponent, AttackCenterLocation);
+        });
+
+        SpawnCircleDecal(AttackCenterLocation, ParentStatusComponent->GetAttackRadius(), PrepareTime);
+        GetWorld()->GetTimerManager().SetTimer(SweepAttackTimerHandle, AttackFunction, PrepareTime, false);
 	}
 }

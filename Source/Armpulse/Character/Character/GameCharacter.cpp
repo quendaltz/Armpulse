@@ -289,10 +289,7 @@ void AGameCharacter::SpawnCircleDecal(FVector Location, float AreaRadius, float 
 
 void AGameCharacter::AttackTriggered()
 {
-	if (CombatComponent)
-	{
-		CombatComponent->Attack(StatusComponent);
-	}
+
 }
 
 bool AGameCharacter::CastSkill(int32 SkillIndex)

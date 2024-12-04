@@ -40,7 +40,7 @@ public:
 
 	void MoveTriggered(const struct FInputActionValue& Value);
 	void MoveCompleted(const struct FInputActionValue& Value);
-	void AttackTriggered();
+	virtual void AttackTriggered();
 	void SpawnCircleDecal(FVector Location, float AreaRadius, float AreaDuration);
 	bool CastSkill(int32 SkillIndex);
 	void Die();
